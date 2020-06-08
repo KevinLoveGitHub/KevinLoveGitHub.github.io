@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>设计模式-组合模式 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="&amp;#x5BF9;&amp;#x4E8E;&amp;#x6811;&amp;#x5F62;&amp;#x7ED3;&amp;#x6784;&amp;#xFF0C;&amp;#x5BB9;&amp;#x5668;&amp;#x5BF9;&amp;#x8C61;&amp;#xFF08;&amp;#x5982;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#xFF09;&amp;#x53EF;&amp;#x4EE5;&amp;#x8FDB;&amp;#x884C;&amp;#x6DFB;&amp;#x52A0;&amp;#x5220;&amp;#x9664">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-组合模式">
+<meta property="og:url" content="http://yoursite.com/2017/07/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="&amp;#x5BF9;&amp;#x4E8E;&amp;#x6811;&amp;#x5F62;&amp;#x7ED3;&amp;#x6784;&amp;#xFF0C;&amp;#x5BB9;&amp;#x5668;&amp;#x5BF9;&amp;#x8C61;&amp;#xFF08;&amp;#x5982;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#xFF09;&amp;#x53EF;&amp;#x4EE5;&amp;#x8FDB;&amp;#x884C;&amp;#x6DFB;&amp;#x52A0;&amp;#x5220;&amp;#x9664">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1499332634.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1499337734.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1499337698.png">
+<meta property="article:published_time" content="2017-07-06T09:15:02.000Z">
+<meta property="article:modified_time" content="2020-03-07T06:23:29.053Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="[object Object]">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1499332634.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            设计模式-组合模式
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-06T09:15:02.000Z" itemprop="datePublished">7月 6 2017</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            8 分钟 读完 (约 1176 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p><img src="https://image.kangxiaoguang.com/1499332634.png" alt></p>
+<p>&#x5BF9;&#x4E8E;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#xFF0C;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;&#xFF08;&#x5982;&#x6587;&#x4EF6;&#x5939;&#xFF09;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x6DFB;&#x52A0;&#x5220;&#x9664;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#xFF08;&#x5982;&#x6587;&#x4EF6;&#xFF09;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x4F46;&#x662F;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x5C31;&#x4E0D;&#x80FD;&#x5177;&#x5907;&#x8FD9;&#x6837;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x6240;&#x4EE5;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;&#x548C;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x9700;&#x8981;&#x533A;&#x522B;&#x5BF9;&#x5F85;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x4F1A;&#x4F7F;&#x5F97;&#x7A0B;&#x5E8F;&#x975E;&#x5E38;&#x590D;&#x6742;&#xFF0C;&#x901A;&#x5E38;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x53EF;&#x4EE5;&#x4E00;&#x81F4;&#x7684;&#x5904;&#x7406;&#x5B83;&#x4EEC;&#xFF0C;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x5C31;&#x662F;&#x4E3A;&#x6B64;&#x7C7B;&#x95EE;&#x9898;&#x800C;&#x8BDE;&#x751F;&#xFF0C;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x901A;&#x8FC7;&#x4E00;&#x79CD;&#x5DE7;&#x5999;&#x7684;&#x8BBE;&#x8BA1;&#x65B9;&#x6848;&#x4F7F;&#x5F97;&#x7528;&#x6237;&#x53EF;&#x4EE5;&#x4E00;&#x81F4;&#x6027;&#x5730;&#x5904;&#x7406;&#x6574;&#x4E2A;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x6216;&#x8005;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x7684;&#x4E00;&#x90E8;&#x5206;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4E00;&#x81F4;&#x6027;&#x5730;&#x5904;&#x7406;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x4E2D;&#x7684;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x548C;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;</p>
+<a id="more"></a>
+
+<p>&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#xFF08;Composite Pattern&#xFF09;&#xFF1A;&#x7EC4;&#x5408;&#x591A;&#x4E2A;&#x5BF9;&#x8C61;&#x5F62;&#x6210;&#x6811;&#x5F62;&#x7ED3;&#x6784;&#x4EE5;&#x8868;&#x793A;&#x5177;&#x6709;&#x201C;&#x6574;&#x4F53;-&#x90E8;&#x5206;&#x201D;&#x5173;&#x7CFB;&#x7684;&#x5C42;&#x6B21;&#x7ED3;&#x6784;&#xFF0C;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x53C8;&#x53EF;&#x4EE5;&#x79F0;&#x4E3A;&#x201C;&#x6574;&#x4F53;-&#x90E8;&#x5206;&#x201D;&#xFF08;Part-Whole&#xFF09;&#x6A21;&#x5F0F;&#xFF0C;&#x662F;&#x4E00;&#x79CD;&#x7ED3;&#x6784;&#x578B;&#x6A21;&#x5F0F;</p>
+<p><img src="https://image.kangxiaoguang.com/1499337734.png" alt="&#x900F;&#x660E;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;"></p>
+<ul>
+<li>Component&#xFF08;&#x62BD;&#x8C61;&#x6784;&#x4EF6;&#xFF09;&#xFF1A;&#x53EF;&#x4EE5;&#x662F;&#x63A5;&#x53E3;&#x6216;&#x8005;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x4E3A;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x548C;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;&#x58F0;&#x660E;&#x63A5;&#x53E3;</li>
+<li>Leaf&#xFF08;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#xFF09;&#xFF1A;&#x5BF9;&#x4E8E;&#x589E;&#x52A0;&#x3001;&#x5220;&#x9664;&#x7B49;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5F02;&#x5E38;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;&#x53EA;&#x5B9E;&#x73B0;&#x5C5E;&#x4E8E;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;</li>
+<li>Composite&#xFF08;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;&#xFF09;&#xFF1A;&#x5305;&#x542B;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x7684;&#x5BB9;&#x5668;</li>
+</ul>
+<p>&#x5148;&#x6765;&#x7528;&#x900F;&#x660E;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x540E;&#x7F00;&#x540D;&#x7684;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<p>Component &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractFile</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AbstractFile</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFile</span><span class="hljs-params">(AbstractFile file)</span></span>;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeFile</span><span class="hljs-params">(AbstractFile file)</span></span>;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> AbstractFile <span class="hljs-title">getFile</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span></span>;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Leaf &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Java &#x6587;&#x4EF6;&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JavaFile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFile</span> </span>{</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">JavaFile</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>(name);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x64CD;&#x4F5C;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x64CD;&#x4F5C;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> AbstractFile <span class="hljs-title">getFile</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x64CD;&#x4F5C;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;Java &#x6587;&#x4EF6;&#x7684;&#x540E;&#x7F00;&#x540D;&#x662F; .java&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// text &#x6587;&#x4EF6;&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFile</span> </span>{</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TextFile</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>(name);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x64CD;&#x4F5C;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x64CD;&#x4F5C;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> AbstractFile <span class="hljs-title">getFile</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException(<span class="hljs-string">&quot;&#x4E0D;&#x652F;&#x6301;&#x64CD;&#x4F5C;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;Text &#x6587;&#x4EF6;&#x7684;&#x540E;&#x7F00;&#x540D;&#x662F; .txt&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Composite &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Folder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFile</span> </span>{</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;AbstractFile&gt; fileList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Folder</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>(name);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        fileList.add(file);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        fileList.remove(file);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> AbstractFile <span class="hljs-title">getFile</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> fileList.get(index);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x6587;&#x4EF6;&#x5939;&#x65E0;&#x540E;&#x7F00;&#x540D;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span> (AbstractFile abstractFile : fileList) {</span><br><span class="line">            abstractFile.getFileSuffix();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Client &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">AbstractFile text1 = <span class="hljs-keyword">new</span> TextFile(<span class="hljs-string">&quot;text1&quot;</span>);</span><br><span class="line">AbstractFile text2 = <span class="hljs-keyword">new</span> TextFile(<span class="hljs-string">&quot;text2&quot;</span>);</span><br><span class="line"></span><br><span class="line">AbstractFile javaFile1 = <span class="hljs-keyword">new</span> JavaFile(<span class="hljs-string">&quot;javaFile1&quot;</span>);</span><br><span class="line">AbstractFile javaFile2 = <span class="hljs-keyword">new</span> JavaFile(<span class="hljs-string">&quot;javaFile2&quot;</span>);</span><br><span class="line"></span><br><span class="line">AbstractFile folder1 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;folder1&quot;</span>);</span><br><span class="line">AbstractFile folder2 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;folder2&quot;</span>);</span><br><span class="line">AbstractFile folder3 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;folder3&quot;</span>);</span><br><span class="line"></span><br><span class="line">folder1.addFile(text1);</span><br><span class="line">folder1.addFile(javaFile1);</span><br><span class="line"></span><br><span class="line">folder2.addFile(text2);</span><br><span class="line">folder2.addFile(javaFile2);</span><br><span class="line"></span><br><span class="line">folder3.addFile(folder1);</span><br><span class="line">folder3.addFile(folder2);</span><br><span class="line">folder3.getFileSuffix();</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x5982;&#x679C;&#x4EC5;&#x4EC5;&#x662F;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x540E;&#x7F00;&#x540D;&#xFF0C;&#x6682;&#x65F6;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x719F;&#x6089;&#x4EE3;&#x7801;&#x5F97;&#x5C0F;&#x4F19;&#x4F34;&#x8C03;&#x7528;&#x4E86; <code>TextFile</code> &#x4E2D;&#x7684; <code>addFile()</code> &#x51FD;&#x6570;&#xFF0C;&#x53C8;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x5F02;&#x5E38;&#x5904;&#x7406;&#xFF0C;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;&#x7A0B;&#x5E8F;&#x51FA;&#x73B0;&#x5F02;&#x5E38;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x900F;&#x660E;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x7684;&#x7F3A;&#x70B9;&#xFF0C;&#x5BF9;&#x4E8E;&#x8C03;&#x7528;&#x8005;&#x6765;&#x8BF4;&#x6240;&#x6709;&#x51FD;&#x6570;&#x8DB3;&#x591F;&#x900F;&#x660E;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x4E0D;&#x5C0F;&#x5FC3;&#x5C31;&#x4F1A;&#x5BFC;&#x81F4;&#x7A0B;&#x5E8F;&#x51FA;&#x73B0;&#x5F02;&#x5E38;</p>
+<p>&#x4E0B;&#x9762;&#x518D;&#x6765;&#x4ECB;&#x7ECD;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#xFF0C;&#x53EB;&#x505A;&#x5B89;&#x5168;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#xFF1A;</p>
+<p><img src="https://image.kangxiaoguang.com/1499337698.png" alt="&#x5B89;&#x5168;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;"></p>
+<p>&#x5229;&#x7528;&#x8BE5;&#x6A21;&#x5F0F;&#x518D;&#x5B9E;&#x73B0;&#x4E00;&#x4E0B;&#x4E0A;&#x9762;&#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x540E;&#x7F00;&#x540D;&#x7684;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<p>Component &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractSafeFile</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AbstractSafeFile</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Leaf &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// Java &#x6587;&#x4EF6;&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JavaFile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSafeFile</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">JavaFile</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>(name);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;Java &#x6587;&#x4EF6;&#x7684;&#x540E;&#x7F00;&#x540D;&#x662F; .java&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// text &#x6587;&#x4EF6;&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSafeFile</span> </span>{</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TextFile</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>(name);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;Text &#x6587;&#x4EF6;&#x7684;&#x540E;&#x7F00;&#x540D;&#x662F; .txt&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Composite &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Folder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractSafeFile</span> </span>{</span><br><span class="line"></span><br><span class="line">    ArrayList&lt;AbstractFile&gt; fileList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Folder</span><span class="hljs-params">(String name)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>(name);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        fileList.add(file);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeFile</span><span class="hljs-params">(AbstractFile file)</span> </span>{</span><br><span class="line">        fileList.remove(file);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> AbstractFile <span class="hljs-title">getFile</span><span class="hljs-params">(<span class="hljs-keyword">int</span> index)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> fileList.get(index);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getFileSuffix</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x6587;&#x4EF6;&#x5939;&#x65E0;&#x540E;&#x7F00;&#x540D;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span> (AbstractFile abstractFile : fileList) {</span><br><span class="line">            abstractFile.getFileSuffix();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Client &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TextFile text1 = <span class="hljs-keyword">new</span> TextFile(<span class="hljs-string">&quot;text1&quot;</span>);</span><br><span class="line">TextFile text2 = <span class="hljs-keyword">new</span> TextFile(<span class="hljs-string">&quot;text2&quot;</span>);</span><br><span class="line"></span><br><span class="line">JavaFile javaFile1 = <span class="hljs-keyword">new</span> JavaFile(<span class="hljs-string">&quot;javaFile1&quot;</span>);</span><br><span class="line">JavaFile javaFile2 = <span class="hljs-keyword">new</span> JavaFile(<span class="hljs-string">&quot;javaFile2&quot;</span>);</span><br><span class="line"></span><br><span class="line">Folder folder1 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;folder1&quot;</span>);</span><br><span class="line">Folder folder2 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;folder2&quot;</span>);</span><br><span class="line">Folder folder3 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;folder3&quot;</span>);</span><br><span class="line"></span><br><span class="line">folder1.addFile(text1);</span><br><span class="line">folder1.addFile(javaFile1);</span><br><span class="line"></span><br><span class="line">folder2.addFile(text2);</span><br><span class="line">folder2.addFile(javaFile2);</span><br><span class="line"></span><br><span class="line">folder3.addFile(folder1);</span><br><span class="line">folder3.addFile(folder2);</span><br><span class="line">folder3.getFileSuffix();</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x5B89;&#x5168;&#x7EC4;&#x5408;&#x6A21;&#x5F0F;&#x4E2D;&#x7684; Component &#x7C7B;&#x4E0D;&#x63D0;&#x4F9B;&#x4EFB;&#x4F55;&#x7BA1;&#x7406;&#x6210;&#x5458;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5728; Composite &#x7C7B;&#x4E2D;&#x81EA;&#x5DF1;&#x5B9E;&#x73B0;&#x8FD9;&#x4E9B;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x79CD;&#x505A;&#x6CD5;&#x867D;&#x7136;&#x5B89;&#x5168;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x4E0D;&#x80FD;&#x9488;&#x5BF9;&#x62BD;&#x8C61;&#x7F16;&#x7A0B;&#xFF0C;&#x4E0D;&#x591F;&#x900F;&#x660E;&#xFF0C;&#x8981;&#x6709;&#x533A;&#x522B;&#x7684;&#x5BF9;&#x5F85;&#x53F6;&#x5B50;&#x5BF9;&#x8C61;&#x548C;&#x5BB9;&#x5668;&#x5BF9;&#x8C61;&#xFF0C;&#x6B63;&#x6240;&#x8C13;<strong>&#x9C7C;&#x4E0E;&#x718A;&#x638C;&#x4E0D;&#x53EF;&#x517C;&#x5F97;</strong></p>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/object-Object/">#[object Object]</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/07/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/">设计模式-装饰模式</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/06/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/">设计模式-桥接模式</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/07/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/';
+        this.page.identifier = '2017/07/06/设计模式/设计模式-组合模式/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

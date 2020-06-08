@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>设计模式-桥接模式 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="&amp;#x6865;&amp;#x63A5;&amp;#x6A21;&amp;#x5F0F;&amp;#x662F;&amp;#x79CD;&amp;#x5F88;&amp;#x5B9E;&amp;#x7528;&amp;#x7684;&amp;#x7ED3;&amp;#x6784;&amp;#x578B;&amp;#x8BBE;&amp;#x8BA1;&amp;#x6A21;&amp;#x5F0F;&amp;#xFF0C;&amp;#x53C8;&amp;#x79F0;&amp;#x4E3A;&amp;#x67C4;&amp;#x4F53;&amp;#x6A21;&amp;#x5F0F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-桥接模式">
+<meta property="og:url" content="http://yoursite.com/2017/06/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="&amp;#x6865;&amp;#x63A5;&amp;#x6A21;&amp;#x5F0F;&amp;#x662F;&amp;#x79CD;&amp;#x5F88;&amp;#x5B9E;&amp;#x7528;&amp;#x7684;&amp;#x7ED3;&amp;#x6784;&amp;#x578B;&amp;#x8BBE;&amp;#x8BA1;&amp;#x6A21;&amp;#x5F0F;&amp;#xFF0C;&amp;#x53C8;&amp;#x79F0;&amp;#x4E3A;&amp;#x67C4;&amp;#x4F53;&amp;#x6A21;&amp;#x5F0F">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1498819691.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1499327796.png">
+<meta property="article:published_time" content="2017-06-30T10:48:48.000Z">
+<meta property="article:modified_time" content="2020-03-07T06:23:29.051Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="[object Object]">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1498819691.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            设计模式-桥接模式
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-06-30T10:48:48.000Z" itemprop="datePublished">6月 30 2017</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            5 分钟 读完 (约 816 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p><img src="https://image.kangxiaoguang.com/1498819691.png" alt></p>
+<p>&#x6865;&#x63A5;&#x6A21;&#x5F0F;&#x662F;&#x79CD;&#x5F88;&#x5B9E;&#x7528;&#x7684;&#x7ED3;&#x6784;&#x578B;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#xFF0C;&#x53C8;&#x79F0;&#x4E3A;&#x67C4;&#x4F53;&#x6A21;&#x5F0F;&#x6216;&#x63A5;&#x53E3;&#x6A21;&#x5F0F;&#xFF0C;&#x8BE5;&#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x5C06;&#x4E24;&#x4E2A;&#x7EF4;&#x5EA6;&#x7684;&#x53D8;&#x5316;&#x5206;&#x79BB;&#x5F00;&#xFF0C;&#x8BA9;&#x7CFB;&#x7EDF;&#x66F4;&#x7B26;&#x5408;&#x201C;&#x5355;&#x4E00;&#x804C;&#x8D23;&#x539F;&#x5219;&#x201D;&#xFF0C;&#x4E0E;&#x591A;&#x5C42;&#x7EE7;&#x627F;&#x65B9;&#x6848;&#x4E0D;&#x540C;&#xFF0C;&#x5B83;&#x5C06;&#x4E24;&#x4E2A;&#x72EC;&#x7ACB;&#x53D8;&#x5316;&#x7684;&#x7EF4;&#x5EA6;&#x8BBE;&#x8BA1;&#x4E3A;&#x4E24;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x7EE7;&#x627F;&#x7B49;&#x7EA7;&#x7ED3;&#x6784;&#xFF0C;&#x5E76;&#x5728;&#x62BD;&#x8C61;&#x5C42;&#x5EFA;&#x7ACB;&#x62BD;&#x8C61;&#x5173;&#x8054;&#xFF0C;&#x8BE5;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x7C7B;&#x4F3C;&#x4E00;&#x6761;&#x8FDE;&#x63A5;&#x4E24;&#x4E2A;&#x72EC;&#x7ACB;&#x7EE7;&#x627F;&#x7ED3;&#x6784;&#x7684;&#x6865;&#xFF0C;&#x6545;&#x800C;&#x53EB;&#x6865;&#x63A5;&#x6A21;&#x5F0F;</p>
+<a id="more"></a>
+
+<p><img src="https://image.kangxiaoguang.com/1499327796.png" alt="UML"></p>
+<ul>
+<li>Abstraction&#xFF08;&#x62BD;&#x8C61;&#x7C7B;&#xFF09;&#xFF1A;&#x4E00;&#x822C;&#x662F;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5176;&#x4E2D;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A; Implementor &#x7C7B;&#x578B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x5B83;&#x4E0E; Implementor &#x4E4B;&#x95F4;&#x5177;&#x6709;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x3002;&#x8BE5;&#x7C7B;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x62BD;&#x8C61;&#x4E1A;&#x52A1;&#x65B9;&#x6CD5;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x5305;&#x542B;&#x5177;&#x4F53;&#x4E1A;&#x52A1;&#x65B9;&#x6CD5;</li>
+<li>RefineAbstraction&#xFF08;&#x6269;&#x5C55;&#x62BD;&#x8C61;&#x7C7B;&#xFF09;&#xFF1A;&#x4E00;&#x822C;&#x662F;&#x5177;&#x4F53;&#x7C7B;&#x800C;&#x4E0D;&#x662F;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x5B9E;&#x73B0; Abstraction &#x4E2D;&#x7684;&#x62BD;&#x8C61;&#x65B9;&#x6CD5;</li>
+<li>Implementor&#xFF08;&#x5B9E;&#x73B0;&#x7C7B;&#x63A5;&#x53E3;&#xFF09;&#xFF1A;&#x8BE5;&#x63A5;&#x53E3;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4EC5;&#x63D0;&#x4F9B;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#xFF0C;Abstraction &#x4E2D;&#x505A;&#x66F4;&#x591A;&#x66F4;&#x590D;&#x6742;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;Implementor &#x63A5;&#x53E3;&#x5BF9;&#x8FD9;&#x4E9B;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x8FDB;&#x884C;&#x58F0;&#x660E;&#xFF0C;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x4EA4;&#x7ED9;&#x5B50;&#x7C7B;&#xFF0C;&#x901A;&#x8FC7;&#x5173;&#x8054;&#x5173;&#x7CFB;&#xFF0C;Abstraction &#x4E0D;&#x4EC5;&#x62E5;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x8C03;&#x7528; Implementor &#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x4F7F;&#x7528;&#x5173;&#x8054;&#x5173;&#x7CFB;&#x4EE3;&#x66FF;&#x7EE7;&#x627F;&#x5173;&#x7CFB;</li>
+<li>ConcreteImplementor&#xFF08;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x7C7B;&#xFF09;&#xFF1A;&#x4EE3;&#x66FF;&#x7236;&#x7C7B;&#x5BF9;&#x8C61;&#xFF0C;&#x63D0;&#x4F9B;&#x7ED9;&#x62BD;&#x8C61;&#x7C7B;&#x505A;&#x5177;&#x4F53;&#x7684;&#x4E1A;&#x52A1;</li>
+</ul>
+<p>&#x4E3E;&#x4E00;&#x4E2A;&#x8863;&#x670D;&#x5E97;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x5E97;&#x91CC;&#x73B0;&#x5728;&#x53EA;&#x5269;&#x4E0B;&#x4E24;&#x79CD;&#x8863;&#x670D;&#xFF0C;&#x9EC4;&#x8272; XXL &#x53F7;&#x548C;&#x7EA2;&#x8272; M &#x53F7;&#x7684;&#xFF0C;&#x8863;&#x670D;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x5177;&#x6709;&#x81F3;&#x5C11;&#x4E24;&#x4E2A;&#x7EF4;&#x5EA6;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x8863;&#x670D;&#x5C3A;&#x7801;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x8863;&#x670D;&#x989C;&#x8272;&#xFF0C;&#x73B0;&#x5728;&#x6765;&#x770B;&#x7528;&#x6865;&#x63A5;&#x6A21;&#x5F0F;&#x5B9E;&#x73B0;&#x8863;&#x670D;&#x5BF9;&#x8C61;&#x7684;&#x4EE3;&#x7801;&#x793A;&#x4F8B;&#xFF1A;</p>
+<p>Implementor &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Color</span> </span>{</span><br><span class="line">    <span class="hljs-function">String <span class="hljs-title">dyeing</span><span class="hljs-params">()</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>ConcreteImplementor &#x7C7B;&#xFF1A;<p></p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Yellow</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Color</span> </span>{</span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">dyeing</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&#x9EC4;&#x8272;&quot;</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Abstraction &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Clothes</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">public</span> Color color;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setColor</span><span class="hljs-params">(Color color)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.color = color;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getClothes</span><span class="hljs-params">()</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>RefineAbstraction &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">XXLClothes</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Clothes</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getClothes</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        String s = <span class="hljs-keyword">null</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (color != <span class="hljs-keyword">null</span>) {</span><br><span class="line">            s = color.dyeing();</span><br><span class="line">        }</span><br><span class="line">        LogUtils.i(s + <span class="hljs-string">&quot;XXL&#x53F7;&#x7684;&#x8863;&#x670D;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Client &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Yellow yellow = <span class="hljs-keyword">new</span> Yellow();</span><br><span class="line">XXLClothes xxlClothes = <span class="hljs-keyword">new</span> XXLClothes();</span><br><span class="line">xxlClothes.setColor(yellow);</span><br><span class="line">xxlClothes.getClothes();</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x73B0;&#x5728;&#x9700;&#x8981;&#x589E;&#x52A0;&#x51E0;&#x79CD;&#x8863;&#x670D;&#x7684;&#x7C7B;&#x578B;&#xFF0C;&#x5C31;&#x4F1A;&#x5F88;&#x5FEB;&#x6377;&#x65B9;&#x4FBF;&#xFF0C;&#x4E5F;&#x9075;&#x5B88;<strong>&#x201C;&#x5F00;&#x95ED;&#x539F;&#x5219;&#x201D;</strong>&#x6BD4;&#x5982;&#x589E;&#x52A0;&#x4E00;&#x4E2A;&#x7C89;&#x8272; L &#x53F7;&#x8863;&#x670D;&#x5BF9;&#x8C61;&#xFF0C;&#x9996;&#x5148;&#x589E;&#x52A0;&#x4E00;&#x4E2A; RefineAbstraction &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LClothes</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Clothes</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getClothes</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        String s = <span class="hljs-keyword">null</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (color != <span class="hljs-keyword">null</span>) {</span><br><span class="line">            s = color.dyeing();</span><br><span class="line">        }</span><br><span class="line">        LogUtils.i(s + <span class="hljs-string">&quot;L&#x53F7;&#x7684;&#x8863;&#x670D;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x518D;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A; ConcreteImplementor &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pink</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Color</span> </span>{</span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">dyeing</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&#x7C89;&#x8272;&quot;</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Client &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Yellow Pink = <span class="hljs-keyword">new</span> Pink();</span><br><span class="line">LClothes lClothes = <span class="hljs-keyword">new</span> LClothes();</span><br><span class="line">lClothes.setColor(Pink);</span><br><span class="line">lClothes.getClothes();</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x6865;&#x63A5;&#x6A21;&#x5F0F;&#x4E2D;&#x4F53;&#x73B0;&#x4E86;&#x5F88;&#x591A;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x8BBE;&#x8BA1;&#x539F;&#x5219;&#x7684;&#x601D;&#x60F3;&#xFF1A;</p>
+<ul>
+<li>&#x5355;&#x4E00;&#x804C;&#x8D23;&#x539F;&#x5219;&#xFF1A;&#x4E00;&#x4E2A;&#x7C7B;&#x8D1F;&#x8D23;&#x4E00;&#x9879;&#x804C;&#x8D23;</li>
+<li>&#x5F00;&#x95ED;&#x539F;&#x5219;&#xFF1A;&#x5F00;&#x653E;&#x6269;&#x5C55;&#xFF0C;&#x5173;&#x95ED;&#x4FEE;&#x6539;</li>
+<li>&#x91CC;&#x6C0F;&#x66FF;&#x6362;&#xFF1A;&#x5B50;&#x7C7B;&#x80FD;&#x5B8C;&#x5168;&#x66FF;&#x4EE3;&#x7236;&#x7C7B;</li>
+<li>&#x4F9D;&#x8D56;&#x5012;&#x7F6E;&#xFF1A;&#x4E0D;&#x4F9D;&#x8D56;&#x7EC6;&#x8282;&#xFF0C;&#x4F9D;&#x8D56;&#x62BD;&#x8C61;</li>
+</ul>
+<p>&#x6865;&#x63A5;&#x6A21;&#x5F0F;&#x7684;&#x597D;&#x5904;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4F46;&#x662F;&#x5BF9;&#x4F7F;&#x7528;&#x8005;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x7ECF;&#x9A8C;&#x8981;&#x6C42;&#xFF0C;&#x9700;&#x8981;&#x6B63;&#x786E;&#x8BC6;&#x522B;&#x72EC;&#x7ACB;&#x53D8;&#x5316;&#x7684;&#x4E24;&#x4E2A;&#x7EF4;&#x5EA6;&#xFF0C;&#x4EE5;&#x53CA;&#x4E00;&#x5F00;&#x59CB;&#x5C31;&#x8981;&#x5BF9;&#x62BD;&#x8C61;&#x5C42;&#x8FDB;&#x884C;&#x8BBE;&#x8BA1;</p>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/object-Object/">#[object Object]</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/07/06/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/">设计模式-组合模式</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/06/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3-JVM-%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B-%E7%AC%94%E8%AE%B0%E4%BA%8C/">《深入理解 JVM 虚拟机》- 笔记二</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/06/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/';
+        this.page.identifier = '2017/06/30/设计模式/设计模式-桥接模式/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

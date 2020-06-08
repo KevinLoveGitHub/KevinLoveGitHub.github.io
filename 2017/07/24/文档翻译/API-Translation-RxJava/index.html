@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>API Translation - RxJava - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="Observableempty()&amp;#x8FD4;&amp;#x56DE;&amp;#x4E00;&amp;#x4E2A;&amp;#x4E0D;&amp;#x5411; observe &amp;#x53D1;&amp;#x9001;&amp;#x4EFB;&amp;#x4F55;&amp;#x9879;&amp;#x76EE;&amp;#x7684; Observable &amp;#x5BF9;&amp;#x8C61;&amp;#xFF0C;&amp;#x5E76;&amp;#x4E14;&amp;#x7ACB;&amp;#x5373;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="API Translation - RxJava">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/API-Translation-RxJava/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="Observableempty()&amp;#x8FD4;&amp;#x56DE;&amp;#x4E00;&amp;#x4E2A;&amp;#x4E0D;&amp;#x5411; observe &amp;#x53D1;&amp;#x9001;&amp;#x4EFB;&amp;#x4F55;&amp;#x9879;&amp;#x76EE;&amp;#x7684; Observable &amp;#x5BF9;&amp;#x8C61;&amp;#xFF0C;&amp;#x5E76;&amp;#x4E14;&amp;#x7ACB;&amp;#x5373;&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1500867805.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1501833901.png">
+<meta property="article:published_time" content="2017-07-24T02:56:41.000Z">
+<meta property="article:modified_time" content="2020-03-07T06:23:29.060Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="[object Object]">
+<meta property="article:tag" content="Translation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1500867805.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            API Translation - RxJava
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-24T02:56:41.000Z" itemprop="datePublished">7月 24 2017</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            11 分钟 读完 (约 1672 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p><img src="https://image.kangxiaoguang.com/1500867805.png" alt></p>
+<h1 id="Observable"><a href="#Observable" class="headerlink" title="Observable"></a>Observable</h1><h2 id="empty"><a href="#empty" class="headerlink" title="empty()"></a>empty()</h2><p>&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x4E0D;&#x5411; observe &#x53D1;&#x9001;&#x4EFB;&#x4F55;&#x9879;&#x76EE;&#x7684; Observable &#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x4E14;&#x7ACB;&#x5373;&#x8C03;&#x7528;&#x5B83;&#x7684; <code>onComplete()</code> &#x65B9;&#x6CD5;</p>
+<h2 id="onErrorReturn"><a href="#onErrorReturn" class="headerlink" title="onErrorReturn()"></a>onErrorReturn()</h2><p>&#x5F53;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6307;&#x793A;&#x4E00;&#x4E2A; ObservableSource &#x53D1;&#x9001;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x53BB;&#x8C03;&#x7528; <code>onError</code></p>
+<p><img src="https://image.kangxiaoguang.com/1501833901.png" alt="onErrorReturn()"></p>
+<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x5F53;&#x9047;&#x5230;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x65F6;&#xFF0C;&#x5C06;&#x4ECE;&#x6570;&#x636E;&#x6D41;&#x4E2D;&#x62E6;&#x622A;&#x8FD9;&#x4E2A;&#x9519;&#x8BEF;&#xFF0C;&#x5E76;&#x53D1;&#x9001;&#x5230; <code>Observer</code>&#xFF0C;&#x63A5;&#x7740;&#x8C03;&#x7528;&#x5176; Observer &#x7684; <code>onError()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x4E4B;&#x540E;&#x5728;&#x4E0D;&#x8C03;&#x7528; <code>Observer</code> &#x5176;&#x4ED6;&#x65B9;&#x6CD5;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x9000;&#x51FA;&#xFF0C;<code>onErrorReturn()</code> &#x65B9;&#x6CD5;&#x5C06;&#x4F1A;&#x6539;&#x53D8;&#x8FD9;&#x4E2A;&#x884C;&#x4E3A;&#xFF0C;&#x5982;&#x679C;&#x4F20;&#x9012;&#x4E00;&#x4E2A;&#x51FD;&#x6570; (resumeFunction) &#x7ED9; ObservableSource &#x7684; <code>onErrorReturn()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5F53;&#x518D;&#x6B21;&#x9047;&#x5230;&#x9519;&#x8BEF;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E0D;&#x518D;&#x662F;&#x8C03;&#x7528; Observer &#x7684; <code>onError()</code> &#x65B9;&#x6CD5;&#xFF0C;&#x5B83;&#x5C06;&#x4F1A;&#x53D1;&#x9001; resumeFunction &#x7684;&#x8FD4;&#x56DE;&#x503C;</p>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x963B;&#x6B62;&#x9519;&#x8BEF;&#x7684;&#x4F20;&#x64AD;&#x4EE5;&#x53CA;&#x63D0;&#x4F9B;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x65F6;&#x9700;&#x8981;&#x7684;&#x5907;&#x7528;&#x6570;&#x636E;</p>
+<ul>
+<li><input disabled type="checkbox"> <a href="http://reactivex.io/documentation/operators/catch.html" target="_blank" rel="noopener">RxJava catch</a></li>
+</ul>
+<h1 id="Schedulers"><a href="#Schedulers" class="headerlink" title="Schedulers"></a>Schedulers</h1><p>&#x7528;&#x4E8E;&#x8FD4;&#x56DE; Schedulers &#x5B9E;&#x4F8B;&#x7684;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;<br>&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4EE5;&#x4E0B;&#x56DB;&#x4E2A;&#x65B9;&#x6CD5;&#x8BBE;&#x7F6E; Schedulers &#x7684;&#x521D;&#x59CB;&#x503C;&#xFF1A;</p>
+<ul>
+<li><code>RxJavaPlugins.setInitComputationSchedulerHandler()</code></li>
+<li><code>RxJavaPlugins.    setInitIoSchedulerHandler()</code></li>
+<li><code>RxJavaPlugins.    setInitNewThreadSchedulerHandler()</code></li>
+<li><code>RxJavaPlugins.    setInitSingleSchedulerHandler()</code></li>
+</ul>
+<p>&#x4EE5;&#x4E0B;&#x65B9;&#x6CD5;&#x8BBE;&#x7F6E; Schedulers &#x8FD0;&#x884C;&#x65F6;&#x7684;&#x503C;&#xFF1A;</p>
+<ul>
+<li><code>RxJavaPlugins.setComputationSchedulerHandler()</code></li>
+<li><code>RxJavaPlugins.    setIoSchedulerHandler()</code></li>
+<li><code>RxJavaPlugins.    setNewThreadSchedulerHandler()</code></li>
+<li><code>RxJavaPlugins.    setSingleSchedulerHandler()</code></li>
+</ul>
+<h2 id="computation"><a href="#computation" class="headerlink" title="computation()"></a>computation()</h2><p>&#x8BE5;&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x7528;&#x4E8E;&#x8BA1;&#x7B97;&#x5DE5;&#x4F5C;&#x7684;&#x9ED8;&#x8BA4;&#x4E14;&#x5171;&#x4EAB;&#x7684; Scheduler &#x5B9E;&#x4F8B;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x5FAA;&#x73AF;&#x4E8B;&#x4EF6;&#xFF0C;&#x5904;&#x7406;&#x56DE;&#x8C03;&#x548C;&#x5176;&#x4ED6;&#x7684;&#x8BA1;&#x7B97;&#x5DE5;&#x4F5C;&#xFF0C;&#x4E0D;&#x63A8;&#x8350;&#x7528;&#x4E8E;&#x6267;&#x884C;&#x963B;&#x585E; IO &#x7684;&#x5DE5;&#x4F5C;</p>
+<p>&#x9ED8;&#x8BA4;&#x5B9E;&#x4F8B;&#x5177;&#x6709;&#x4E00;&#x4E2A;&#x7B49;&#x4E8E; JVM &#x53EF;&#x7528;&#x5904;&#x7406;&#x5668;&#x6570;&#x91CF;&#x7684;&#x5355;&#x7EBF;&#x7A0B; ScheduledExecutorService &#x5B9E;&#x4F8B;&#x7684;&#x540E;&#x5907;&#x6C60;</p>
+<p>&#x6CA1;&#x6709;&#x5904;&#x7406;&#x7684;&#x9519;&#x8BEF;&#x5C06;&#x4F1A;&#x53D1;&#x9001;&#x5230; scheduler &#x7EBF;&#x7A0B;&#x7684; Thread.UncaughtExceptionHandler</p>
+<p>&#x8BE5; scheduler &#x5BF9;&#x4E8E; Scheduler.Worker &#x5B9E;&#x4F8B;&#x7684;&#x6CC4;&#x6F0F;&#x4E0D;&#x654F;&#x611F;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x53D6;&#x6D88; timed/delayed &#x4EFB;&#x52A1;&#xFF0C;&#x6267;&#x884C; and/or &#x4EFB;&#x52A1;&#x53EF;&#x80FD;&#x4F1A;&#x5BFC;&#x81F4;&#x8D44;&#x6E90;&#x6CC4;&#x6F0F;</p>
+<p>&#x5982;&#x679C; <code>RxJavaPlugins.setFailOnNonBlockingScheduler(boolean)</code> &#x8BBE;&#x7F6E;&#x4E86; true&#xFF0C;&#x5728; scheduler &#x8FD0;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x963B;&#x6B62;&#x7684;&#x64CD;&#x4F5C;&#x7B26;&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4; IllegalStateException</p>
+<p>&#x5728;&#x4F7F;&#x7528; Scheduler &#x4E4B;&#x524D;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5FC5;&#x987B;&#x8BBE;&#x7F6E;&#x7684;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;&#x63A7;&#x5236;&#x6807;&#x51C6;&#x7684; scheduler &#x7684;&#x67D0;&#x4E9B;&#x5C5E;&#x6027;&#xFF0C;&#x652F;&#x6301;&#x7684;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;&#xFF08;&#x901A;&#x8FC7; System.getProperty() &#x83B7;&#x53D6;&#xFF09;&#xFF1A;</p>
+<ul>
+<li>rx2.computation-threads (int)&#xFF1A;&#x8BBE;&#x7F6E; Computation() &#x7684; Scheduler &#x7684;&#x7EBF;&#x7A0B;&#x6570;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;&#x53EF;&#x7528; CPU &#x6570;</li>
+<li>rx2.computation-priority (int):&#x8BBE;&#x7F6E; Computation() &#x7684; Scheduler &#x7684;&#x7EBF;&#x7A0B;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F; <code>Thread.NORM_PRIORITY</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E00;&#x822C;&#x7684;&#x4F18;&#x5148;&#x7EA7;</li>
+</ul>
+<p>&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x4E86;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>RxJavaPlugins.setInitComputationSchedulerHandler()</code> &#x65B9;&#x6CD5;&#x8986;&#x76D6; scheduler &#x7684;&#x521D;&#x59CB;&#x5316;&#x9ED8;&#x8BA4;&#x503C;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x7531;&#x4E8E;&#x521D;&#x59CB;&#x5316;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#xFF0C;&#x5728; Scheduler &#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6210;&#x524D;&#x8C03;&#x7528;&#x5176;&#x4ED6;&#x8FD4;&#x56DE; Scheduler &#x5B9E;&#x4F8B;&#x7684;&#x65B9;&#x6CD5;&#x90FD;&#x4F1A;&#x629B;&#x51FA; <code>NullPointerException</code>&#xFF0C;&#x4E00;&#x65E6; Scheduler &#x521D;&#x59CB;&#x5316;&#x5B8C;&#x6210;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>RxJavaPlugins.setComputationSchedulerHandler()</code> &#x65B9;&#x6CD5;&#x8986;&#x76D6;&#x8FD4;&#x56DE;&#x7684; Scheduler &#x5B9E;&#x4F8B;</p>
+<p>&#x901A;&#x8FC7; <code>RxJavaPlugins.createComputationScheduler(ThreadFactory)</code> &#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x4E00;&#x4E2A;&#x81EA;&#x5B9A;&#x4E49;&#x7684; ThreadFactory &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x8BE5;&#x81EA;&#x5B9A;&#x4E49;&#x5B9E;&#x4F8B;&#x9700;&#x8981;&#x624B;&#x52A8;&#x8C03;&#x7528; <code>Scheduler.shutdown()</code> &#x5141;&#x8BB8; JVM &#x9000;&#x51FA;&#x6216;&#x8005; J2EE &#x5BB9;&#x5668;&#x6B63;&#x786E;&#x5378;&#x8F7D;</p>
+<p>&#x4F7F;&#x7528;&#x8BE5; scheduler &#x4F5C;&#x4E3A;&#x57FA;&#x7840;&#x7684;&#x8FD0;&#x7B97;&#x7B26;&#x90FD;&#x7528; <code>@SchedulerSupport(COMPUTATION)</code> &#x6CE8;&#x89E3;&#x6807;&#x8BC6;</p>
+<h1 id="Disposable"><a href="#Disposable" class="headerlink" title="Disposable"></a>Disposable</h1><h2 id="isDisposed"><a href="#isDisposed" class="headerlink" title="isDisposed()"></a>isDisposed()</h2><p>&#x5982;&#x679C;&#x8D44;&#x6E90;&#x5DF2;&#x7ECF;&#x88AB;&#x5904;&#x7406;&#xFF0C;&#x5219;&#x8FD4;&#x56DE; true</p>
+<h2 id="dispose"><a href="#dispose" class="headerlink" title="dispose()"></a>dispose()</h2><p>&#x5904;&#x7406;&#x8D44;&#x6E90;&#xFF0C;&#x8BE5;&#x64CD;&#x4F5C;&#x5E94;&#x8BE5;&#x662F;&#x5E42;&#x7B49;&#x7684;</p>
+<h1 id="Error-handing"><a href="#Error-handing" class="headerlink" title="Error handing"></a>Error handing</h1><p>RxJava 2.x &#x4E2D;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x8BBE;&#x8BA1;&#x9700;&#x6C42;&#x5C31;&#x662F;&#x5F02;&#x5E38;&#x4E0D;&#x5E94;&#x8BE5;&#x88AB;&#x5FFD;&#x7565;&#xFF0C;&#x8FD9;&#x610F;&#x5473;&#x7740;&#x5F53;&#x4E0B;&#x6E38;&#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x5230;&#x8FBE;&#x4E86;&#x7EC8;&#x70B9;&#x6216;&#x8005;&#x4E0B;&#x6E38;&#x53D6;&#x6D88;&#x4E86;&#x5373;&#x5C06;&#x53D1;&#x751F;&#x9519;&#x8BEF;&#x7684;&#x5E8F;&#x5217;&#xFF0C;&#x5C06;&#x4E0D;&#x4F1A;&#x53D1;&#x751F;&#x9519;&#x8BEF;</p>
+<p>&#x8FD9;&#x6837;&#x7684;&#x9519;&#x8BEF;&#x5C06;&#x8DEF;&#x7531;&#x5230; <code>RxJavaPlugins.onError</code> &#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;<code>RxJavaPlugins.setErrorHandler(Consumer&lt;Throwable&gt;)</code> &#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x91CD;&#x5199;&#x8FD9;&#x4E2A;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x5668;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x4E00;&#x4E2A;&#x660E;&#x786E;&#x7684;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x5668;&#xFF0C;RxJava &#x9ED8;&#x8BA4;&#x4F1A;&#x6253;&#x5370;&#x5F02;&#x5E38;&#x7684;&#x5806;&#x6808;&#x4FE1;&#x606F;&#x5230;&#x63A7;&#x5236;&#x53F0;&#x5E76;&#x4E14;&#x8C03;&#x7528;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x672A;&#x6355;&#x83B7;&#x5F02;&#x5E38;&#x7684;&#x5904;&#x7406;&#x5668;</p>
+<p>&#x5728; Java &#x7A0B;&#x5E8F;&#x4E2D;&#xFF0C;&#x540E;&#x9762;&#x7684;&#x5904;&#x7406;&#x5668;&#x5BF9; <code>ExecutorService</code> &#x652F;&#x6301;&#x7684; <code>Scheduler</code> &#x65E0;&#x6548;&#xFF0C;&#x7A0B;&#x5E8F;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x4FDD;&#x6301;&#x8FD0;&#x884C;&#x3002;&#x7136;&#x800C;&#xFF0C;Android &#x7A0B;&#x5E8F;&#x66F4;&#x52A0;&#x7684;&#x4E25;&#x683C;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x672A;&#x6355;&#x83B7;&#x5F02;&#x5E38;&#x4F1A;&#x5BFC;&#x81F4;&#x7A0B;&#x5E8F;&#x7EC8;&#x6B62;</p>
+<p>&#x8FD9;&#x79CD;&#x884C;&#x4E3A;&#x662F;&#x5426;&#x662F;&#x5408;&#x9002;&#x7684;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x7684;&#x8BA8;&#x8BBA;&#xFF0C;&#x4F46;&#x65E0;&#x8BBA;&#x5982;&#x4F55;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x907F;&#x514D;&#x8C03;&#x7528;&#x672A;&#x6355;&#x83B7;&#x5F02;&#x5E38;&#x7684;&#x5904;&#x7406;&#x5668;&#xFF0C;&#x4F7F;&#x7528; RxJava 2.x &#x7684;&#x7A0B;&#x5E8F;&#x5E94;&#x8BE5;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#x65E0;&#x64CD;&#x4F5C;&#x7684;&#x5904;&#x7406;&#x5668;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// If Java 8 lambdas are supported</span></span><br><span class="line">RxJavaPlugins.setErrorHandler(e -&gt; { });</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// If no Retrolambda or Jack </span></span><br><span class="line">RxJavaPlugins.setErrorHandler(Functions.&lt;Throwable&gt;emptyConsumer());</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x4E0D;&#x63A8;&#x8350;&#x4E2D;&#x95F4;&#x5E93;&#x5728;&#x6D4B;&#x8BD5;&#x73AF;&#x5883;&#x4E4B;&#x5916;&#x66F4;&#x6539;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x5668;&#xFF0C;&#x4E0D;&#x5E78;&#x7684;&#x662F;&#xFF0C;RxJava 2.x &#x65E0;&#x6CD5;&#x544A;&#x8BC9;&#x67D0;&#x4E2A;&#x751F;&#x547D;&#x5468;&#x671F;&#x9047;&#x5230;&#x65E0;&#x6CD5;&#x4F20;&#x9012;&#x7684;&#x5F02;&#x5E38;&#x65F6;&#xFF0C;&#x662F;&#x5426;&#x8BE5;&#x8BA9;&#x7A0B;&#x5E8F;&#x5D29;&#x6E83;&#x3002;&#x8BC6;&#x522B;&#x8FD9;&#x4E9B;&#x5F02;&#x5E38;&#x7684;&#x6765;&#x6E90;&#x548C;&#x539F;&#x56E0;&#x5F88;&#x8BA9;&#x4EBA;&#x8BA8;&#x538C;&#xFF0C;&#x7279;&#x522B;&#x662F;&#x5B83;&#x4EEC;&#x6765;&#x6E90;&#x4E8E;&#x5C06;&#x94FE;&#x8DEF;&#x8DEF;&#x7531;&#x5230; <code>RxJavaPlugins.onError</code> &#x7684;&#x6E90;&#x4E2D;</p>
+<p>&#x56E0;&#x6B64;&#xFF0C;2.0.6&#x5F15;&#x5165;&#x4E86;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x5F02;&#x5E38;&#x5305;&#x88C5;&#x5668;&#x6765;&#x5E2E;&#x52A9;&#x533A;&#x5206;&#x548C;&#x8FFD;&#x8E2A;&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF1A;</p>
+<ul>
+<li><code>OnErrorNotImplementedException</code>&#xFF1A;&#x5F53;&#x7528;&#x6237;&#x5FD8;&#x8BB0;&#x7ED9; <code>subscribe()</code> &#x6DFB;&#x52A0;&#x9519;&#x8BEF;&#x5904;&#x7406;&#x65F6;&#xFF0C;&#x91CD;&#x65B0;&#x5F15;&#x5165;&#x68C0;&#x6D4B;</li>
+<li><code>ProtocolViolationException</code>&#xFF1A;&#x8868;&#x793A;&#x64CD;&#x4F5C;&#x4E2D;&#x7684;&#x9519;&#x8BEF;</li>
+<li><code>UndeliverableException</code>&#xFF1A;&#x5305;&#x88C5;&#x7531;&#x4E8E; <code>Subscriber</code>/<code>Observer</code> &#x7684;&#x751F;&#x547D;&#x5468;&#x671F;&#x9650;&#x5236;&#x800C;&#x65E0;&#x6CD5;&#x4F20;&#x9012;&#x7684;&#x539F;&#x59CB;&#x5F02;&#x5E38;&#x3002;&#x5B83;&#x7531; <code>RxJavaPlugins.onError</code> &#x81EA;&#x52A8;&#x7528;&#x4E8E;&#x5B8C;&#x6574;&#x7684;&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#xFF0C;&#x5B83;&#x6709;&#x52A9;&#x4E8E;&#x5E2E;&#x52A9;&#x627E;&#x5230;&#x662F;&#x90A3;&#x4E2A;&#x64CD;&#x4F5C;&#x7B26;&#x91CD;&#x65B0;&#x8DEF;&#x7531;&#x4E86;&#x539F;&#x59CB;&#x9519;&#x8BEF;</li>
+</ul>
+<p>&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x672A;&#x4F20;&#x9012;&#x7684;&#x5F02;&#x5E38;&#x662F; <code>NullPointerException</code>&#xFF0C;<code>IllegalStateException</code>&#xFF0C; <code>IllegalArgumentException</code>&#xFF0C; <code>CompositeException</code>&#xFF0C; <code>MissingBackpressureException</code> or <code>OnErrorNotImplementedException</code> &#x7684;&#x5B9E;&#x4F8B;&#x6216;&#x8005;&#x5B50;&#x7C7B;&#xFF0C;&#x8FD9;&#x4E9B;&#x5F02;&#x5E38;&#x5C06;&#x4E0D;&#x4F1A;&#x5305;&#x88C5;&#x6210; <code>UndeliverableException</code></p>
+<p>&#x6B64;&#x5916;&#xFF0C;&#x4E00;&#x4E9B;&#x7B2C;&#x4E09;&#x65B9;&#x7684;&#x5E93;&#xFF0C;&#x5F53;&#x5B83;&#x4EEC;&#x88AB;&#x4E00;&#x4E2A; <code>cancel</code>/<code>dispose</code> &#x8C03;&#x7528;&#x4E2D;&#x65AD;&#x65F6;&#xFF0C;&#x5F88;&#x591A;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x5BFC;&#x81F4;&#x672A;&#x4F20;&#x9012;&#x7684;&#x5F02;&#x5E38;&#xFF0C;2.0.6&#x7248;&#x672C;&#x5185;&#x90E8;&#x7684;&#x6539;&#x53D8;&#x662F;&#x5728; cancelling/disposing &#x4E00;&#x4E2A; task &#x6216;&#x8005; worker&#xFF08;&#x4F1A;&#x5BFC;&#x81F4;&#x76EE;&#x6807;&#x7EBF;&#x7A0B;&#x4E2D;&#x65AD;&#xFF09;&#x4E4B;&#x524D;&#xFF0C;&#x4F1A;&#x4E00;&#x76F4; cancel &#x6216;&#x8005; dispose <code>Subscription</code>/<code>Disposable</code></p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// in some library</span></span><br><span class="line"><span class="hljs-keyword">try</span> {</span><br><span class="line">   doSomethingBlockingly()</span><br><span class="line">} <span class="hljs-keyword">catch</span> (InterruptedException ex) {</span><br><span class="line">   <span class="hljs-comment">// check if the interrupt is due to cancellation</span></span><br><span class="line">   <span class="hljs-comment">// if so, no need to signal the InterruptedException</span></span><br><span class="line">   <span class="hljs-keyword">if</span> (!disposable.isDisposed()) {</span><br><span class="line">      observer.onError(ex);</span><br><span class="line">   }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x5982;&#x679C;&#x5E93;&#x6216;&#x8005;&#x4EE3;&#x7801;&#x4E2D;&#x5DF2;&#x7ECF;&#x8FD9;&#x4E48;&#x505A;&#x4E86;&#xFF0C;&#x73B0;&#x5728;&#x5E94;&#x8BE5;&#x505C;&#x6B62;&#x65E0;&#x6CD5;&#x4F20;&#x9012;&#x7684; <code>InterruptedExceptions</code>&#xFF0C;&#x5982;&#x679C;&#x4E4B;&#x524D;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x6A21;&#x5F0F;&#xFF0C;&#x6211;&#x4EEC;&#x63D0;&#x5021;&#x66F4;&#x65B0;&#x76F8;&#x5173;&#x7684;&#x4EE3;&#x7801;&#x6216;&#x5E93;</p>
+<p>&#x5982;&#x679C;&#x51B3;&#x5B9A;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x975E;&#x7A7A;&#x7684;&#x5168;&#x5C40;&#x9519;&#x8BEF;&#x5904;&#x7406;&#xFF0C;&#x8FD9;&#x91CC;&#x6709;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x5B83;&#x4EEC;&#x662F;&#x5426;&#x4EE3;&#x8868;&#x4E00;&#x4E2A; bug &#x6216;&#x8005;&#x4E00;&#x4E2A;&#x53EF;&#x5FFD;&#x7565;&#x7684;&#x7A0B;&#x5E8F;&#x6216;&#x7F51;&#x7EDC;&#x72B6;&#x6001;&#x6765;&#x7BA1;&#x7406;&#x5178;&#x578B;&#x7684;&#x672A;&#x4F20;&#x9012;&#x7684;&#x5F02;&#x5E38;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">RxJavaPlugins.setErrorHandler(e -&gt; {</span><br><span class="line">    <span class="hljs-keyword">if</span> (e <span class="hljs-keyword">instanceof</span> UndeliverableException) {</span><br><span class="line">        e = e.getCause();</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">if</span> ((e <span class="hljs-keyword">instanceof</span> IOException) || (e <span class="hljs-keyword">instanceof</span> SocketException)) {</span><br><span class="line">        <span class="hljs-comment">// fine, irrelevant network problem or API that throws on cancellation</span></span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">if</span> (e <span class="hljs-keyword">instanceof</span> InterruptedException) {</span><br><span class="line">        <span class="hljs-comment">// fine, some blocking code was interrupted by a dispose call</span></span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">if</span> ((e <span class="hljs-keyword">instanceof</span> NullPointerException) || (e <span class="hljs-keyword">instanceof</span> IllegalArgumentException)) {</span><br><span class="line">        <span class="hljs-comment">// that&apos;s likely a bug in the application</span></span><br><span class="line">        Thread.currentThread().getUncaughtExceptionHandler()</span><br><span class="line">            .handleException(Thread.currentThread(), e);</span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="hljs-keyword">if</span> (e <span class="hljs-keyword">instanceof</span> IllegalStateException) {</span><br><span class="line">        <span class="hljs-comment">// that&apos;s a bug in RxJava or in a custom operator</span></span><br><span class="line">        Thread.currentThread().getUncaughtExceptionHandler()</span><br><span class="line">            .handleException(Thread.currentThread(), e);</span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line">    Log.warning(<span class="hljs-string">&quot;Undeliverable exception received, not sure what to do&quot;</span>, e);</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/object-Object/">#[object Object]</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Translation/">#Translation</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/07/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/">设计模式-享元模式</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/07/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/">设计模式-外观模式</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/07/24/%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91/API-Translation-RxJava/';
+        this.page.identifier = '2017/07/24/文档翻译/API-Translation-RxJava/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>设计模式-代理模式 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="&amp;#x4EE3;&amp;#x7406;&amp;#x6A21;&amp;#x5F0F;&amp;#xFF08;Proxy Pattern&amp;#xFF09;&amp;#xFF1A;&amp;#x7ED9;&amp;#x67D0;&amp;#x4E00;&amp;#x4E2A;&amp;#x5BF9;&amp;#x8C61;&amp;#x63D0;&amp;#x4F9B;&amp;#x4E00;&amp;#x4E2A;&amp;#x4EE3;&amp;#x7406;&amp;#x6216;&amp;#x5360;&amp;#x4F4D;&amp;#x7B26;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-代理模式">
+<meta property="og:url" content="http://yoursite.com/2017/07/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="&amp;#x4EE3;&amp;#x7406;&amp;#x6A21;&amp;#x5F0F;&amp;#xFF08;Proxy Pattern&amp;#xFF09;&amp;#xFF1A;&amp;#x7ED9;&amp;#x67D0;&amp;#x4E00;&amp;#x4E2A;&amp;#x5BF9;&amp;#x8C61;&amp;#x63D0;&amp;#x4F9B;&amp;#x4E00;&amp;#x4E2A;&amp;#x4EE3;&amp;#x7406;&amp;#x6216;&amp;#x5360;&amp;#x4F4D;&amp;#x7B26;&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1501497047.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1502352061.png">
+<meta property="article:published_time" content="2017-07-31T10:31:08.000Z">
+<meta property="article:modified_time" content="2020-03-07T06:23:29.057Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="[object Object]">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1501497047.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            设计模式-代理模式
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-07-31T10:31:08.000Z" itemprop="datePublished">7月 31 2017</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1089 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p><img src="https://image.kangxiaoguang.com/1501497047.png" alt="&#x4EE3;&#x7406;&#x6A21;&#x5F0F;"></p>
+<p>&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#xFF08;Proxy Pattern&#xFF09;&#xFF1A;&#x7ED9;&#x67D0;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x6216;&#x5360;&#x4F4D;&#x7B26;&#xFF0C;&#x5E76;&#x7531;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x6765;&#x63A7;&#x5236;&#x5BF9;&#x539F;&#x5BF9;&#x8C61;&#x7684;&#x8BBF;&#x95EE;&#xFF0C;&#x5B83;&#x662F;&#x4E00;&#x79CD;&#x5BF9;&#x8C61;&#x7ED3;&#x6784;&#x578B;&#x6A21;&#x5F0F;&#x3002;</p>
+<a id="more"></a>
+
+<p>&#x5F53;&#x65E0;&#x6CD5;&#x6216;&#x4E0D;&#x60F3;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x6216;&#x8BBF;&#x95EE;&#x67D0;&#x4E2A;&#x5BF9;&#x8C61;&#x5B58;&#x5728;&#x56F0;&#x96BE;&#x65F6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x6765;&#x95F4;&#x63A5;&#x8BBF;&#x95EE;&#xFF0C;&#x4E3A;&#x4E86;&#x4FDD;&#x8BC1;&#x5BA2;&#x6237;&#x7AEF;&#x4F7F;&#x7528;&#x7684;&#x900F;&#x660E;&#x6027;&#xFF0C;&#x59D4;&#x6258;&#x5BF9;&#x8C61;&#x548C;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x76F8;&#x540C;&#x7684;&#x63A5;&#x53E3;</p>
+<div align="center">
+<img src="https://image.kangxiaoguang.com/1502352061.png">
+</div>
+
+<ul>
+<li>Subject&#xFF08;&#x62BD;&#x8C61;&#x7C7B;&#xFF09;&#xFF1A;&#x58F0;&#x660E;&#x4EE3;&#x7406;&#x89D2;&#x8272;&#x548C;&#x771F;&#x5B9E;&#x89D2;&#x8272;&#x5171;&#x540C;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x62BD;&#x8C61;&#x7C7B;&#x6216;&#x63A5;&#x53E3;</li>
+<li>Proxy&#xFF08;&#x4EE3;&#x7406;&#x7C7B;&#xFF09;&#xFF1A;&#x6301;&#x6709;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x7684;&#x5F15;&#x7528;&#xFF0C;&#x901A;&#x5E38;&#xFF0C;&#x5728;&#x4EE3;&#x7406;&#x7C7B;&#x4E2D;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x5728;&#x8C03;&#x7528;&#x6240;&#x5F15;&#x7528;&#x7684;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x4E4B;&#x524D;&#x6216;&#x4E4B;&#x540E;&#x8FD8;&#x9700;&#x8981;&#x6267;&#x884C;&#x5176;&#x4ED6;&#x64CD;&#x4F5C;&#xFF0C;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;&#x8C03;&#x7528;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;</li>
+<li>RealSubject&#xFF08;&#x771F;&#x5B9E;&#x7C7B;&#xFF09;&#xFF1A;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x7684;&#x4E1A;&#x52A1;&#x64CD;&#x4F5C;</li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x7684;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<p>Subject &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Subject</span> </span>{</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">request</span><span class="hljs-params">()</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>RealSubject &#x7C7B;&#xFF1A;<p></p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RealSubject</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Subject</span> </span>{</span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">request</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x6211;&#x662F;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Proxy &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Proxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Subject</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> RealSubject mRealSubject;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Proxy</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        mRealSubject = <span class="hljs-keyword">new</span> RealSubject();</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">request</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x8C03;&#x7528;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x524D;&quot;</span>);</span><br><span class="line">        mRealSubject.request();</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x8C03;&#x7528;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x540E;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x731B;&#x7684;&#x4E00;&#x770B;&#x548C; <a href="http://lovedev.org/2017/07/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/" target="_blank" rel="noopener">&#x88C5;&#x9970;&#x6A21;&#x5F0F;</a> &#x975E;&#x5E38;&#x7684;&#x76F8;&#x4F3C;&#xFF0C;<strong>&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x4E2D;&#x7684;&#x5177;&#x4F53;&#x7EC4;&#x4EF6;&#x7C7B;&#xFF08;ConcreteComponent&#xFF09;&#x548C;&#x88C5;&#x9970;&#x7C7B;&#xFF08;Decorator&#xFF09;&#x90FD;&#x5B9E;&#x73B0;&#x540C;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x4E2D;&#x7684;&#x62BD;&#x8C61;&#x7C7B;&#xFF08;Subject&#xFF09;&#x548C;&#x4EE3;&#x7406;&#x7C7B;&#xFF08;Proxy&#xFF09;&#x4E5F;&#x662F;&#x5B9E;&#x73B0;&#x540C;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x88C5;&#x9970;&#x7C7B;&#xFF08;Decorator&#xFF09;&#x548C;&#x4EE3;&#x7406;&#x7C7B;&#xFF08;Proxy&#xFF09;&#x90FD;&#x662F;&#x5728;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x6CD5;&#x524D;&#x9762;&#x6216;&#x8005;&#x540E;&#x9762;&#x6DFB;&#x52A0;&#x65B9;&#x6CD5;</strong>&#xFF0C;&#x4F46;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x6A21;&#x5F0F;&#x8FD8;&#x662F;&#x53C8;&#x672C;&#x8D28;&#x4E0A;&#x7684;&#x533A;&#x522B;&#xFF0C;<strong>&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x7528;&#x4E8E;&#x7ED9;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x52A8;&#x6001;&#x6DFB;&#x52A0;&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x7528;&#x4E8E;&#x63A7;&#x5236;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x8BBF;&#x95EE;&#xFF0C;&#x9690;&#x85CF;&#x5BF9;&#x8C61;&#x7684;&#x5177;&#x4F53;&#x4FE1;&#x606F;&#xFF0C;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x4E2D;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x548C;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x5728;&#x7F16;&#x8BD1;&#x5668;&#x5C31;&#x5DF2;&#x7ECF;&#x786E;&#x5B9A;&#xFF0C;&#x800C;&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x662F;&#x901A;&#x8FC7;&#x6784;&#x9020;&#x5668;&#x4F20;&#x9012;&#xFF0C;&#x8FD0;&#x884C;&#x671F;&#x624D;&#x80FD;&#x786E;&#x5B9A;</strong>&#xFF0C;&#x4E0B;&#x9762;&#x662F; <strong>&#x88C5;&#x9970;&#x7C7B;&#xFF08;Decorator&#xFF09;</strong> &#x7684;&#x90E8;&#x5206;&#x4EE3;&#x7801;&#xFF0C;&#x5BF9;&#x6BD4; <strong>&#x4EE3;&#x7406;&#x7C7B;&#xFF08;Proxy&#xFF09;</strong> &#x7684;&#x4EE3;&#x7406;&#x5C31;&#x5F88;&#x6E05;&#x6670;&#x4E86;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Decorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> Component component;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// &#x901A;&#x8FC7;&#x6784;&#x9020;&#x5668;&#x4F20;&#x9012;&#x5BF9;&#x8C61;</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Decorator</span><span class="hljs-params">(Component component)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.component = component;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x770B;&#x5B8C;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x548C;&#x88C5;&#x9970;&#x6A21;&#x5F0F;&#x7684;&#x533A;&#x522B;&#xFF0C;&#x518D;&#x6765;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x4E2D;&#x7684;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#xFF0C;&#x4E0A;&#x9762;&#x662F;&#x9759;&#x6001;&#x4EE3;&#x7406;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#x5728;&#x7F16;&#x8BD1;&#x671F;&#x5C31;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#xFF1B;&#x800C;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x4E0D;&#x540C;&#x4E8E;&#x9759;&#x6001;&#x4EE3;&#x7406;&#xFF0C;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x673A;&#x5236;&#x5728;&#x8FD0;&#x884C;&#x671F;&#x52A8;&#x6001;&#x751F;&#x6210;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#xFF0C;Java &#x4E2D;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A; <code>InvocationHandler</code> &#x63A5;&#x53E3;&#x5B9E;&#x73B0;&#x52A8;&#x6001;&#x4EE3;&#x7406;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<p>DynamicProxy &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DynamicProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InvocationHandler</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> Subject subject;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DynamicProxy</span><span class="hljs-params">(Subject subject)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.subject = subject;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x524D;&quot;</span>);</span><br><span class="line">        Object invoke = method.invoke(subject, args);</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x65B9;&#x6CD5;&#x8C03;&#x7528;&#x540E;&quot;</span>);</span><br><span class="line">        <span class="hljs-keyword">return</span> invoke;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x9759;&#x6001;&#x4EE3;&#x7406; Client &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Proxy proxy = <span class="hljs-keyword">new</span> Proxy();</span><br><span class="line">proxy.request();</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x52A8;&#x6001;&#x4EE3;&#x7406; Client &#x7C7B;&#xFF1A;</p>
+<pre><code class="Java">Subject realSubject = <span class="keyword">new</span> RealSubject();
+DynamicProxy dynamicProxy = <span class="keyword">new</span> DynamicProxy(realSubject);
+Subject subject = (Subject)java.lang.reflect.Proxy.newProxyInstance(RealSubject<span class="class">.<span class="keyword">class</span>.<span class="title">getClassLoader</span>(), <span class="title">RealSubject</span>.<span class="title">class</span>.<span class="title">getInterfaces</span>(),<span class="title">dynamicProxy</span>)</span>;
+subject.request();
+```![]()
+
+&lt;h3&gt; &#x4F18;&#x70B9; &lt;/h3&gt;
+
+* &#x534F;&#x8C03;&#x8C03;&#x7528;&#x8005;&#x548C;&#x88AB;&#x8C03;&#x7528;&#x8005;&#xFF0C;&#x4E00;&#x5B9A;&#x7A0B;&#x5EA6;&#x4E0A;&#x964D;&#x4F4E;&#x7CFB;&#x7EDF;&#x8026;&#x5408;
+* &#x5BA2;&#x6237;&#x7AEF;&#x53EF;&#x9488;&#x5BF9;&#x62BD;&#x8C61;&#x7C7B;&#x8FDB;&#x884C;&#x7F16;&#x7A0B;&#xFF0C;&#x589E;&#x52A0;&#x548C;&#x66FF;&#x6362;&#x4EE3;&#x7406;&#x7C7B;&#x65E0;&#x987B;&#x4FEE;&#x6539;&#x6E90;&#x4EE3;&#x7801;&#xFF0C;&#x7B26;&#x5408;&#x5F00;&#x95ED;&#x539F;&#x5219;&#xFF0C;&#x7CFB;&#x7EDF;&#x5177;&#x6709;&#x8F83;&#x597D;&#x7684;&#x7075;&#x6D3B;&#x6027;&#x548C;&#x53EF;&#x6269;&#x5C55;&#x6027;
+
+&lt;h3&gt; &#x7F3A;&#x70B9; &lt;/h3&gt;
+
+* &#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x771F;&#x5B9E;&#x5BF9;&#x8C61;&#x4E4B;&#x95F4;&#x589E;&#x52A0;&#x4E86;&#x4EE3;&#x7406;&#x5BF9;&#x8C61;&#xFF0C;&#x6709;&#x4E9B;&#x7C7B;&#x578B;&#x7684;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x8BF7;&#x6C42;&#x7684;&#x5904;&#x7406;&#x901F;&#x5EA6;&#x53D8;&#x6162;&#xFF0C;&#x4F8B;&#x5982;&#x4FDD;&#x62A4;&#x4EE3;&#x7406;
+* &#x5B9E;&#x73B0;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x9700;&#x8981;&#x989D;&#x5916;&#x7684;&#x5DE5;&#x4F5C;&#x91CF;&#xFF0C;&#x6709;&#x4E9B;&#x4EE3;&#x7406;&#x6A21;&#x5F0F;&#x5B9E;&#x73B0;&#x8FC7;&#x7A0B;&#x8F83;&#x4E3A;&#x590D;&#x6742;&#xFF0C;&#x4F8B;&#x5982;&#x8FDC;&#x7A0B;&#x4EE3;&#x7406;
+
+&lt;h3&gt; &#x9002;&#x7528;&#x573A;&#x666F; &lt;/h3&gt;
+
+* &#x9700;&#x8981;&#x63A7;&#x5236;&#x5BF9;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7684;&#x8BBF;&#x95EE;&#xFF0C;&#x4E3A;&#x4E0D;&#x540C;&#x8C03;&#x7528;&#x8005;&#x63D0;&#x4F9B;&#x4E0D;&#x540C;&#x7EA7;&#x522B;&#x7684;&#x8BBF;&#x95EE;&#x6743;&#x9650;
+* &#x9700;&#x8981;&#x4E3A;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x63D0;&#x4F9B;&#x4E00;&#x4E9B;&#x989D;&#x5916;&#x7684;&#x64CD;&#x4F5C;
+
+
+
+
+
+
+</code></pre>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/object-Object/">#[object Object]</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/08/01/Android/Android-%E5%BC%80%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">Android 开发常见问题总结</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/07/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/">设计模式-享元模式</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/07/31/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/';
+        this.page.identifier = '2017/07/31/设计模式/设计模式-代理模式/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

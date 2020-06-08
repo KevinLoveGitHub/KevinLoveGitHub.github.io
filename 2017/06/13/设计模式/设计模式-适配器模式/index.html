@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>设计模式-适配器模式 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="&amp;#x9002;&amp;#x914D;&amp;#x5668;&amp;#x6A21;&amp;#x5F0F;&amp;#xFF08;Adapter Pattern&amp;#xFF09;&amp;#xFF1A;&amp;#x5C06;&amp;#x4E00;&amp;#x4E2A;&amp;#x63A5;&amp;#x53E3;&amp;#x8F6C;&amp;#x6362;&amp;#x6210;&amp;#x8C03;&amp;#x7528;&amp;#x8005;&amp;#x5E0C;&amp;#x671B;&amp;#x7684;&amp;#x53E6;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-适配器模式">
+<meta property="og:url" content="http://yoursite.com/2017/06/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="&amp;#x9002;&amp;#x914D;&amp;#x5668;&amp;#x6A21;&amp;#x5F0F;&amp;#xFF08;Adapter Pattern&amp;#xFF09;&amp;#xFF1A;&amp;#x5C06;&amp;#x4E00;&amp;#x4E2A;&amp;#x63A5;&amp;#x53E3;&amp;#x8F6C;&amp;#x6362;&amp;#x6210;&amp;#x8C03;&amp;#x7528;&amp;#x8005;&amp;#x5E0C;&amp;#x671B;&amp;#x7684;&amp;#x53E6;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1501232275.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1497431257.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1497425355.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1497431298.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1497526078.png-480">
+<meta property="article:published_time" content="2017-06-13T07:09:38.000Z">
+<meta property="article:modified_time" content="2020-03-07T06:23:29.049Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="[object Object]">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1501232275.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            设计模式-适配器模式
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-06-13T07:09:38.000Z" itemprop="datePublished">6月 13 2017</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            7 分钟 读完 (约 1122 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p><img src="https://image.kangxiaoguang.com/1501232275.png" alt></p>
+<p>&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#xFF08;Adapter Pattern&#xFF09;&#xFF1A;&#x5C06;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x8F6C;&#x6362;&#x6210;&#x8C03;&#x7528;&#x8005;&#x5E0C;&#x671B;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x4F7F;&#x63A5;&#x53E3;&#x4E0D;&#x517C;&#x5BB9;&#x7684;&#x90A3;&#x4E9B;&#x7C7B;&#x53EF;&#x4EE5;&#x4E00;&#x8D77;&#x5DE5;&#x4F5C;&#xFF0C;&#x5176;&#x522B;&#x540D;&#x4E3A;&#x5305;&#x88C5;&#x7C7B;&#xFF08;Wrapper&#xFF09;&#xFF0C;&#x8BE5;&#x6A21;&#x5F0F;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x7C7B;&#x7ED3;&#x6784;&#x578B;&#x6A21;&#x5F0F;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4F5C;&#x4E3A;&#x5BF9;&#x8C61;&#x7ED3;&#x6784;&#x578B;&#x6A21;&#x5F0F;</p>
+<a id="more"></a>
+
+<p>&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#x5E94;&#x8BE5;&#x662F; Android &#x5F00;&#x53D1;&#x5F53;&#x4E2D;&#x6700;&#x5E38;&#x89C1;&#x7684;&#x51E0;&#x4E2A;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x4E4B;&#x4E00;&#x4E86;&#xFF0C;&#x5404;&#x79CD;&#x5404;&#x6837;&#x7684;&#x5217;&#x8868;&#xFF08;ListView&#xFF0C;GridView&#xFF0C;RecyclerView&#xFF09;&#x90FD;&#x8981;&#x4F7F;&#x7528;&#x4E00;&#x4E2A; Adapter &#x7684;&#x7C7B;</p>
+<p>&#x4F7F;&#x7528;&#x573A;&#x666F;&#xFF1A;</p>
+<ul>
+<li>&#x7CFB;&#x7EDF;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x73B0;&#x6709;&#x7684;&#x7C7B;&#xFF0C;&#x800C;&#x8FD9;&#x4E9B;&#x7C7B;&#x7684;&#x63A5;&#x53E3;&#x4E0D;&#x7B26;&#x5408;&#x7CFB;&#x7EDF;&#x7684;&#x9700;&#x8981;</li>
+<li>&#x60F3;&#x8981;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x91CD;&#x590D;&#x4F7F;&#x7528;&#x7684;&#x7C7B;&#xFF0C;&#x7528;&#x4E8E;&#x4E0E;&#x4E00;&#x4E9B;&#x5F7C;&#x6B64;&#x4E4B;&#x95F4;&#x6CA1;&#x6709;&#x592A;&#x5927;&#x5173;&#x8054;&#x7684;&#x4E00;&#x4E9B;&#x7C7B;&#xFF0C;&#x5305;&#x62EC;&#x4E00;&#x4E9B;&#x53EF;&#x80FD;&#x5728;&#x5C06;&#x6765;&#x5F15;&#x8FDB;&#x7684;&#x7C7B;&#x4E00;&#x8D77;&#x5DE5;&#x4F5C;</li>
+</ul>
+<p>&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#x4E00;&#x4E2A;&#x53EF;&#x4EE5;&#x5206;&#x4E3A;&#x4E09;&#x4E2A;&#x9002;&#x914D;&#x5668;&#xFF1A;</p>
+<ul>
+<li><a href="#CLASS">&#x7C7B;&#x9002;&#x914D;&#x5668;</a></li>
+<li><a href="#OBJECT">&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;</a></li>
+<li><a href="#DEFAULT">&#x7F3A;&#x7701;&#x9002;&#x914D;&#x5668;</a></li>
+</ul>
+<h1 id="CLASS"> &#x7C7B;&#x9002;&#x914D;&#x5668; </h1>
+
+<p><img src="https://image.kangxiaoguang.com/1497431257.png" alt="&#x7C7B;&#x9002;&#x914D;&#x5668;"></p>
+<ul>
+<li>Target&#xFF1A;&#x76EE;&#x6807;&#x89D2;&#x8272;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#x6216;&#x63A5;&#x53E3;&#xFF0C;&#x7531;&#x4E8E;&#x662F;&#x7C7B;&#x9002;&#x914D;&#x5668;&#xFF0C;&#x4E0D;&#x80FD;&#x4E3A;&#x5177;&#x4F53;&#x7C7B;</li>
+<li>Adaptee&#xFF1A;&#x9002;&#x914D;&#x8005;&#x7C7B;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7C7B;&#xFF0C;&#x5305;&#x542B;&#x671F;&#x671B;&#x7684;&#x4E1A;&#x52A1;&#x65B9;&#x6CD5;&#xFF0C;&#x67D0;&#x4E9B;&#x60C5;&#x51B5;&#x4E0B;&#x53EF;&#x80FD;&#x6CA1;&#x6709;&#x9002;&#x914D;&#x8005;&#x7684;&#x6E90;&#x4EE3;&#x7801;</li>
+<li>Adapter&#xFF1A;&#x9002;&#x914D;&#x5668;&#x7C7B;&#xFF0C;&#x53EF;&#x4EE5;&#x628A;&#x6E90;&#x63A5;&#x53E3;&#x8F6C;&#x6362;&#x6210;&#x76EE;&#x6807;&#x63A5;&#x53E3;</li>
+</ul>
+<p><img src="https://image.kangxiaoguang.com/1497425355.png" alt="Apple"><br>&#x4F7F;&#x7528; Mac &#x7684;&#x540C;&#x5B66;&#x5E94;&#x8BE5;&#x5F88;&#x719F;&#x6089;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x4E2A;&#x4E1C;&#x897F;&#xFF0C;Apple &#x7684;&#x5145;&#x7535;&#x5668;&#x53EF;&#x4EE5;&#x628A;&#x4E24;&#x811A;&#x7684;&#x5145;&#x7535;&#x5934;&#x62D4;&#x6389;&#x6362;&#x6210;&#x4E00;&#x4E2A;&#x66F4;&#x957F;&#x4E14;&#x662F;&#x4E09;&#x811A;&#x7684;&#x5145;&#x7535;&#x5934;&#xFF0C;&#x4E0B;&#x9762;&#x5C31;&#x4EE5;&#x8FD9;&#x4E24;&#x4E2A;&#x4E1C;&#x897F;&#x4E3A;&#x793A;&#x4F8B;&#xFF0C;&#x5B8C;&#x6210;&#x4E00;&#x4E2A;&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#xFF0C;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<p>Target &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Power</span> </span>{</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * &#x5145;&#x7535;</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">charge</span><span class="hljs-params">()</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>&#x5728;&#x6B63;&#x5E38;&#x60C5;&#x51B5;&#x4E0B;&#x7528;&#x4E24;&#x811A;&#x7684;&#x63D2;&#x5934;&#x5DF2;&#x7ECF;&#x8DB3;&#x591F;&#x6EE1;&#x8DB3;&#x9700;&#x6C42;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x73B0;&#x5728;&#x6240;&#x5904;&#x7684;&#x73AF;&#x5883;&#x53EA;&#x6709;&#x4E09;&#x811A;&#x7684;&#x63D2;&#x677F;&#xFF0C;&#x73B0;&#x5728;&#x5C31;&#x53EF;&#x4EE5;&#x628A;&#x53EA;&#x652F;&#x6301;&#x4E09;&#x811A;&#x7684;&#x63D2;&#x677F;&#x770B;&#x505A;&#x662F;&#x73B0;&#x6709;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x800C;&#x9ED8;&#x8BA4;&#x7684;&#x5145;&#x7535;&#x662F;&#x4E0D;&#x652F;&#x6301;&#x6B64;&#x63A5;&#x53E3;&#x7684;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x5C31;&#x9700;&#x8981;&#x7528;&#x5230;&#x4E09;&#x811A;&#x7684;&#x9002;&#x914D;&#x5668;&#xFF0C;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF1A;<p></p>
+<p>Adaptee &#x7C7B;&#xFF0C;&#x671F;&#x671B;&#x5B9E;&#x73B0;&#x7684;&#x529F;&#x80FD;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtensionPower</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">specificPower</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x7528;&#x4E09;&#x811A;&#xFF0C;1.8&#x7C73;&#x5EF6;&#x957F;&#x7EBF;&#x5145;&#x7535;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Adapter &#x7C7B;&#xFF0C;&#x4E09;&#x811A;&#x5EF6;&#x957F;&#x7EBF;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PowerAdapter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ExtensionPower</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Power</span></span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">charge</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">super</span>.specificPower();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>Client &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>{</span><br><span class="line">    PowerAdapter powerAdapter = <span class="hljs-keyword">new</span> PowerAdapter();</span><br><span class="line">    powerAdapter.charge();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x5229;&#x7528;&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#x5C31;&#x53EF;&#x4EE5;&#x89E3;&#x51B3;&#x4E0A;&#x8FF0;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5E76;&#x4E14;&#x975E;&#x5E38;&#x7B26;&#x5408;<strong>&#x5F00;&#x95ED;&#x539F;&#x5219;</strong></p>
+<h1 id="OBJECT"> &#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668; </h1>
+
+<p><img src="https://image.kangxiaoguang.com/1497431298.png" alt="&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;"><br>&#x5BF9;&#x8C61;&#x9002;&#x914D;&#x5668;&#x4E0D;&#x5728;&#x4F7F;&#x7528;&#x7C7B;&#x9002;&#x914D;&#x5668;&#x7EE7;&#x627F;&#x518D;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x800C;&#x662F;&#x91C7;&#x7528;&#x76F4;&#x63A5;&#x5173;&#x8054;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x533A;&#x522B;&#x5C31;&#x5728;&#x4E8E; adapter &#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PowerAdapter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Power</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">private</span> ExtensionPower extensionPower;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">// &#x6B64;&#x5904;&#x6539;&#x4E3A;&#x76F4;&#x63A5;&#x5173;&#x8054;&#x7684;&#x65B9;&#x5F0F;</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">PowerAdapter</span><span class="hljs-params">(ExtensionPower extensionPower)</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.extensionPower = extensionPower;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">charge</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        <span class="hljs-keyword">this</span>.extensionPower.specificPower();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h1 id="DEFAULT"> &#x7F3A;&#x7701;&#x9002;&#x914D;&#x5668; </h1>
+
+<p><img src="https://image.kangxiaoguang.com/1497526078.png-480" alt="&#x7F3A;&#x7701;&#x9002;&#x914D;&#x5668;"></p>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x53EA;&#x60F3;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x63A5;&#x53E3; N &#x591A;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x65F6;&#xFF0C;&#x5C31;&#x8981;&#x7528;&#x5230;&#x8BE5;&#x6A21;&#x5F0F;&#x4E86;&#xFF0C;&#x5728;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x4E2D;&#x95F4;&#x8BBE;&#x8BA1;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#xFF0C;&#x5E76;&#x63D0;&#x4F9B;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x7684;&#x7A7A;&#x5B9E;&#x73B0;&#xFF0C;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x7C7B;&#x5C31;&#x53EF;&#x4EE5;&#x7EE7;&#x627F;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x81EA;&#x5DF1;&#x60F3;&#x8981;&#x5B9E;&#x73B0;&#x7684;&#x67D0;&#x4E00;&#x63A5;&#x53E3;</p>
+<p>&#x4E3E;&#x4E2A;&#x6817;&#x5B50;&#xFF1A;&#x4E00;&#x4E2A;&#x5DF2;&#x5A5A;&#x4EBA;&#x58EB;&#x7684;&#x751F;&#x6D3B;&#x662F;&#x5403;&#x996D;&#xFF0C;&#x7761;&#x89C9;&#x4EE5;&#x53CA;&#x556A;&#x556A;&#x556A;&#xFF0C;&#x4F46;&#x662F;&#x73B0;&#x5728;&#x9700;&#x8981;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x7269;&#x79CD;&#x53EB;&#x505A;<strong>&#x5355;&#x8EAB;&#x72D7;</strong>&#xFF0C;&#x5355;&#x8EAB;&#x72D7;&#x5F53;&#x7136;&#x662F;&#x6CA1;&#x6709;&#x556A;&#x556A;&#x556A;&#x529F;&#x80FD;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x5C31;&#x9700;&#x8981;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#x5B9E;&#x73B0;&#x5DF2;&#x5A5A;&#x4EBA;&#x58EB;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x5E76;&#x8BA9;&#x5355;&#x8EAB;&#x72D7;&#x7EE7;&#x627F;&#x5B9E;&#x73B0;&#x5403;&#x996D;&#x548C;&#x7761;&#x89C9;&#x7684;&#x529F;&#x80FD;</p>
+<p>&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<p>&#x5DF2;&#x5A5A;&#x4EBA;&#x58EB;&#x63A5;&#x53E3;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">MarriedPeople</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * &#x5403;&#x996D;</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * &#x7761;&#x89C9;</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">()</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * &#x556A;&#x556A;&#x556A;</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">papapa</span><span class="hljs-params">()</span></span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x62BD;&#x8C61;&#x7C7B;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Adults</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">MarriedPeople</span> </span>{</span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>{</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">()</span> </span>{</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">papapa</span><span class="hljs-params">()</span> </span>{</span><br><span class="line"></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x5355;&#x8EAB;&#x72D7;&#xFF1A;</p>
+<p></p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SingleDog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Adults</span> </span>{</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x5403;&#x996D;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">        LogUtils.i(<span class="hljs-string">&quot;&#x7761;&#x89C9;&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x8BF4;&#x4E86;&#x8FD9;&#x4E48;&#x591A;&#xFF0C;&#x8BE5;&#x5230;&#x603B;&#x7ED3;&#x7684;&#x65F6;&#x5019;&#x4E86;&#xFF0C;&#x9002;&#x914D;&#x5668;&#x6A21;&#x5F0F;&#x4F18;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>&#x4F7F;&#x7528;&#x9002;&#x914D;&#x5668;&#x7C7B;&#x8FBE;&#x5230;&#x91CD;&#x7528;&#x5148;&#x7528;&#x9002;&#x914D;&#x8005;&#x7C7B;&#xFF0C;&#x65E0;&#x987B;&#x4FEE;&#x6539;&#x539F;&#x6709;&#x7ED3;&#x6784;</li>
+<li>&#x589E;&#x52A0;&#x7C7B;&#x7684;&#x900F;&#x660E;&#x6027;&#x548C;&#x590D;&#x7528;&#x6027;&#xFF0C;&#x5177;&#x4F53;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x90FD;&#x5C01;&#x88C5;&#x5728;&#x9002;&#x914D;&#x8005;&#x7C7B;&#x4E2D;&#xFF0C;&#x63D0;&#x9AD8;&#x9002;&#x914D;&#x8005;&#x7684;&#x590D;&#x7528;&#x6027;</li>
+</ul>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/object-Object/">#[object Object]</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">#设计模式</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/06/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JAVA%E8%99%9A%E6%8B%9F%E6%9C%BA%E3%80%8B-%E7%AC%94%E8%AE%B0%E4%B8%80/">《深入理解 Java 虚拟机》- 笔记一</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/06/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">设计模式-原型模式</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/06/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/';
+        this.page.identifier = '2017/06/13/设计模式/设计模式-适配器模式/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>macOS 交叉编译 Android so 库以及可运行二进制文件 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="&amp;#x7F16;&amp;#x8BD1; Android so&amp;#x5E93;&amp;#x548C;&amp;#x53EF;&amp;#x8FD0;&amp;#x884C;&amp;#x4E8C;&amp;#x8FDB;&amp;#x5236;&amp;#x6587;&amp;#x4EF6;&amp;#x7684;&amp;#x65B9;&amp;#x5F0F;&amp;#x6709;&amp;#x4E24;&amp;#x79CD;&amp;#xFF1A;  ndk-build cmake  ndk-build &amp;#x53EA;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macOS 交叉编译 Android so 库以及可运行二进制文件">
+<meta property="og:url" content="http://yoursite.com/2019/01/10/Android/macOS-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91-Android-so-%E5%BA%93%E4%BB%A5%E5%8F%8A%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="&amp;#x7F16;&amp;#x8BD1; Android so&amp;#x5E93;&amp;#x548C;&amp;#x53EF;&amp;#x8FD0;&amp;#x884C;&amp;#x4E8C;&amp;#x8FDB;&amp;#x5236;&amp;#x6587;&amp;#x4EF6;&amp;#x7684;&amp;#x65B9;&amp;#x5F0F;&amp;#x6709;&amp;#x4E24;&amp;#x79CD;&amp;#xFF1A;  ndk-build cmake  ndk-build &amp;#x53EA;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1547115198.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1547115234.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1547116663.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1547194093.png">
+<meta property="article:published_time" content="2019-01-10T10:48:56.000Z">
+<meta property="article:modified_time" content="2020-03-07T06:23:29.047Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1547115198.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目录">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#ndk-build">1&nbsp;&nbsp;<b>ndk-build</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#cmake">2&nbsp;&nbsp;<b>cmake</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Clion-配置">3&nbsp;&nbsp;<b>Clion 配置</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            macOS 交叉编译 Android so 库以及可运行二进制文件
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2019-01-10T10:48:56.000Z" itemprop="datePublished">1月 10 2019</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            6 分钟 读完 (约 844 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>&#x7F16;&#x8BD1; Android so&#x5E93;&#x548C;&#x53EF;&#x8FD0;&#x884C;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x7684;&#x65B9;&#x5F0F;&#x6709;&#x4E24;&#x79CD;&#xFF1A;</p>
+<ul>
+<li>ndk-build</li>
+<li>cmake</li>
+</ul>
+<p>ndk-build &#x53EA;&#x80FD;&#x7F16;&#x8BD1; Android &#x5E73;&#x53F0;&#x8FD0;&#x884C;&#x7684; so &#x5E93;&#x6216;&#x8005;&#x53EF;&#x6267;&#x884C;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#xFF0C;cmake &#x652F;&#x6301;&#x8DE8;&#x5E73;&#x53F0;&#x7684;&#x4EA4;&#x53C9;&#x7F16;&#x8BD1;</p>
+<a id="more"></a>
+<h2 id="ndk-build"><a href="#ndk-build" class="headerlink" title="ndk-build"></a>ndk-build</h2><p>&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#x9700;&#x8981; <code>Android.mk</code> &#x548C; <code>Application.mk</code> &#x6587;&#x4EF6;&#x914D;&#x5408;&#x7F16;&#x8BD1;&#xFF0C;&#x901A;&#x8FC7;&#x4E00;&#x4E2A; demo &#x4E86;&#x89E3;&#x5229;&#x7528; <code>ndk-build</code> &#x7684;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#xFF0C;&#x9996;&#x5148;&#x4E00;&#x6BB5;&#x5F88;&#x7B80;&#x5355;&#x7684; C &#x4EE3;&#x7801;&#xFF1A;</p>
+<p></p><figure class="highlight c hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{</span><br><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello world\n&quot;</span>);</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br><code>Android.mk</code> &#x6587;&#x4EF6;&#x914D;&#x7F6E;&#xFF1A;<p></p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LOCAL_PATH := $(call my-dir)</span><br><span class="line">include $(CLEAR_VARS)</span><br><span class="line">LOCAL_MODULE := ndk_build_demo</span><br><span class="line">LOCAL_SRC_FILES := main.c</span><br><span class="line"># BUILD_SHARED_LIBRARY &#x7F16;&#x8BD1;&#x7ED3;&#x679C;&#x4E3A; .so &#x6587;&#x4EF6;</span><br><span class="line">include $(BUILD_SHARED_LIBRARY)</span><br><span class="line"># BUILD_EXECUTABLE &#x7F16;&#x8BD1;&#x7ED3;&#x679C;&#x4E3A;&#x53EF;&#x6267;&#x884C;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;</span><br><span class="line"># include $(BUILD_EXECUTABLE)</span><br></pre></td></tr></tbody></table></figure><br><code>Application.mk</code> &#x6587;&#x4EF6;&#x914D;&#x7F6E;&#xFF1A;<p></p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">APP_PLATFORM := android-16</span><br><span class="line">APP_BUILD_SCRIPT := Android.mk</span><br></pre></td></tr></tbody></table></figure><br>&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x8FD0;&#x884C;&#x547D;&#x4EE4; <code>ndk-build NDK_PROJECT_PATH=. APP_BUILD_SCRIPT=./Android.mk NDK_APPLICATION_MK=./Application.mk</code> <p></p>
+<p><img src="https://image.kangxiaoguang.com/1547115198.png" alt></p>
+<p>&#x8FD0;&#x884C;&#x5B8C;&#x6210;&#x751F;&#x6210; <code>libs</code> &#x548C; <code>obj</code> &#x4E24;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5176;&#x4E2D; <code>libs</code> &#x6587;&#x4EF6;&#x5939;&#x4E2D;&#x5B58;&#x653E;&#x7740;&#x5BF9;&#x5E94;&#x5404;&#x4E2A; CPU &#x67B6;&#x6784;&#x7684; .so &#x6587;&#x4EF6;</p>
+<p><img src="https://image.kangxiaoguang.com/1547115234.png" alt></p>
+<h2 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h2><p>cmake &#x7684;&#x7F16;&#x8BD1;&#x65B9;&#x5F0F;&#x9700;&#x8981;&#x6709; <code>CMakeLists.txt</code> &#x6587;&#x4EF6;&#x914D;&#x5408;&#x7F16;&#x8BD1;&#xFF0C;&#x901A;&#x8FC7;&#x7F16;&#x8BD1;&#x4E00;&#x4E2A;&#x53EF;&#x5728; Android &#x5E73;&#x53F0;&#x8FD0;&#x884C;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;&#x4E3A;&#x4F8B;&#x7B80;&#x5355;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#x6574;&#x4E2A;&#x7F16;&#x8BD1;&#x8FC7;&#x7A0B;&#xFF0C;&#x5176;&#x4E2D; C &#x6587;&#x4EF6;&#x4E0D;&#x53D8;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F; <code>CMakeLists.txt</code> &#x7684;&#x914D;&#x7F6E;&#xFF1A;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.8.2)</span><br><span class="line">set(CMAKE_TOOLCHAIN_FILE ndk-path/build/cmake/android.toolchain.cmake)</span><br><span class="line">project(demo)</span><br><span class="line">set(CMAKE_SYSTEM_NAME Android)</span><br><span class="line">set(CMAKE_SYSTEM_VERSION 21) # API level</span><br><span class="line">set(CMAKE_ANDROID_ARCH_ABI arm64-v8a)</span><br><span class="line"></span><br><span class="line">add_executable(run main.c)</span><br></pre></td></tr></tbody></table></figure><p></p>
+<ul>
+<li>CMAKE_TOOLCHAIN_FILE - &#x5C06;&#x63D0;&#x524D;&#x52A0;&#x8F7D;&#x6307;&#x5B9A;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x8BBE;&#x7F6E;&#x9879;&#x8BBE;&#x7F6E;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x503C;</li>
+</ul>
+<p>&#x5176;&#x4ED6;&#x7684;&#x914D;&#x7F6E;&#x67E5;&#x9605;<a href="https://cmake.org/cmake/help/v3.8/manual/cmake-toolchains.7.html#cross-compiling-for-android" target="_blank" rel="noopener">cmake &#x6587;&#x6863;</a></p>
+<p>&#x914D;&#x7F6E;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x6267;&#x884C;&#x547D;&#x4EE4;&#xFF1A;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cmake .</span><br><span class="line">$ make</span><br></pre></td></tr></tbody></table></figure><br>&#x7F16;&#x8BD1;&#x7ED3;&#x679C;&#xFF1A;<br><img src="https://image.kangxiaoguang.com/1547116663.png" alt><p></p>
+<p>&#x5176;&#x4E2D;&#x9700;&#x8981;&#x6CE8;&#x610F;<strong>Check for working C compiler</strong>&#x548C;<strong>Check for working CXX compiler</strong>&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x53EA;&#x6709;&#x4F7F;&#x7528; NDK &#x4E2D;&#x7684;&#x7F16;&#x8BD1;&#x5668;&#x624D;&#x80FD;&#x6B63;&#x786E;&#x7F16;&#x8BD1;&#x51FA;&#x5728; Android &#x5E73;&#x53F0;&#x8FD0;&#x884C;&#x7684; .so &#x548C;&#x53EF;&#x6267;&#x884C;&#x4E8C;&#x8FDB;&#x5236;&#x6587;&#x4EF6;</p>
+<p>&#x8FD9;&#x79CD;&#x628A;&#x8DDF;&#x5E73;&#x53F0;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x5199;&#x5165; <code>CMakeLists.txt</code> &#x7684;&#x5199;&#x6CD5;&#x5176;&#x5B9E;&#x4E0D;&#x592A;&#x597D;&#xFF0C;&#x8BA9; <code>CMakeLists.txt</code> &#x6587;&#x4EF6;&#x770B;&#x8D77;&#x6765;&#x5F88;&#x81C3;&#x80BF;&#xFF0C;<code>CMakeLists.txt</code> &#x6587;&#x4EF6;&#x4E2D;&#x5E94;&#x8BE5;&#x53EA;&#x5B58;&#x653E;&#x7F16;&#x8BD1;&#x6E90;&#x7801;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x548C;&#x5E73;&#x53F0;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x6700;&#x597D;&#x5355;&#x72EC;&#x653E;&#x5230;&#x5BF9;&#x5E94;&#x5E73;&#x53F0;&#x7684; shell &#x811A;&#x672C;&#x4E2D;&#xFF1A;</p>
+<p></p><figure class="highlight shell hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#</span><span class="hljs-bash">!/usr/bin/env bash</span></span><br><span class="line">cmake -DCMAKE_TOOLCHAIN_FILE=&quot;${ANDROID_NDK}/build/cmake/android.toolchain.cmake&quot; \</span><br><span class="line">      -DCMAKE_BUILD_TYPE=Debug                    \</span><br><span class="line">      -DANDROID_ABI=&quot;armeabi-v7a&quot;                  \</span><br><span class="line">      -DANDROID_PLATFORM=&quot;android-21&quot;        \</span><br><span class="line">      .</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="Clion-&#x914D;&#x7F6E;"><a href="#Clion-&#x914D;&#x7F6E;" class="headerlink" title="Clion &#x914D;&#x7F6E;"></a>Clion &#x914D;&#x7F6E;</h2><p>Clion &#x9ED8;&#x8BA4;&#x67E5;&#x627E;&#x672C;&#x673A;&#x73AF;&#x5883;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x5F00;&#x53D1; Android &#x9A71;&#x52A8;&#x6216;&#x8005; NDK &#x5F00;&#x53D1;&#x65F6;&#x9ED8;&#x8BA4;&#x65E0;&#x6CD5;&#x627E;&#x5230; NDK &#x5305;&#x542B;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x5728; <code>CMakeLists.txt</code> &#x5F53;&#x4E2D;&#x914D;&#x7F6E; <code>CMAKE_C_COMPILER</code>&#x3001;<code>CMAKE_CXX_COMPILER</code> &#x8FD9;&#x4E24;&#x4E2A;&#x7F16;&#x8BD1;&#x5668;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x4EE5;&#x53CA;&#x6307;&#x5B9A; NDK &#x5934;&#x6587;&#x4EF6;&#x6839;&#x76EE;&#x5F55;&#xFF1A;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set(CMAKE_C_COMPILER /ndk/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-gcc)</span><br><span class="line">set(CMAKE_CXX_COMPILER /ndk/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/bin/arm-linux-androideabi-g++)</span><br><span class="line">add_definitions(&quot;--sysroot=/ndk/sysroot&quot;)</span><br><span class="line"># &#x5FC5;&#x987B;&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x7F16;&#x8BD1;&#x7C7B;&#x578B;&#xFF0C;&#x6700;&#x540E;&#x624D;&#x80FD;&#x5728; Clion &#x7684; External Libraries &#x4E2D;&#x751F;&#x6210;&#x5934;&#x6587;&#x4EF6;&#x641C;&#x7D22;&#x8DEF;&#x5F84;</span><br><span class="line">add_executable(run_rtc main.c)</span><br></pre></td></tr></tbody></table></figure><br><img src="https://image.kangxiaoguang.com/1547194093.png" alt><p></p>
+<p>&#x867D;&#x7136;&#x5728;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x4E5F;&#x53EF;&#x4EE5;&#x6307;&#x5B9A;&#x7F16;&#x8BD1;&#x5668;&#x7C7B;&#x578B;&#xFF0C;&#x4F46;&#x662F; Clion &#x4E0D;&#x4F1A;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x5934;&#x6587;&#x4EF6;&#x641C;&#x7D22;&#x8DEF;&#x5F84;&#xFF0C;&#x8FD9;&#x6837;&#x8BBE;&#x7F6E;&#x7684;&#x7ED3;&#x679C;&#x5C31;&#x662F;&#x53EA;&#x80FD;&#x7528; Android &#x7684; C &#x548C; C++ &#x7F16;&#x8BD1;&#x5668;&#xFF0C;&#x65E0;&#x6CD5;&#x5B9E;&#x73B0;&#x9879;&#x76EE;&#x7684;&#x8DE8;&#x5E73;&#x53F0;&#xFF08;&#x4E5F;&#x8BB8;&#x53EF;&#x4EE5;&#xFF09;&#x3002;</p>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Android/">#Android</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2018/08/23/Android/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6WorkManager/">Android架构组件WorkManager</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2019/01/10/Android/macOS-%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91-Android-so-%E5%BA%93%E4%BB%A5%E5%8F%8A%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6/';
+        this.page.identifier = '2019/01/10/Android/macOS-交叉编译-Android-so-库以及可运行二进制文件/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Gradle 入门 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="Gradle&amp;#x662F;&amp;#x4E00;&amp;#x6B3E;&amp;#x4E13;&amp;#x6CE8;&amp;#x4E8E;&amp;#x7075;&amp;#x6D3B;&amp;#x6027;&amp;#x548C;&amp;#x6027;&amp;#x80FD;&amp;#x7684;&amp;#x5F00;&amp;#x6E90;&amp;#x6784;&amp;#x5EFA;&amp;#x81EA;&amp;#x52A8;&amp;#x5316;&amp;#x5DE5;&amp;#x5177;&amp;#x3002; Gradle&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle 入门">
+<meta property="og:url" content="http://yoursite.com/2018/05/29/Android/Gradle-%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="Gradle&amp;#x662F;&amp;#x4E00;&amp;#x6B3E;&amp;#x4E13;&amp;#x6CE8;&amp;#x4E8E;&amp;#x7075;&amp;#x6D3B;&amp;#x6027;&amp;#x548C;&amp;#x6027;&amp;#x80FD;&amp;#x7684;&amp;#x5F00;&amp;#x6E90;&amp;#x6784;&amp;#x5EFA;&amp;#x81EA;&amp;#x52A8;&amp;#x5316;&amp;#x5DE5;&amp;#x5177;&amp;#x3002; Gradle&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1527562887.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1528530490.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1527671441.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1543573137.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1543573252.png">
+<meta property="og:image" content="https://image.kangxiaoguang.com/1543573312.png">
+<meta property="article:published_time" content="2018-05-29T03:00:18.000Z">
+<meta property="article:modified_time" content="2020-03-23T07:10:58.350Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.kangxiaoguang.com/1527562887.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目录">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#安装">1&nbsp;&nbsp;<b>安装</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#基础">2&nbsp;&nbsp;<b>基础</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Projects-amp-tasks">2.1&nbsp;&nbsp;Projects &amp; tasks</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Hello-World">2.2&nbsp;&nbsp;Hello World</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#快速定义">2.3&nbsp;&nbsp;快速定义</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#任务依赖">2.4&nbsp;&nbsp;任务依赖</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#动态创建任务">2.5&nbsp;&nbsp;动态创建任务</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#使用已存在的-task">2.6&nbsp;&nbsp;使用已存在的 task</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#task-属性">2.7&nbsp;&nbsp;task 属性</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#默认-task">2.8&nbsp;&nbsp;默认 task</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#为不同-task-配置不同参数">2.9&nbsp;&nbsp;为不同 task 配置不同参数</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Gradle-Wrapper">3&nbsp;&nbsp;<b>Gradle Wrapper</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Gradle-命令行">4&nbsp;&nbsp;<b>Gradle 命令行</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#多任务调用">4.1&nbsp;&nbsp;多任务调用</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#排除任务">4.2&nbsp;&nbsp;排除任务</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#失败后继续执行">4.3&nbsp;&nbsp;失败后继续执行</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#简化任务名">4.4&nbsp;&nbsp;简化任务名</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#指定构建文件">4.5&nbsp;&nbsp;指定构建文件</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#获取任务信息">4.6&nbsp;&nbsp;获取任务信息</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#配置任务参数">4.7&nbsp;&nbsp;配置任务参数</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#获取依赖信息">4.8&nbsp;&nbsp;获取依赖信息</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#获取指定依赖信息">4.8.1&nbsp;&nbsp;获取指定依赖信息</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#获取特定依赖报告">4.8.2&nbsp;&nbsp;获取特定依赖报告</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#获取属性">4.8.3&nbsp;&nbsp;获取属性</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#构建日志">4.8.4&nbsp;&nbsp;构建日志</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Dry-Run">4.8.5&nbsp;&nbsp;Dry Run</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#给-JVM-添加参数">4.8.6&nbsp;&nbsp;给 JVM 添加参数</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Gradle-DSL">5&nbsp;&nbsp;<b>Gradle DSL</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#声明变量">5.1&nbsp;&nbsp;声明变量</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#局部变量">5.1.1&nbsp;&nbsp;局部变量</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#额外属性">5.1.2&nbsp;&nbsp;额外属性</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#闭包委托">5.1.3&nbsp;&nbsp;闭包委托</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#使用外部构建脚本">5.1.4&nbsp;&nbsp;使用外部构建脚本</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#缓存">5.1.5&nbsp;&nbsp;缓存</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Task">6&nbsp;&nbsp;<b>Task</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#定义任务">6.1&nbsp;&nbsp;定义任务</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#重写任务">6.2&nbsp;&nbsp;重写任务</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自定义类型-Task">6.3&nbsp;&nbsp;自定义类型 Task</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#跳过任务">6.4&nbsp;&nbsp;跳过任务</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#onlyIf">6.4.1&nbsp;&nbsp;onlyIf</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#StopExecutionException">6.4.2&nbsp;&nbsp;StopExecutionException</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#Task-enable-属性">6.4.3&nbsp;&nbsp;Task enable 属性</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#任务规则">6.5&nbsp;&nbsp;任务规则</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#conventions-vs-extensions">6.6&nbsp;&nbsp;conventions vs extensions</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#日志">7&nbsp;&nbsp;<b>日志</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#等级">7.1&nbsp;&nbsp;等级</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#日志命令参数">7.2&nbsp;&nbsp;日志命令参数</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#堆栈跟踪参数">7.3&nbsp;&nbsp;堆栈跟踪参数</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#打印日志">7.4&nbsp;&nbsp;打印日志</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自定义-configuration">7.5&nbsp;&nbsp;自定义 configuration</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#debug-plugin">8&nbsp;&nbsp;<b>debug plugin</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#自定义插件">9&nbsp;&nbsp;<b>自定义插件</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#小技巧">10&nbsp;&nbsp;<b>小技巧</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#忽略debug版本">10.1&nbsp;&nbsp;忽略debug版本</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#设置-apk-文件名称">10.2&nbsp;&nbsp;设置 apk 文件名称</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#util-gradle">10.3&nbsp;&nbsp;util.gradle</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#实例">11&nbsp;&nbsp;<b>实例</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#加速Gradle构建">11.1&nbsp;&nbsp;加速Gradle构建</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#修改默认-apk-文件名">11.2&nbsp;&nbsp;修改默认 apk 文件名</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#自动生成-versionCode-和-versionName">11.3&nbsp;&nbsp;自动生成 versionCode 和 versionName</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#productFlavors-配置产品风味">11.4&nbsp;&nbsp;productFlavors 配置产品风味</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#sourceSets-设置源集">11.5&nbsp;&nbsp;sourceSets 设置源集</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#忽略-release-buildType">11.6&nbsp;&nbsp;忽略 release buildType</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#生成-jar-包">11.7&nbsp;&nbsp;生成 jar 包</a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Gradle 入门
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-05-29T03:00:18.000Z" itemprop="datePublished">5月 29 2018</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            28 分钟 读完 (约 4264 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p><img src="https://image.kangxiaoguang.com/1527562887.png" alt></p>
+<p>Gradle&#x662F;&#x4E00;&#x6B3E;&#x4E13;&#x6CE8;&#x4E8E;&#x7075;&#x6D3B;&#x6027;&#x548C;&#x6027;&#x80FD;&#x7684;&#x5F00;&#x6E90;&#x6784;&#x5EFA;&#x81EA;&#x52A8;&#x5316;&#x5DE5;&#x5177;&#x3002; Gradle&#x6784;&#x5EFA;&#x811A;&#x672C;&#x4F7F;&#x7528; Groovy &#x6216; Kotlin DSL &#x7F16;&#x5199;&#xFF0C;&#x5177;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x70B9;&#xFF1A;</p>
+<ul>
+<li><strong>&#x9AD8;&#x5EA6;&#x53EF;&#x5B9A;&#x5236;</strong> &#x2014; Gradle&#x4EE5;&#x6700;&#x57FA;&#x672C;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x5B9A;&#x5236;&#x548C;&#x6269;&#x5C55;</li>
+<li><strong>&#x5FEB;&#x901F;</strong> &#x2014; Gradle&#x901A;&#x8FC7;&#x91CD;&#x590D;&#x4F7F;&#x7528;&#x5148;&#x524D;&#x6267;&#x884C;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x4EC5;&#x5904;&#x7406;&#x5DF2;&#x66F4;&#x6539;&#x7684;&#x8F93;&#x5165;&#x4EE5;&#x53CA;&#x5E76;&#x884C;&#x6267;&#x884C;&#x4EFB;&#x52A1;&#x6765;&#x5FEB;&#x901F;&#x5B8C;&#x6210;&#x4EFB;&#x52A1;</li>
+<li><strong>&#x5F3A;&#x5927;</strong> &#x2014; Gradle&#x662F;Android&#x7684;&#x5B98;&#x65B9;&#x6784;&#x5EFA;&#x5DE5;&#x5177;&#xFF0C;&#x5E76;&#x4E14;&#x652F;&#x6301;&#x8BB8;&#x591A;&#x6D41;&#x884C;&#x7684;&#x8BED;&#x8A00;&#x548C;&#x6280;&#x672F;<a id="more"></a>
+<h1 id="&#x5B89;&#x88C5;"><a href="#&#x5B89;&#x88C5;" class="headerlink" title="&#x5B89;&#x88C5;"></a>&#x5B89;&#x88C5;</h1>&#x4E00;&#x884C;&#x547D;&#x4EE4;&#x641E;&#x5B9A;&#x6CD5;&#xFF1A;</li>
+</ul>
+<p></p><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ brew install gradle</span><br><span class="line"><span class="hljs-comment"># &#x9A8C;&#x8BC1;&#x662F;&#x5426;&#x5B89;&#x88C5;&#x6210;&#x529F;</span></span><br><span class="line">$ gradle -v</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h1 id="&#x57FA;&#x7840;"><a href="#&#x57FA;&#x7840;" class="headerlink" title="&#x57FA;&#x7840;"></a>&#x57FA;&#x7840;</h1><h2 id="Projects-amp-tasks"><a href="#Projects-amp-tasks" class="headerlink" title="Projects &amp; tasks"></a>Projects &amp; tasks</h2><p>&#x4EFB;&#x4F55;&#x4E00;&#x4E2A; Gradle &#x6784;&#x5EFA;&#x90FD;&#x662F;&#x7531;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A; projects &#x7EC4;&#x6210;&#xFF0C;&#x6BCF;&#x4E2A; task &#x90FD;&#x4EE3;&#x8868;&#x4E86;&#x6784;&#x5EFA;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x539F;&#x5B50;&#x6027;&#x64CD;&#x4F5C;&#x3002;&#x5982;&#x7F16;&#x8BD1;&#xFF0C;&#x6253;&#x5305;&#xFF0C;&#x751F;&#x6210; javadoc&#xFF0C;&#x53D1;&#x5E03;&#x5230;&#x67D0;&#x4E2A;&#x4ED3;&#x5E93;&#x7B49;&#x64CD;&#x4F5C;</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> hello {</span><br><span class="line">    <span class="hljs-keyword">doLast</span> {</span><br><span class="line">        <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;hello world&apos;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Run&#xFF1A;gradle -q hello</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<ol>
+<li>&#x9996;&#x5148;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x53EB;&#x505A; <code>hello</code> &#x7684; task</li>
+<li>doLast - Adds the given closure to the end of this task&#x2019;s action list&#xFF0C;&#x53EF;&#x4EE5;&#x4ECE;&#x5B98;&#x65B9;&#x6587;&#x6863;&#x4E2D;&#x770B;&#x7684;&#x51FA;&#x6765;&#xFF0C;doLast &#x628A;&#x53C2;&#x6570;&#x4E2D;&#x7684;&#x95ED;&#x5305;&#x653E;&#x5230;&#x4E86;&#x6240;&#x6709; task &#x7684;&#x6700;&#x540E;&#x6267;&#x884C;</li>
+<li>&#x5176;&#x4E2D; <code>-q</code> &#x53C2;&#x6570;&#x8868;&#x793A;&#x53EA;&#x6253;&#x5370;&#x9519;&#x8BEF;&#x4FE1;&#x606F;&#xFF0C;&#x4E0D;&#x4F1A;&#x6253;&#x5370;&#x5176;&#x4ED6;&#x65E5;&#x5FD7;&#x4FE1;&#x606F;</li>
+</ol>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x4E0B;&#x9762; task &#x7684;&#x5199;&#x6CD5;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> why {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;hello&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x8FD9;&#x79CD;&#x5199;&#x6CD5;&#x5C5E;&#x4E8E;&#x7ED9;&#x5F53;&#x524D;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x589E;&#x52A0;&#x5171;&#x540C;&#x884C;&#x4E3A;</p>
+<h2 id="&#x5FEB;&#x901F;&#x5B9A;&#x4E49;"><a href="#&#x5FEB;&#x901F;&#x5B9A;&#x4E49;" class="headerlink" title="&#x5FEB;&#x901F;&#x5B9A;&#x4E49;"></a>&#x5FEB;&#x901F;&#x5B9A;&#x4E49;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> <span class="hljs-keyword">append</span> &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;hello world&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><code>&lt;&lt;</code> &#x64CD;&#x4F5C;&#x7B26;&#x4E0D;&#x80FD;&#x7406;&#x89E3;&#x4E3A; Groovy &#x4E2D;&#x7684;&#x8FFD;&#x52A0;&#x64CD;&#x4F5C;&#xFF0C;&#x5FC5;&#x987B;&#x7406;&#x89E3;&#x4E3A; <code>doLast</code> &#x7684;&#x7B80;&#x5355;&#x5199;&#x6CD5;&#x3002;&#x9700;&#x8981;&#x7684;&#x6CE8;&#x610F;&#x7684;&#x662F; <code>doLast</code> &#x9ED8;&#x8BA4;&#x4F1A;&#x6309;&#x987A;&#x5E8F;&#x6267;&#x884C;&#x6240;&#x5728;&#x6587;&#x4EF6;&#x4E2D;&#x6240;&#x6709;&#x7684; task</p>
+<h2 id="&#x4EFB;&#x52A1;&#x4F9D;&#x8D56;"><a href="#&#x4EFB;&#x52A1;&#x4F9D;&#x8D56;" class="headerlink" title="&#x4EFB;&#x52A1;&#x4F9D;&#x8D56;"></a>&#x4EFB;&#x52A1;&#x4F9D;&#x8D56;</h2><p>&#x4EFB;&#x52A1;&#x4F9D;&#x8D56;&#x4E3B;&#x8981;&#x7528; <code>dependsOn</code> &#xFF0C;&#x6709;&#x4E24;&#x79CD;&#x7528;&#x6CD5;&#xFF0C;&#x7B2C;&#x4E00;&#x79CD;&#x4E3A;&#x5E38;&#x89C4;&#x7528;&#x6CD5;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> <span class="hljs-keyword">append</span> &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;append&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> depend(dependsOn: <span class="hljs-keyword">append</span>) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;depend&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> <span class="hljs-keyword">compile</span>(dependsOn: [<span class="hljs-keyword">append</span>, denpend]) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;compile&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x7B2C;&#x4E8C;&#x79CD;&#x662F;&#x5F53;&#x88AB;&#x4F9D;&#x8D56;&#x7684; task &#x58F0;&#x660E;&#x5728;&#x5F53;&#x524D; task &#x4E4B;&#x540E;&#x7684;&#x5199;&#x6CD5;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &#x6CE8;&#x610F;&#x533A;&#x522B;&#xFF0C;&#x8FD9;&#x91CC; task &#x540D;&#x5B57;&#x52A0;&#x4E0A;&#x4E86;&#x5355;&#x5F15;&#x53F7;</span></span><br><span class="line"><span class="hljs-keyword">task</span> depend(dependsOn: <span class="hljs-string">&apos;append&apos;</span>) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;depend&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> <span class="hljs-keyword">append</span> {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;append&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4EFB;&#x52A1;"><a href="#&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4EFB;&#x52A1;" class="headerlink" title="&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4EFB;&#x52A1;"></a>&#x52A8;&#x6001;&#x521B;&#x5EFA;&#x4EFB;&#x52A1;</h2><p>&#x4F7F;&#x7528; Groovy &#x5FAA;&#x73AF;&#x65B9;&#x5F0F;&#x4E5F;&#x53EF;&#x4EE5;&#x521B;&#x5EFA; task&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">1</span>.<span class="hljs-keyword">upto</span>(<span class="hljs-number">5</span>){</span><br><span class="line">    <span class="hljs-keyword">task</span> <span class="hljs-string">&quot;task_$it&quot;</span> &lt;&lt; {</span><br><span class="line">        <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;$it&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x4F7F;&#x7528;&#x5DF2;&#x5B58;&#x5728;&#x7684;-task"><a href="#&#x4F7F;&#x7528;&#x5DF2;&#x5B58;&#x5728;&#x7684;-task" class="headerlink" title="&#x4F7F;&#x7528;&#x5DF2;&#x5B58;&#x5728;&#x7684; task"></a>&#x4F7F;&#x7528;&#x5DF2;&#x5B58;&#x5728;&#x7684; task</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">task_1.dependsOn task_2, task_3</span><br><span class="line"></span><br><span class="line">task_1.<span class="hljs-keyword">doFirst</span> {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;do $task_1.name&quot;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">task_1.<span class="hljs-keyword">doLast</span> {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;finish $task_1.name&quot;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">task_1 &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;finish $task_1.name again&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="task-&#x5C5E;&#x6027;"><a href="#task-&#x5C5E;&#x6027;" class="headerlink" title="task &#x5C5E;&#x6027;"></a>task &#x5C5E;&#x6027;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &#x5176;&#x4E2D; $task_1.name &#x5C31;&#x662F;&#x9ED8;&#x8BA4;&#x7684; task &#x5C5E;&#x6027;</span></span><br><span class="line">task_1 &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;finish $task_1.name again&quot;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// &#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;</span></span><br><span class="line"><span class="hljs-keyword">task</span> config {</span><br><span class="line">    ext.customName = <span class="hljs-string">&apos;kevin&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> test &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> config.customName</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x9ED8;&#x8BA4;-task"><a href="#&#x9ED8;&#x8BA4;-task" class="headerlink" title="&#x9ED8;&#x8BA4; task"></a>&#x9ED8;&#x8BA4; task</h2><p>&#x4F7F;&#x7528; <code>defaultTasks</code> &#x5B9A;&#x4E49;&#x9ED8;&#x8BA4; task&#xFF0C;&#x591A;&#x4E2A; task &#x4F7F;&#x7528;&#x9017;&#x53F7;&#x533A;&#x5206;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaultTasks <span class="hljs-string">&apos;append&apos;</span>, <span class="hljs-string">&apos;hello&apos;</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x4E3A;&#x4E0D;&#x540C;-task-&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#x53C2;&#x6570;"><a href="#&#x4E3A;&#x4E0D;&#x540C;-task-&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#x53C2;&#x6570;" class="headerlink" title="&#x4E3A;&#x4E0D;&#x540C; task &#x914D;&#x7F6E;&#x4E0D;&#x540C;&#x53C2;&#x6570;"></a>&#x4E3A;&#x4E0D;&#x540C; task &#x914D;&#x7F6E;&#x4E0D;&#x540C;&#x53C2;&#x6570;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">File</span>[] getFiles(dir) {</span><br><span class="line">    <span class="hljs-keyword">file</span>(dir).listFiles({<span class="hljs-keyword">file</span> -&gt; <span class="hljs-keyword">file</span>.isFile()} as FileFilter).<span class="hljs-keyword">sort</span>()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6;&#x6587;&#x4EF6;&#x5185;&#x5BB9;</span></span><br><span class="line"><span class="hljs-keyword">task</span> loadDirFile &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">def</span> files = getFiles(<span class="hljs-string">&quot;$dir&quot;</span>)</span><br><span class="line">    <span class="hljs-keyword">if</span> (files.length &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">        files.<span class="hljs-keyword">each</span> { <span class="hljs-keyword">file</span> -&gt;</span><br><span class="line">            <span class="hljs-keyword">ant</span>.loadfile(srcFile: <span class="hljs-keyword">file</span>, property: <span class="hljs-keyword">file</span>.name)</span><br><span class="line">            <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;${ant.properties[file.name]}&quot;</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// &#x751F;&#x6210;&#x6821;&#x9A8C;&#x503C;</span></span><br><span class="line"><span class="hljs-keyword">task</span> checkSum &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">def</span> files = getFiles(<span class="hljs-string">&quot;$dir&quot;</span>)</span><br><span class="line">    <span class="hljs-keyword">if</span> (files.length &gt; <span class="hljs-number">0</span>) {</span><br><span class="line">        files.<span class="hljs-keyword">each</span> { <span class="hljs-keyword">file</span> -&gt;</span><br><span class="line">            <span class="hljs-keyword">ant</span>.checksum(<span class="hljs-keyword">file</span>: <span class="hljs-keyword">file</span>, property: <span class="hljs-keyword">file</span>.name)</span><br><span class="line">            <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;${ant.properties[file.name]}&quot;</span></span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">gradle.taskGraph.whenReady { <span class="hljs-keyword">task</span> -&gt;</span><br><span class="line">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">task</span>.hasTask(checkSum)) {</span><br><span class="line">        ext.dir = <span class="hljs-string">&quot;..&quot;</span></span><br><span class="line">    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">task</span>.hasTask(loadDirFile)) {</span><br><span class="line">        ext.dir = <span class="hljs-string">&quot;.&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h1 id="Gradle-Wrapper"><a href="#Gradle-Wrapper" class="headerlink" title="Gradle Wrapper"></a>Gradle Wrapper</h1><p>&#x8FD0;&#x884C; Gradle Script &#x7684;&#x63A8;&#x8350;&#x65B9;&#x5F0F;&#x5C31;&#x662F;&#x4F7F;&#x7528; Gradle Wrapper&#xFF0C;&#x5148;&#x770B;&#x4E00;&#x4E0B; Gradle Wrapper &#x7684;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#xFF1A;</p>
+<p><img src="https://image.kangxiaoguang.com/1528530490.png" alt></p>
+<p>Wrapper&#x662F;&#x4E00;&#x4E2A;&#x8C03;&#x7528;Gradle&#x58F0;&#x660E;&#x7248;&#x672C;&#x7684;&#x811A;&#x672C;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x4E8B;&#x5148;&#x4E0B;&#x8F7D;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x53EF;&#x4EE5;&#x5FEB;&#x901F;&#x542F;&#x52A8;&#x5E76;&#x8FD0;&#x884C;Gradle&#x9879;&#x76EE;&#xFF0C;&#x4E0D;&#x7528;&#x62C5;&#x5FC3;&#x672C;&#x5730; Gradle &#x7248;&#x672C;&#x548C;&#x9879;&#x76EE;&#x4E2D;&#x4F7F;&#x7528;&#x7684; Gradle &#x7248;&#x672C;&#x4E0D;&#x4E00;&#x81F4;&#x5BFC;&#x81F4;&#x4E00;&#x4E9B;&#x4E0D;&#x53EF;&#x9884;&#x89C1;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x4ECE;&#x800C;&#x8282;&#x7701;&#x516C;&#x53F8;&#x7684;&#x65F6;&#x95F4;&#x548C;&#x91D1;&#x94B1;&#x3002;</p>
+<h1 id="Gradle-&#x547D;&#x4EE4;&#x884C;"><a href="#Gradle-&#x547D;&#x4EE4;&#x884C;" class="headerlink" title="Gradle &#x547D;&#x4EE4;&#x884C;"></a>Gradle &#x547D;&#x4EE4;&#x884C;</h1><p>&#x6267;&#x884C; <code>gradle -h</code> &#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6240;&#x6709;&#x53C2;&#x6570;&#x4EE5;&#x53CA;&#x63CF;&#x8FF0;</p>
+<h2 id="&#x591A;&#x4EFB;&#x52A1;&#x8C03;&#x7528;"><a href="#&#x591A;&#x4EFB;&#x52A1;&#x8C03;&#x7528;" class="headerlink" title="&#x591A;&#x4EFB;&#x52A1;&#x8C03;&#x7528;"></a>&#x591A;&#x4EFB;&#x52A1;&#x8C03;&#x7528;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> <span class="hljs-keyword">compile</span> &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;compile&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> compileTest(dependsOn: <span class="hljs-keyword">compile</span>) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;compileTest&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> runTest(dependsOn: [<span class="hljs-keyword">compile</span>, compileTest]) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;runTest&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> running(dependsOn: runTest) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;running&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>&#x6267;&#x884C; <code>gradle running compile</code> &#x540E;&#x7684;&#x7ED3;&#x679C;&#xFF1A;<p></p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x279C; gradle running <span class="hljs-keyword">compile</span> </span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :<span class="hljs-keyword">compile</span></span><br><span class="line"><span class="hljs-keyword">compile</span></span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :compileTest</span><br><span class="line">compileTest</span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :runTest</span><br><span class="line">runTest</span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :running</span><br><span class="line">running</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x6BCF;&#x4E2A; task &#x53EA;&#x4F1A;&#x6267;&#x884C;&#x4E00;&#x6B21;&#xFF0C;<code>running</code> &#x5DF2;&#x7ECF;&#x4F9D;&#x8D56;&#x4E86; <code>compile</code>&#xFF0C;&#x6240;&#x4EE5; <code>compile</code> &#x4E0D;&#x4F1A;&#x6267;&#x884C;&#x4E24;&#x6B21;</p>
+<h2 id="&#x6392;&#x9664;&#x4EFB;&#x52A1;"><a href="#&#x6392;&#x9664;&#x4EFB;&#x52A1;" class="headerlink" title="&#x6392;&#x9664;&#x4EFB;&#x52A1;"></a>&#x6392;&#x9664;&#x4EFB;&#x52A1;</h2><blockquote>
+<p>-x, &#x2013;exclude-task        Specify a task to be excluded from execution.<br>&#x6307;&#x5B9A;&#x4E00;&#x4E2A; task &#x4E0D;&#x6267;&#x884C;</p>
+</blockquote>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x279C; gradle running -x <span class="hljs-keyword">compile</span></span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :compileTest</span><br><span class="line">compileTest</span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :runTest</span><br><span class="line">runTest</span><br><span class="line"></span><br><span class="line">&gt; <span class="hljs-keyword">Task</span> :running</span><br><span class="line">running</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x5931;&#x8D25;&#x540E;&#x7EE7;&#x7EED;&#x6267;&#x884C;"><a href="#&#x5931;&#x8D25;&#x540E;&#x7EE7;&#x7EED;&#x6267;&#x884C;" class="headerlink" title="&#x5931;&#x8D25;&#x540E;&#x7EE7;&#x7EED;&#x6267;&#x884C;"></a>&#x5931;&#x8D25;&#x540E;&#x7EE7;&#x7EED;&#x6267;&#x884C;</h2><blockquote>
+<p>&#x2013;continue                Continue task execution after a task failure.<br>&#x5F53;&#x4E00;&#x4E2A; task &#x5931;&#x8D25;&#x540E;&#x7EE7;&#x7EED;&#x5F80;&#x540E;&#x6267;&#x884C;</p>
+</blockquote>
+<h2 id="&#x7B80;&#x5316;&#x4EFB;&#x52A1;&#x540D;"><a href="#&#x7B80;&#x5316;&#x4EFB;&#x52A1;&#x540D;" class="headerlink" title="&#x7B80;&#x5316;&#x4EFB;&#x52A1;&#x540D;"></a>&#x7B80;&#x5316;&#x4EFB;&#x52A1;&#x540D;</h2><p>&#x9700;&#x8981;&#x6267;&#x884C;&#x4EFB;&#x52A1;&#x65F6;&#xFF0C;&#x65E0;&#x987B;&#x8F93;&#x5165;&#x5168;&#x90E8;&#x4EFB;&#x52A1;&#x540D;&#xFF0C;&#x53EA;&#x9700;&#x63D0;&#x4F9B;&#x8DB3;&#x591F;&#x7684;&#x53EF;&#x4EE5;&#x552F;&#x4E00;&#x533A;&#x5206;&#x51FA;&#x8BE5;&#x4EFB;&#x52A1;&#x7684;&#x5B57;&#x7B26;&#x5373;&#x53EF;</p>
+<h2 id="&#x6307;&#x5B9A;&#x6784;&#x5EFA;&#x6587;&#x4EF6;"><a href="#&#x6307;&#x5B9A;&#x6784;&#x5EFA;&#x6587;&#x4EF6;" class="headerlink" title="&#x6307;&#x5B9A;&#x6784;&#x5EFA;&#x6587;&#x4EF6;"></a>&#x6307;&#x5B9A;&#x6784;&#x5EFA;&#x6587;&#x4EF6;</h2><blockquote>
+<p>-b, &#x2013;build-file          Specify the build file.<br>&#x6307;&#x5B9A;&#x4E00;&#x4E2A;&#x6784;&#x5EFA;&#x6587;&#x4EF6;</p>
+</blockquote>
+<h2 id="&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;"><a href="#&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;" class="headerlink" title="&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;"></a>&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x4FE1;&#x606F;</h2><blockquote>
+<p>tasks - Displays the tasks runnable from root project &#x2018;gradle&#x2019;<br>&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x65B0;</p>
+</blockquote>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6;&#x6240;&#x6709;&#x7684; task</span></span><br><span class="line">$ gradle -q tasks --all</span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6; task &#x7684;&#x8BE6;&#x7EC6;&#x4FE1;&#x606F;</span></span><br><span class="line">$ gradle help --<span class="hljs-keyword">task</span> taskName</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x914D;&#x7F6E;&#x4EFB;&#x52A1;&#x53C2;&#x6570;"><a href="#&#x914D;&#x7F6E;&#x4EFB;&#x52A1;&#x53C2;&#x6570;" class="headerlink" title="&#x914D;&#x7F6E;&#x4EFB;&#x52A1;&#x53C2;&#x6570;"></a>&#x914D;&#x7F6E;&#x4EFB;&#x52A1;&#x53C2;&#x6570;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> hello {</span><br><span class="line">    <span class="hljs-keyword">description</span> = <span class="hljs-string">&quot;hello&quot;</span></span><br><span class="line">    version = <span class="hljs-string">&quot;10.0.0&quot;</span></span><br><span class="line">    <span class="hljs-keyword">group</span> = <span class="hljs-string">&quot;build&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x83B7;&#x53D6;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;"><a href="#&#x83B7;&#x53D6;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;" class="headerlink" title="&#x83B7;&#x53D6;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;"></a>&#x83B7;&#x53D6;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;</h2><p>&#x9488;&#x5BF9; Android &#x9879;&#x76EE;&#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6;&#x6240;&#x6709; projects</span></span><br><span class="line">$ gradle -q projects</span><br><span class="line"><span class="hljs-comment">// &#x9009;&#x62E9;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x6216;&#x591A;&#x4E2A;&#x83B7;&#x53D6;&#x5B83;&#x7684;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;</span></span><br><span class="line">$ gradle -q app:<span class="hljs-keyword">dependencies</span> lib:dependenices</span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6; Gradle &#x6784;&#x5EFA;&#x811A;&#x672C;&#x7684;&#x4F9D;&#x8D56;&#x9879;</span></span><br><span class="line">$ gradle buildEnvironment</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="&#x83B7;&#x53D6;&#x6307;&#x5B9A;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;"><a href="#&#x83B7;&#x53D6;&#x6307;&#x5B9A;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;" class="headerlink" title="&#x83B7;&#x53D6;&#x6307;&#x5B9A;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;"></a>&#x83B7;&#x53D6;&#x6307;&#x5B9A;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;</h3><p>&#x9996;&#x5148;&#x9700;&#x8981;&#x660E;&#x767D; <code>configuration</code> &#x7684;&#x6982;&#x5FF5;&#xFF1A;</p>
+<blockquote>
+<p><strong>What is a configuration?</strong></p>
+</blockquote>
+<blockquote>
+<p>Every dependency declared for a Gradle project applies to a specific scope. For &gt; example some dependencies should be used for compiling source code whereas others only need to be available at runtime. Gradle represents the scope of a dependency with the help of a Configuration. Every configuration can be identified by a unique name.</p>
+</blockquote>
+<blockquote>
+<p>Many Gradle plugins add pre-defined configurations to your project. The Java plugin, for example, adds configurations to represent the various classpaths it needs for source code compilation, executing tests and the like. See the Java plugin chapter for an example. The sections above demonstrate how to declare dependencies for different use cases. </p>
+</blockquote>
+<p>&#x4E0A;&#x9762;&#x662F;&#x5B98;&#x65B9;&#x7684;&#x89E3;&#x91CA;&#xFF0C;&#x7B80;&#x5355;&#x7FFB;&#x8BD1;&#x540E;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#xFF1A;</p>
+<blockquote>
+<p>&#x6BCF;&#x4E2A; Gradle &#x9879;&#x76EE;&#x7684;&#x4F9D;&#x8D56;&#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x8303;&#x56F4;&#xFF0C;&#x6BD4;&#x5982; <code>implementation</code> &#x4EE5;&#x53CA; <code>api</code>&#xFF0C;&#x6839;&#x636E;&#x8FD9;&#x4E9B;&#x914D;&#x7F6E;&#xFF0C;Gradle &#x624D;&#x80FD;&#x77E5;&#x9053;&#x8BE5;&#x600E;&#x4E48;&#x5904;&#x7406;&#x8FD9;&#x4E9B;&#x4F9D;&#x8D56;&#x3002;&#x5176;&#x5B9E; <code>implementation</code> &#x4EE5;&#x53CA; <code>api</code> &#x90FD;&#x662F; Android &#x9879;&#x76EE;&#x9884;&#x5B9A;&#x4E49;&#x7684; <code>configuration</code></p>
+</blockquote>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6;&#x6307;&#x5B9A; configuration &#x7684;&#x4F9D;&#x8D56;&#x4FE1;&#x606F;</span></span><br><span class="line">$ gradle app:<span class="hljs-keyword">dependencies</span> --configuration implementation</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="&#x83B7;&#x53D6;&#x7279;&#x5B9A;&#x4F9D;&#x8D56;&#x62A5;&#x544A;"><a href="#&#x83B7;&#x53D6;&#x7279;&#x5B9A;&#x4F9D;&#x8D56;&#x62A5;&#x544A;" class="headerlink" title="&#x83B7;&#x53D6;&#x7279;&#x5B9A;&#x4F9D;&#x8D56;&#x62A5;&#x544A;"></a>&#x83B7;&#x53D6;&#x7279;&#x5B9A;&#x4F9D;&#x8D56;&#x62A5;&#x544A;</h3><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// --dependency &#x662F;&#x5177;&#x4F53;&#x4F9D;&#x8D56; --configuration &#x662F;&#x4F9D;&#x8D56;&#x7684;&#x5177;&#x4F53;&#x914D;&#x7F6E;&#xFF0C;&#x7F3A;&#x4E00;&#x4E0D;&#x53EF;</span></span><br><span class="line">$ gradle -q app:dependencyInsight --dependency com.facebook.stetho</span><br><span class="line"> --configuration compileClasspath</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><code>dependencyInsight</code> &#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x4F9D;&#x8D56;&#x6DF1;&#x5EA6;&#x62A5;&#x544A;&#xFF0C;&#x7528;&#x6765;&#x6392;&#x67E5;&#x4F9D;&#x8D56;&#x51B2;&#x7A81;&#x975E;&#x5E38;&#x6709;&#x6548;</p>
+<h3 id="&#x83B7;&#x53D6;&#x5C5E;&#x6027;"><a href="#&#x83B7;&#x53D6;&#x5C5E;&#x6027;" class="headerlink" title="&#x83B7;&#x53D6;&#x5C5E;&#x6027;"></a>&#x83B7;&#x53D6;&#x5C5E;&#x6027;</h3><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gradle -q app:properties</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="&#x6784;&#x5EFA;&#x65E5;&#x5FD7;"><a href="#&#x6784;&#x5EFA;&#x65E5;&#x5FD7;" class="headerlink" title="&#x6784;&#x5EFA;&#x65E5;&#x5FD7;"></a>&#x6784;&#x5EFA;&#x65E5;&#x5FD7;</h3><p>&#x52A0;&#x4E0A; <code>--profile</code> &#x53C2;&#x6570;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x6839;&#x76EE;&#x5F55;&#x7684; <code>build/reports/profile</code> &#x4E2D;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x4EE5;&#x65E5;&#x671F;&#x547D;&#x540D;&#x7684;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gradle -q --profile  getConfigurationByName</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><img src="https://image.kangxiaoguang.com/1527671441.png" alt></p>
+<h3 id="Dry-Run"><a href="#Dry-Run" class="headerlink" title="Dry Run"></a>Dry Run</h3><p>&#x53EA;&#x60F3;&#x77E5;&#x9053;&#x67D0;&#x4E2A;&#x4EFB;&#x52A1;&#x5728;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1;&#x96C6;&#x4E2D;&#x6309;&#x987A;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x60F3;&#x5B9E;&#x9645;&#x6267;&#x884C;&#x8FD9;&#x4E9B;&#x4EFB;&#x52A1;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>-m</code> &#x53C2;&#x6570;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gradle -m build</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="&#x7ED9;-JVM-&#x6DFB;&#x52A0;&#x53C2;&#x6570;"><a href="#&#x7ED9;-JVM-&#x6DFB;&#x52A0;&#x53C2;&#x6570;" class="headerlink" title="&#x7ED9; JVM &#x6DFB;&#x52A0;&#x53C2;&#x6570;"></a>&#x7ED9; JVM &#x6DFB;&#x52A0;&#x53C2;&#x6570;</h3><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gradle -Dmyprop=myprop</span><br></pre></td></tr></tbody></table></figure><br>Gradle &#x7684; <strong>-D</strong> &#x53C2;&#x6570;&#x548C; Java &#x7684; <strong>-D</strong> &#x53C2;&#x6570;&#x529F;&#x80FD;&#x4E00;&#x81F4;<p></p>
+<h1 id="Gradle-DSL"><a href="#Gradle-DSL" class="headerlink" title="Gradle DSL"></a>Gradle DSL</h1><p>DSL &#x7684;&#x5168;&#x79F0;&#x5C31;&#x662F; Domain Specific Language&#xFF08;&#x9886;&#x57DF;&#x7279;&#x5B9A;&#x8BED;&#x8A00;&#xFF09;&#xFF0C;&#x901A;&#x8FC7;&#x4F8B;&#x5B50;&#x53EF;&#x80FD;&#x4F1A;&#x66F4;&#x597D;&#x7684;&#x7406;&#x89E3;&#xFF1A;</p>
+<ol>
+<li>&#x6B63;&#x5219;&#x8868;&#x8FBE;&#x5F0F; - &#x6309;&#x7167;&#x6307;&#x5B9A;&#x89C4;&#x5219;&#x7F16;&#x5199;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x662F;&#x5426;&#x5339;&#x914D;&#x5168;&#x4EA4;&#x7ED9;&#x4E86;&#x8BED;&#x8A00;&#x5F15;&#x64CE;&#x6765;&#x5B8C;&#x6210;</li>
+<li>SQL - &#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x6570;&#x636E;&#x5E93;&#x9886;&#x57DF;&#x7684; DSL</li>
+<li>Markdown - &#x5199;&#x4F5C;&#x9886;&#x57DF;&#x7684; DSL</li>
+</ol>
+<h2 id="&#x58F0;&#x660E;&#x53D8;&#x91CF;"><a href="#&#x58F0;&#x660E;&#x53D8;&#x91CF;" class="headerlink" title="&#x58F0;&#x660E;&#x53D8;&#x91CF;"></a>&#x58F0;&#x660E;&#x53D8;&#x91CF;</h2><h3 id="&#x5C40;&#x90E8;&#x53D8;&#x91CF;"><a href="#&#x5C40;&#x90E8;&#x53D8;&#x91CF;" class="headerlink" title="&#x5C40;&#x90E8;&#x53D8;&#x91CF;"></a>&#x5C40;&#x90E8;&#x53D8;&#x91CF;</h3><p>&#x53EA;&#x5728;&#x5B9A;&#x4E49;&#x8BE5;&#x53D8;&#x91CF;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x6709;&#x6548;&#x7684;&#x53D8;&#x91CF;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// build.gradle</span></span><br><span class="line"><span class="hljs-keyword">def</span> value = <span class="hljs-string">&apos;kevin&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> getValue {</span><br><span class="line">    <span class="hljs-keyword">println</span> value</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="&#x989D;&#x5916;&#x5C5E;&#x6027;"><a href="#&#x989D;&#x5916;&#x5C5E;&#x6027;" class="headerlink" title="&#x989D;&#x5916;&#x5C5E;&#x6027;"></a>&#x989D;&#x5916;&#x5C5E;&#x6027;</h3><p>&#x989D;&#x5916;&#x5C5E;&#x6027;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x6240;&#x5C5E;&#x5BF9;&#x8C61;&#x7684; <code>ext</code> &#x5C5E;&#x6027;&#x8FDB;&#x884C;&#x6DFB;&#x52A0;&#xFF0C;&#x8BFB;&#x53D6;&#x548C;&#x8BBE;&#x7F6E;&#xFF1A;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// root/build.gradle</span><br><span class="line">ext {</span><br><span class="line">    value = &apos;world&apos;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">ext.a = &apos;a&apos;</span><br><span class="line">ext.b = [1,2,3]</span><br><span class="line">ext.c = [:]</span><br><span class="line">c.a = &apos;c.a&apos;</span><br><span class="line">c.b = &apos;c.b&apos;</span><br><span class="line"></span><br><span class="line">// root/app/buidl.gradle</span><br><span class="line">def value = &apos;kevin&apos;</span><br><span class="line"></span><br><span class="line">task getValue &lt;&lt; {</span><br><span class="line">    println &quot;Local variable is $value, Global variable is $c.a&quot;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>&#x540C;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>gradle.properties</code> &#x6587;&#x4EF6;&#x4E3A; <code>project</code> &#x5BF9;&#x8C61;&#x6DFB;&#x52A0;&#x989D;&#x5916;&#x53C2;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x5F53;&#x524D;&#x76EE;&#x5F55;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x8BFB;&#x53D6;&#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E2D;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;<p></p>
+<p><code>-P</code> &#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// command: gradle -q -PcommandValue=hello2 getCommandValue</span></span><br><span class="line"><span class="hljs-comment">// output: hello2</span></span><br><span class="line"><span class="hljs-keyword">task</span> getCommandValue &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> commandValue</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><code>-D</code> &#x53C2;&#x6570;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// command: gradle -q -DsystemValue=hello getSystemValue</span></span><br><span class="line"><span class="hljs-comment">// output: hello</span></span><br><span class="line"><span class="hljs-keyword">task</span> getSystemValue &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> System.getProperty(<span class="hljs-string">&quot;systemValue&quot;</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x901A;&#x8FC7;&#x7CFB;&#x7EDF;&#x53D8;&#x91CF;&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;&#xFF0C;&#x5F53;&#x6709;&#x7C7B;&#x4F3C; <code>ORG_GRADLE_PROJECT_propName=value</code> &#x8FD9;&#x6837;&#x683C;&#x5F0F;&#x7684;&#x7CFB;&#x7EDF;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;Gradle &#x91CC;&#x9762;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; <code>propName</code> &#x5C5E;&#x6027;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x4E00;&#x4E2A;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// command:</span></span><br><span class="line"><span class="hljs-comment">// export ORG_GRADLE_PROJECT_value=kevin</span></span><br><span class="line"><span class="hljs-comment">// gradle -q getSystemValue2</span></span><br><span class="line"><span class="hljs-comment">// output: kevin</span></span><br><span class="line"><span class="hljs-keyword">task</span> getSystemValue2 &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> value</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x8FD8;&#x6709;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#x662F;&#x9700;&#x8981;&#x8BBE;&#x7F6E;&#x7CFB;&#x7EDF;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; <code>gradle.properties</code> &#x6587;&#x4EF6;&#x6765;&#x8BBE;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x8BE5;&#x6587;&#x4EF6;&#x4E2D;&#x6709;&#x4E00;&#x4E2A; <code>systemProp.</code> &#x4E3A;&#x524D;&#x7F00;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x8BE5;&#x5C5E;&#x6027;&#x548C;&#x5B83;&#x5BF9;&#x5E94;&#x7684;&#x503C;&#x5C31;&#x4F1A;&#x88AB;&#x6DFB;&#x52A0;&#x5230;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;&#x4E2D;&#xFF0C;&#x4E14;&#x4E0D;&#x5E26;&#x524D;&#x7F00;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5728;&#x591A;&#x9879;&#x76EE;&#x6784;&#x5EFA;&#x4E2D;&#xFF0C;&#x9664;&#x4E86;&#x6839;&#x76EE;&#x5F55;&#x7684; <code>systemProp.</code> &#x5C5E;&#x6027;&#xFF0C;&#x5176;&#x4ED6;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x90FD;&#x5C06;&#x88AB;&#x5FFD;&#x7565;&#xFF1A;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// gradle.properties</span><br><span class="line">systemProp.helloWorld=hello</span><br><span class="line">// build.gradle</span><br><span class="line">// command: gradle -q getSystemValue</span><br><span class="line">// output: hello</span><br><span class="line">task getSystemValue &lt;&lt; {</span><br><span class="line">    println System.getProperty(&quot;helloWorld&quot;)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x5982;&#x679C;&#x540C;&#x65F6;&#x5728; <code>gradle.properties</code> &#x548C;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x90FD;&#x8BBE;&#x7F6E;&#x4E86;&#x540C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5219;&#x4F18;&#x5148;&#x4F7F;&#x7528;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x914D;&#x7F6E;&#x7684;&#x53C2;&#x6570;</p>
+<h3 id="&#x95ED;&#x5305;&#x59D4;&#x6258;"><a href="#&#x95ED;&#x5305;&#x59D4;&#x6258;" class="headerlink" title="&#x95ED;&#x5305;&#x59D4;&#x6258;"></a>&#x95ED;&#x5305;&#x59D4;&#x6258;</h3><p>&#x4FEE;&#x70BC;&#x4E2D;&#x2026;</p>
+<h3 id="&#x4F7F;&#x7528;&#x5916;&#x90E8;&#x6784;&#x5EFA;&#x811A;&#x672C;"><a href="#&#x4F7F;&#x7528;&#x5916;&#x90E8;&#x6784;&#x5EFA;&#x811A;&#x672C;" class="headerlink" title="&#x4F7F;&#x7528;&#x5916;&#x90E8;&#x6784;&#x5EFA;&#x811A;&#x672C;"></a>&#x4F7F;&#x7528;&#x5916;&#x90E8;&#x6784;&#x5EFA;&#x811A;&#x672C;</h3><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// other.gradle</span></span><br><span class="line">ext.otherValue=<span class="hljs-string">&apos;other&apos;</span></span><br><span class="line">ext.otherMethod={</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;other.gradle#otherMethod&quot;</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// build.gradle</span></span><br><span class="line">apply <span class="hljs-keyword">from</span>: <span class="hljs-string">&apos;other.gradle&apos;</span></span><br><span class="line"><span class="hljs-keyword">task</span> getOtherScriptValue &lt;&lt; {</span><br><span class="line">    otherMethod()</span><br><span class="line">    <span class="hljs-keyword">println</span> otherValue</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="&#x7F13;&#x5B58;"><a href="#&#x7F13;&#x5B58;" class="headerlink" title="&#x7F13;&#x5B58;"></a>&#x7F13;&#x5B58;</h3><p>Gradle &#x9ED8;&#x8BA4;&#x7F13;&#x5B58;&#x6240;&#x6709;&#x7F16;&#x8BD1;&#x8FC7;&#x7684;&#x811A;&#x672C;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x811A;&#x672C;&#x6709;&#x6539;&#x52A8;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x5E76;&#x7F13;&#x5B58;&#xFF0C;&#x6CA1;&#x6709;&#x6539;&#x52A8;&#x5219;&#x4F7F;&#x7528;&#x7F13;&#x5B58;&#x4E0D;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;&#x3002;&#x4F7F;&#x7528; <code>--recompile-scripts</code> &#x9009;&#x9879;&#x8FD0;&#x884C; Gradle &#x4F1A;&#x5F3A;&#x5236;&#x4E22;&#x5F03;&#x7F13;&#x5B58;&#x91CD;&#x65B0;&#x7F16;&#x8BD1;&#x5E76;&#x7F13;&#x5B58;</p>
+<h1 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h1><h2 id="&#x5B9A;&#x4E49;&#x4EFB;&#x52A1;"><a href="#&#x5B9A;&#x4E49;&#x4EFB;&#x52A1;" class="headerlink" title="&#x5B9A;&#x4E49;&#x4EFB;&#x52A1;"></a>&#x5B9A;&#x4E49;&#x4EFB;&#x52A1;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> myTask{</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;myTask&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span>(myTask){</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;myTask&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span>(<span class="hljs-string">&apos;myTask&apos;</span>){</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;myTask&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span>(myTask, type: <span class="hljs-keyword">Copy</span>){</span><br><span class="line">    <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;.&quot;</span></span><br><span class="line">    <span class="hljs-keyword">into</span> <span class="hljs-string">&quot;..&quot;</span></span><br><span class="line">    <span class="hljs-keyword">include</span> <span class="hljs-string">&apos;*.gradle&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">tasks.create(name: <span class="hljs-string">&apos;createTask&apos;</span>) {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;crate task&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x91CD;&#x5199;&#x4EFB;&#x52A1;"><a href="#&#x91CD;&#x5199;&#x4EFB;&#x52A1;" class="headerlink" title="&#x91CD;&#x5199;&#x4EFB;&#x52A1;"></a>&#x91CD;&#x5199;&#x4EFB;&#x52A1;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tasks.create(name: <span class="hljs-string">&apos;createTask&apos;</span>) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;crate task&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> createTask(overwrite: <span class="hljs-keyword">true</span>) &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;overwrite&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// output: </span></span><br><span class="line"><span class="hljs-comment">// override</span></span><br></pre></td></tr></tbody></table></figure><br>&#x5FC5;&#x987B;&#x628A; <code>overwrite</code> &#x5C5E;&#x6027;&#x8BBE;&#x7F6E;&#x4E3A; <strong>true</strong>&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x629B;&#x51FA; <code>a task with that name already exists</code> &#x7684;&#x5F02;&#x5E38;<p></p>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;-Task"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B;-Task" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B; Task"></a>&#x81EA;&#x5B9A;&#x4E49;&#x7C7B;&#x578B; Task</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">class</span> CustomTask <span class="hljs-keyword">extends</span> DefaultTask {</span><br><span class="line">    String value = <span class="hljs-string">&apos;hello workd&apos;</span></span><br><span class="line"></span><br><span class="line">    @TaskAction</span><br><span class="line">    <span class="hljs-keyword">def</span> init() {</span><br><span class="line">        <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;i&apos;m custom task -- $value&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> customTask1(type: CustomTask)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> customTask2(type: CustomTask) {</span><br><span class="line">    value = <span class="hljs-string">&apos;custom prop&apos;</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// command: gradle -q customTask2 hello</span></span><br><span class="line"><span class="hljs-comment">// output: i&apos;m custom task -- custom prop</span></span><br><span class="line"><span class="hljs-comment">// output: i&apos;m custom task -- hello workd</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x8BE5;&#x4EFB;&#x52A1;&#x6DFB;&#x52A0;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x5E76;&#x4F7F;&#x7528; <code>@TaskAction</code> &#x6CE8;&#x91CA;&#x6807;&#x8BB0;&#x5B83;&#x3002;&#x5F53;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x65F6;&#xFF0C;Gradle&#x5C06;&#x8C03;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;</p>
+<h2 id="&#x8DF3;&#x8FC7;&#x4EFB;&#x52A1;"><a href="#&#x8DF3;&#x8FC7;&#x4EFB;&#x52A1;" class="headerlink" title="&#x8DF3;&#x8FC7;&#x4EFB;&#x52A1;"></a>&#x8DF3;&#x8FC7;&#x4EFB;&#x52A1;</h2><h3 id="onlyIf"><a href="#onlyIf" class="headerlink" title="onlyIf"></a>onlyIf</h3><p>Typical usage:<code>myTask.onlyIf{ dependsOnTaskDidWork() }</code>&#xFF0C;&#x5F53;&#x95ED;&#x5305;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#x8FD4;&#x56DE; <strong>true</strong> &#x65F6;&#xFF0C;&#x624D;&#x4F1A;&#x6267;&#x884C;&#x8BE5; Task&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">createTask.onlyIf {</span><br><span class="line">    <span class="hljs-keyword">project</span>.hasProperty(<span class="hljs-string">&apos;skip&apos;</span>)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// command: gradle createTask</span></span><br><span class="line"><span class="hljs-comment">// output: BUILD SUCCESSFUL in 0s</span></span><br><span class="line"><span class="hljs-comment">// command: gradle -q createTask -Pskip</span></span><br><span class="line"><span class="hljs-comment">// output: overwrite</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="StopExecutionException"><a href="#StopExecutionException" class="headerlink" title="StopExecutionException"></a>StopExecutionException</h3><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> <span class="hljs-keyword">compile</span> &lt;&lt; {</span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;We are doing the compile.&apos;</span></span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">compile</span>.<span class="hljs-keyword">doFirst</span> {</span><br><span class="line">    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">true</span>) { <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> StopExecutionException() }</span><br><span class="line">}</span><br><span class="line"><span class="hljs-keyword">task</span> myTask(dependsOn: <span class="hljs-string">&apos;compile&apos;</span>) &lt;&lt; {</span><br><span class="line">   <span class="hljs-keyword">println</span> <span class="hljs-string">&apos;I am not affected&apos;</span></span><br><span class="line">} </span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// command: gradle -q myTask</span></span><br><span class="line"><span class="hljs-comment">// output: I am not affected</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<h3 id="Task-enable-&#x5C5E;&#x6027;"><a href="#Task-enable-&#x5C5E;&#x6027;" class="headerlink" title="Task enable &#x5C5E;&#x6027;"></a>Task enable &#x5C5E;&#x6027;</h3><p>&#x6BCF;&#x4E2A; task &#x90FD;&#x6709;&#x4E00;&#x4E2A;&#x503C;&#x4E3A; true &#x7684; enable &#x5C5E;&#x6027;&#xFF0C;&#x5982;&#x679C;&#x628A;&#x8FD9;&#x4E2A;&#x5C5E;&#x6027;&#x8BBE;&#x7F6E;&#x4E3A; false&#xFF0C;&#x5219;&#x4E0D;&#x4F1A;&#x6267;&#x884C;&#x8BE5; task &#x7684;&#x4EFB;&#x4F55;&#x64CD;&#x4F5C;</p>
+<h2 id="&#x4EFB;&#x52A1;&#x89C4;&#x5219;"><a href="#&#x4EFB;&#x52A1;&#x89C4;&#x5219;" class="headerlink" title="&#x4EFB;&#x52A1;&#x89C4;&#x5219;"></a>&#x4EFB;&#x52A1;&#x89C4;&#x5219;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tasks.addRule(<span class="hljs-string">&quot;Pattern: ping&lt;ID&gt;&quot;</span>) { String taskName -&gt;</span><br><span class="line">    <span class="hljs-keyword">if</span> (taskName.startsWith(<span class="hljs-string">&quot;ping&quot;</span>)) {</span><br><span class="line">        <span class="hljs-keyword">task</span>(taskName) &lt;&lt; {</span><br><span class="line">            <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;Pinging: &quot;</span> + (taskName - <span class="hljs-string">&apos;ping&apos;</span>)</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">} </span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// command: gradle -q pingHello</span></span><br><span class="line"><span class="hljs-comment">// output: Pinging: Hello</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="conventions-vs-extensions"><a href="#conventions-vs-extensions" class="headerlink" title="conventions vs extensions"></a>conventions vs extensions</h2><p>&#x6269;&#x5C55;&#x662F;&#x8F83;&#x65B0;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x5DF2;&#x5728;&#x5F88;&#x5927;&#x7A0B;&#x5EA6;&#x4E0A;&#x53D6;&#x4EE3;&#x4E86;&#x7EA6;&#x5B9A;&#x3002;&#x7B80;&#x800C;&#x8A00;&#x4E4B;&#xFF0C;&#x4EC5;&#x4F7F;&#x7528;&#x6269;&#x5C55;&#x540D;&#xFF0C;&#x800C;&#x4E0D;&#x4F7F;&#x7528;&#x7EA6;&#x5B9A;&#x3002;</p>
+<h1 id="&#x65E5;&#x5FD7;"><a href="#&#x65E5;&#x5FD7;" class="headerlink" title="&#x65E5;&#x5FD7;"></a>&#x65E5;&#x5FD7;</h1><h2 id="&#x7B49;&#x7EA7;"><a href="#&#x7B49;&#x7EA7;" class="headerlink" title="&#x7B49;&#x7EA7;"></a>&#x7B49;&#x7EA7;</h2><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Feature</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ERROR</td>
+<td>&#x9519;&#x8BEF;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>QUIET</td>
+<td>&#x91CD;&#x8981;&#x7684;&#x4FE1;&#x606F;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>WARNING</td>
+<td>&#x8B66;&#x544A;</td>
+</tr>
+<tr>
+<td>LIFECYCLE</td>
+<td>&#x8FDB;&#x5EA6;</td>
+</tr>
+<tr>
+<td>INFO</td>
+<td>&#x4FE1;&#x606F;&#x6027;&#x6D88;&#x606F;</td>
+</tr>
+<tr>
+<td>DEBUG</td>
+<td>&#x8C03;&#x8BD5;&#x6D88;&#x606F;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x65E5;&#x5FD7;&#x547D;&#x4EE4;&#x53C2;&#x6570;"><a href="#&#x65E5;&#x5FD7;&#x547D;&#x4EE4;&#x53C2;&#x6570;" class="headerlink" title="&#x65E5;&#x5FD7;&#x547D;&#x4EE4;&#x53C2;&#x6570;"></a>&#x65E5;&#x5FD7;&#x547D;&#x4EE4;&#x53C2;&#x6570;</h2><table>
+<thead>
+<tr>
+<th>&#x9009;&#x9879;</th>
+<th>&#x8F93;&#x51FA;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x65E0;</td>
+<td>LIFECYCLE &#x53CA;&#x66F4;&#x9AD8;</td>
+</tr>
+<tr>
+<td>&#x2013;quiet</td>
+<td>QUIET &#x53CA;&#x66F4;&#x9AD8;</td>
+</tr>
+<tr>
+<td>&#x2013;info</td>
+<td>INFO &#x53CA;&#x66F4;&#x9AD8;</td>
+</tr>
+<tr>
+<td>&#x2013;debug</td>
+<td>DEBUG &#x53CA;&#x66F4;&#x9AD8;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x53C2;&#x6570;"><a href="#&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x53C2;&#x6570;" class="headerlink" title="&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x53C2;&#x6570;"></a>&#x5806;&#x6808;&#x8DDF;&#x8E2A;&#x53C2;&#x6570;</h2><table>
+<thead>
+<tr>
+<th>&#x9009;&#x9879;</th>
+<th>&#x542B;&#x4E49;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x65E0;</td>
+<td>&#x6784;&#x5EFA;&#x9519;&#x8BEF;&#xFF08;&#x5982;&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#xFF09;&#x65F6;&#x6CA1;&#x6709;&#x6808;&#x8DDF;&#x8E2A;&#x6253;&#x5370;&#x5230;&#x63A7;&#x5236;&#x53F0;&#x3002;&#x53EA;&#x6709;&#x5728;&#x5185;&#x90E8;&#x5F02;&#x5E38;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x624D;&#x6253;&#x5370;&#x6808;&#x8DDF;&#x8E2A;&#x3002;&#x5982;&#x679C;&#x9009;&#x62E9; DEBUG &#x65E5;&#x5FD7;&#x7EA7;&#x522B;&#xFF0C;&#x5219;&#x603B;&#x662F;&#x8F93;&#x51FA;&#x622A;&#x53D6;&#x540E;&#x7684;&#x6808;&#x8DDF;&#x8E2A;&#x4FE1;&#x606F;</td>
+</tr>
+<tr>
+<td>&#x2013;stacktrace</td>
+<td>&#x8F93;&#x51FA;&#x622A;&#x65AD;&#x7684;&#x6808;&#x8DDF;&#x8E2A;&#x3002;&#x6211;&#x4EEC;&#x63A8;&#x8350;&#x4F7F;&#x7528;&#x8FD9;&#x4E00;&#x4E2A;&#x9009;&#x9879;&#x800C;&#x4E0D;&#x662F;&#x6253;&#x5370;&#x5168;&#x6808;&#x7684;&#x8DDF;&#x8E2A;&#x4FE1;&#x606F;&#x3002;Groovy &#x7684;&#x5168;&#x6808;&#x8DDF;&#x8E2A;&#x975E;&#x5E38;&#x5197;&#x957F; &#xFF08;&#x7531;&#x4E8E;&#x5176;&#x6F5C;&#x5728;&#x7684;&#x52A8;&#x6001;&#x8C03;&#x7528;&#x673A;&#x5236;&#xFF0C;&#x7136;&#x800C;&#x4ED6;&#x4EEC;&#x901A;&#x5E38;&#x4E0D;&#x5305;&#x542B;&#x4F60;&#x7684;&#x7684;&#x4EE3;&#x7801;&#x4E2D;&#x54EA;&#x91CC;&#x9519;&#x4E86;&#x7684;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#xFF09;</td>
+</tr>
+<tr>
+<td>&#x2013;full-stacktrace</td>
+<td>&#x6253;&#x5370;&#x5168;&#x6808;&#x7684;&#x8DDF;&#x8E2A;&#x4FE1;&#x606F;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x6253;&#x5370;&#x65E5;&#x5FD7;"><a href="#&#x6253;&#x5370;&#x65E5;&#x5FD7;" class="headerlink" title="&#x6253;&#x5370;&#x65E5;&#x5FD7;"></a>&#x6253;&#x5370;&#x65E5;&#x5FD7;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">prinln <span class="hljs-string">&apos;log&apos;</span></span><br><span class="line">logger.quiet(<span class="hljs-string">&apos;An info log message which is always logged.&apos;</span>)</span><br><span class="line">logger.error(<span class="hljs-string">&apos;An error log message.&apos;</span>)</span><br><span class="line">logger.warn(<span class="hljs-string">&apos;A warning log message.&apos;</span>)</span><br><span class="line">logger.lifecycle(<span class="hljs-string">&apos;A lifecycle info log message.&apos;</span>)</span><br><span class="line">logger.info(<span class="hljs-string">&apos;An info log message.&apos;</span>)</span><br><span class="line">logger.debug(<span class="hljs-string">&apos;A debug log message.&apos;</span>)</span><br><span class="line">logger.trace(<span class="hljs-string">&apos;A trace log message.&apos;</span>)</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;-configuration"><a href="#&#x81EA;&#x5B9A;&#x4E49;-configuration" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49; configuration"></a>&#x81EA;&#x5B9A;&#x4E49; configuration</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-keyword">configurations</span> {</span><br><span class="line">    custom</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">dependencies</span> {</span><br><span class="line">    custom <span class="hljs-string">&apos;com.facebook.stetho:stetho:1.5.0&apos;</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">task</span> copyDependencies(type: <span class="hljs-keyword">Copy</span>){</span><br><span class="line">    <span class="hljs-keyword">from</span> <span class="hljs-keyword">configurations</span>.custom</span><br><span class="line">    <span class="hljs-keyword">into</span> <span class="hljs-string">&apos;build/bins&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x81EA;&#x5B9A;&#x4E49;&#x7684; <code>configurations</code> &#x505A;&#x4E00;&#x4E9B;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#x4E8B;&#x60C5;&#xFF0C;&#x6BD4;&#x5982;&#x628A;&#x81EA;&#x5B9A;&#x4E49;  <code>configurations</code> &#x6240;&#x4F9D;&#x8D56;&#x7684;&#x5E93;&#x62F7;&#x8D1D;&#x5230;&#x6307;&#x5B9A;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x4E2D;</p>
+<h1 id="debug-plugin"><a href="#debug-plugin" class="headerlink" title="debug plugin"></a>debug plugin</h1><p>&#x53EA;&#x7528;&#x6539;&#x4E00;&#x4E2A;&#x4F60;&#x60F3;&#x8981;&#x7684;&#x540D;&#x5B57;&#x5373;&#x53EF;&#xFF0C;&#x5176;&#x4ED6;&#x53C2;&#x6570;&#x4E0D;&#x7528;&#x53D8;&#xFF1A;</p>
+<p><img src="https://image.kangxiaoguang.com/1543573137.png" alt></p>
+<p>&#x4E0B;&#x597D;&#x65AD;&#x70B9;&#x4F4D;&#x7F6E;&#x540E;&#xFF0C;&#x6267;&#x884C;&#x5982;&#x4E0B;&#x6307;&#x4EE4;&#xFF1A;</p>
+<p></p><figure class="highlight bash hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./gradlew assembleDebug -Dorg.gradle.daemon=<span class="hljs-literal">false</span> -Dorg.gradle.debug=<span class="hljs-literal">true</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><img src="https://image.kangxiaoguang.com/1543573252.png" alt></p>
+<p>&#x770B;&#x5230;&#x8FD9;&#x4E2A;&#x63D0;&#x793A;&#x540E;&#x518D;&#x6267;&#x884C; debug &#x64CD;&#x4F5C;&#xFF1A;</p>
+<p><img src="https://image.kangxiaoguang.com/1543573312.png" alt></p>
+<h1 id="&#x81EA;&#x5B9A;&#x4E49;&#x63D2;&#x4EF6;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x63D2;&#x4EF6;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x63D2;&#x4EF6;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x63D2;&#x4EF6;</h1><p><a href="https://plugins.gradle.org/docs/publish-plugin" target="_blank" rel="noopener">&#x53C2;&#x8003;&#x8D44;&#x6599;</a><br><a href="https://github.com/eriwen/gradle-digest-plugin" target="_blank" rel="noopener">&#x53C2;&#x8003;&#x8D44;&#x6599;</a><br>    <a href="https://github.com/gradle/kotlin-dsl" target="_blank" rel="noopener">&#x5B98;&#x65B9; dsl demo</a><br><a href="https://stackoverflow.com/questions/39497010/configure-uploadarchives-task-using-gradle-script-kotlin" target="_blank" rel="noopener">kts &#x914D;&#x7F6E; uploadArchives</a><br><a href="https://github.com/goodbranch/Android-GradlePlugin-Demo" target="_blank" rel="noopener">&#x4E2D;&#x6587; demo</a></p>
+<h1 id="&#x5C0F;&#x6280;&#x5DE7;"><a href="#&#x5C0F;&#x6280;&#x5DE7;" class="headerlink" title="&#x5C0F;&#x6280;&#x5DE7;"></a>&#x5C0F;&#x6280;&#x5DE7;</h1><h2 id="&#x5FFD;&#x7565;debug&#x7248;&#x672C;"><a href="#&#x5FFD;&#x7565;debug&#x7248;&#x672C;" class="headerlink" title="&#x5FFD;&#x7565;debug&#x7248;&#x672C;"></a>&#x5FFD;&#x7565;debug&#x7248;&#x672C;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">variantFilter { variant -&gt;</span><br><span class="line">    <span class="hljs-keyword">if</span>(variant.buildType.name == <span class="hljs-string">&apos;debug&apos;</span>) {</span><br><span class="line">        setIgnore(<span class="hljs-keyword">true</span>)</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x8BBE;&#x7F6E;-apk-&#x6587;&#x4EF6;&#x540D;&#x79F0;"><a href="#&#x8BBE;&#x7F6E;-apk-&#x6587;&#x4EF6;&#x540D;&#x79F0;" class="headerlink" title="&#x8BBE;&#x7F6E; apk &#x6587;&#x4EF6;&#x540D;&#x79F0;"></a>&#x8BBE;&#x7F6E; apk &#x6587;&#x4EF6;&#x540D;&#x79F0;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">android.applicationVariants.all { variant -&gt;</span><br><span class="line">    variant.outputs.all {</span><br><span class="line">        outputFileName = <span class="hljs-string">&quot;${defaultConfig.applicationId}-${variant.productFlavors[0].name}.apk&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="util-gradle"><a href="#util-gradle" class="headerlink" title="util.gradle"></a>util.gradle</h2><p>&#x603B;&#x7ED3;&#x4E86;&#x5E38;&#x7528;&#x7684;&#x4E00;&#x4E9B;&#x5DE5;&#x5177;&#x51FD;&#x6570; <code>util.gradle</code> &#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">ext.getCurrentFlavor = {</span><br><span class="line">    Gradle gradle = getGradle()</span><br><span class="line">    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()</span><br><span class="line"></span><br><span class="line">    Pattern pattern</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span> (tskReqStr.contains(<span class="hljs-string">&quot;assemble&quot;</span>))</span><br><span class="line">        pattern = Pattern.<span class="hljs-keyword">compile</span>(<span class="hljs-string">&quot;assemble(\\w+)(Release|Debug)&quot;</span>)</span><br><span class="line">    <span class="hljs-keyword">else</span></span><br><span class="line">        pattern = Pattern.<span class="hljs-keyword">compile</span>(<span class="hljs-string">&quot;generate(\\w+)(Release|Debug)&quot;</span>)</span><br><span class="line"></span><br><span class="line">    Matcher matcher = pattern.matcher(tskReqStr)</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span> (matcher.<span class="hljs-keyword">find</span>()) {</span><br><span class="line">        <span class="hljs-keyword">println</span> matcher.<span class="hljs-keyword">group</span>(<span class="hljs-number">1</span>).toLowerCase()</span><br><span class="line">        <span class="hljs-keyword">return</span> matcher.<span class="hljs-keyword">group</span>(<span class="hljs-number">1</span>).toLowerCase()</span><br><span class="line">    } <span class="hljs-keyword">else</span> {</span><br><span class="line">        <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;NO MATCH FOUND&quot;</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">ext.getCurrentBuildType = {</span><br><span class="line">    Gradle gradle = getGradle()</span><br><span class="line">    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">if</span> (tskReqStr.contains(<span class="hljs-string">&quot;Release&quot;</span>)) {</span><br><span class="line">        <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;getCurrentBuildType release&quot;</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;release&quot;</span></span><br><span class="line">    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (tskReqStr.contains(<span class="hljs-string">&quot;generateDebug&quot;</span>)) {</span><br><span class="line">        <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;getCurrentBuildType debug&quot;</span></span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;debug&quot;</span></span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">println</span> <span class="hljs-string">&quot;NO MATCH FOUND&quot;</span></span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><code>build.gradle</code> &#x4E2D;&#x4F7F;&#x7528;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="hljs-keyword">from</span>: <span class="hljs-string">&apos;util.gradle&apos;</span></span><br><span class="line"><span class="hljs-keyword">task</span> callOtherScriptMethod {</span><br><span class="line">    getCurrentBuildType()</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h1 id="&#x5B9E;&#x4F8B;"><a href="#&#x5B9E;&#x4F8B;" class="headerlink" title="&#x5B9E;&#x4F8B;"></a>&#x5B9E;&#x4F8B;</h1><p>&#x8BB2;&#x4E86;&#x8FD9;&#x4E48;&#x591A;&#xFF0C;&#x4E0B;&#x9762;&#x5217;&#x4E3E;&#x51E0;&#x4E2A;&#x5E38;&#x89C1;&#x7684; Gradle &#x914D;&#x7F6E;&#xFF1A;</p>
+<h2 id="&#x52A0;&#x901F;Gradle&#x6784;&#x5EFA;"><a href="#&#x52A0;&#x901F;Gradle&#x6784;&#x5EFA;" class="headerlink" title="&#x52A0;&#x901F;Gradle&#x6784;&#x5EFA;"></a>&#x52A0;&#x901F;Gradle&#x6784;&#x5EFA;</h2><p>&#x963F;&#x91CC;&#x56FD;&#x5185;&#x955C;&#x50CF;&#xFF0C;&#x4E0B;&#x8F7D;&#x901F;&#x5EA6;&#x5F88;&#x5FEB;&#xFF0C;&#x4ECE;&#x6B64;&#x544A;&#x522B;&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;&#x540E;&#x518D;&#x7B49;&#x4E0A;&#x5341;&#x5206;&#x949F;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">allprojects {</span><br><span class="line">    repositories {</span><br><span class="line">        maven{ url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos;}</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x4FEE;&#x6539;&#x9ED8;&#x8BA4;-apk-&#x6587;&#x4EF6;&#x540D;"><a href="#&#x4FEE;&#x6539;&#x9ED8;&#x8BA4;-apk-&#x6587;&#x4EF6;&#x540D;" class="headerlink" title="&#x4FEE;&#x6539;&#x9ED8;&#x8BA4; apk &#x6587;&#x4EF6;&#x540D;"></a>&#x4FEE;&#x6539;&#x9ED8;&#x8BA4; apk &#x6587;&#x4EF6;&#x540D;</h2><p>&#x5F88;&#x591A;&#x65F6;&#x5019;&#x9700;&#x8981;&#x901A;&#x8FC7; apk &#x7684;&#x547D;&#x540D;&#x5F88;&#x76F4;&#x89C2;&#x7684;&#x770B;&#x5230;&#x4E00;&#x4E9B;&#x4FE1;&#x606F;&#xFF0C;&#x6BD4;&#x5982;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x6E20;&#x9053;&#x4EE5;&#x53CA;&#x662F;&#x5426;&#x6D4B;&#x8BD5;&#x7248;&#x7B49;&#x7B49;&#xFF0C;&#x6B64;&#x65F6;&#x5C31;&#x9700;&#x8981;&#x4FEE;&#x6539; apk &#x6587;&#x4EF6;&#x540D;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">buildTypes {</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">     applicationVariants.all { variant -&gt;</span><br><span class="line">                    variant.outputs.<span class="hljs-keyword">each</span> { output -&gt;</span><br><span class="line">                        <span class="hljs-keyword">def</span> outputFile = output.outputFile</span><br><span class="line">                        <span class="hljs-keyword">if</span> (outputFile != <span class="hljs-keyword">null</span> &amp;&amp; outputFile.name.endsWith(<span class="hljs-string">&apos;.apk&apos;</span>)) {</span><br><span class="line">                            <span class="hljs-comment">// &#x8F93;&#x51FA;apk&#x540D;&#x79F0;&#x4E3A;LoveDev-v1.0.apk</span></span><br><span class="line">                            <span class="hljs-keyword">def</span> fileName = <span class="hljs-string">&quot;LoveDev-v${defaultConfig.versionName}.apk&quot;</span></span><br><span class="line">                            output.outputFile = <span class="hljs-keyword">new</span> <span class="hljs-keyword">File</span>(outputFile.parent, fileName)</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x81EA;&#x52A8;&#x751F;&#x6210;-versionCode-&#x548C;-versionName"><a href="#&#x81EA;&#x52A8;&#x751F;&#x6210;-versionCode-&#x548C;-versionName" class="headerlink" title="&#x81EA;&#x52A8;&#x751F;&#x6210; versionCode &#x548C; versionName"></a>&#x81EA;&#x52A8;&#x751F;&#x6210; versionCode &#x548C; versionName</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// versionCode  : git commit &#x6B21;&#x6570; ;</span></span><br><span class="line"><span class="hljs-comment">// versionName : &#x5927;&#x7248;&#x672C;&#x53F7;.&#x5C0F;&#x7248;&#x672C;&#x53F7;.&#x4FEE;&#x6539;&#x7248;&#x672C;&#x53F7;.&#x7F16;&#x8BD1;&#x7248;&#x672C;&#x53F7; ;</span></span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6; version code</span></span><br><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">def</span> getVersionCode(<span class="hljs-keyword">boolean</span> isDebug) {</span><br><span class="line">  <span class="hljs-keyword">if</span> (isDebug) {</span><br><span class="line">    <span class="hljs-keyword">return</span> Integer.parseInt(<span class="hljs-keyword">new</span> Date().format(<span class="hljs-string">&quot;yyMMddHHmm&quot;</span>))</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> getRevisionNumber()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6; version name</span></span><br><span class="line"><span class="hljs-keyword">def</span> getVersionName(<span class="hljs-keyword">boolean</span> isDebug) {</span><br><span class="line">  String version = rootProject.ext.appmajor +</span><br><span class="line">          <span class="hljs-string">&apos;.&apos;</span> + rootProject.ext.appminor +</span><br><span class="line">          <span class="hljs-string">&apos;.&apos;</span> + getRevisionNumber()</span><br><span class="line">  String today = <span class="hljs-keyword">new</span> Date().format(<span class="hljs-string">&apos;yyMMdd&apos;</span>)</span><br><span class="line">  String time = <span class="hljs-keyword">new</span> Date().format(<span class="hljs-string">&apos;HHmmss&apos;</span>)</span><br><span class="line">  <span class="hljs-keyword">if</span> (isDebug) {</span><br><span class="line">    <span class="hljs-keyword">return</span> version + <span class="hljs-string">&quot;.$today.$time.&quot;</span> + getRevisionDescription()</span><br><span class="line">  }</span><br><span class="line">  <span class="hljs-keyword">return</span> version + <span class="hljs-string">&quot;.$today.&quot;</span> + getRevisionDescription()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6;&#x4FEE;&#x8BA2;&#x7248;&#x672C; git &#x63D0;&#x4EA4;&#x6B21;&#x6570;</span></span><br><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">def</span> getRevisionNumber() {</span><br><span class="line">  Process process = <span class="hljs-string">&quot;git rev-list --count HEAD&quot;</span>.execute()</span><br><span class="line">  process.waitFor()</span><br><span class="line">  <span class="hljs-keyword">return</span> process.<span class="hljs-keyword">getText</span>().<span class="hljs-keyword">toInteger</span>()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// &#x83B7;&#x53D6;&#x4FEE;&#x8BA2;&#x7248;&#x672C;&#x6700;&#x540E;&#x4E00;&#x6B21; git &#x8BB0;&#x5F55;&#x540E;6&#x4F4D;</span></span><br><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">def</span> getRevisionDescription() {</span><br><span class="line">  String desc = <span class="hljs-string">&apos;git describe --always&apos;</span>.execute().<span class="hljs-keyword">getText</span>().trim()</span><br><span class="line">  <span class="hljs-keyword">return</span> (desc == <span class="hljs-keyword">null</span> || desc.<span class="hljs-keyword">size</span>() == <span class="hljs-number">0</span>) ? <span class="hljs-keyword">new</span> Date().format(<span class="hljs-string">&quot;yyMMdd&quot;</span>) : desc.substring(desc.<span class="hljs-keyword">size</span>() - <span class="hljs-number">6</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="productFlavors-&#x914D;&#x7F6E;&#x4EA7;&#x54C1;&#x98CE;&#x5473;"><a href="#productFlavors-&#x914D;&#x7F6E;&#x4EA7;&#x54C1;&#x98CE;&#x5473;" class="headerlink" title="productFlavors &#x914D;&#x7F6E;&#x4EA7;&#x54C1;&#x98CE;&#x5473;"></a>productFlavors &#x914D;&#x7F6E;&#x4EA7;&#x54C1;&#x98CE;&#x5473;</h2><p>&#x5982;&#x679C;&#x9664;&#x4E86;&#x6B63;&#x5F0F;&#x7248;&#xFF0C;&#x6D4B;&#x8BD5;&#x7248;&#x4E4B;&#x5916;&#x8FD8;&#x8981;&#x7EE7;&#x7EED;&#x7EC6;&#x5206;&#x5316;&#xFF0C;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x6E20;&#x9053;&#xFF0C;&#x6B63;&#x5F0F;&#x7248;&#x8981;&#x5206;&#x4E3A;&#x6536;&#x8D39;&#x7248;&#xFF0C;&#x514D;&#x8D39;&#x7248;&#x7B49;&#x60C5;&#x51B5;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x5C31;&#x9700;&#x8981;&#x7528;&#x5230; <code>productFlavors</code> &#x6765;&#x914D;&#x7F6E;&#x4E86;</p>
+<p>&#x5C06;&#x914D;&#x7F6E;&#x4FE1;&#x606F;&#x6DFB;&#x52A0;&#x5230; <code>productFlavors {}</code> &#x4EE3;&#x7801;&#x5757;&#x5E76;&#x914D;&#x7F6E;&#x60F3;&#x8981;&#x7684;&#x8BBE;&#x7F6E;&#x3002;&#x4EA7;&#x54C1;&#x98CE;&#x5473;&#x652F;&#x6301;&#x4E0E; <code>defaultConfig</code> &#x76F8;&#x540C;&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A; <code>defaultConfig</code> &#x5B9E;&#x9645;&#x4E0A;&#x5C5E;&#x4E8E; <code>ProductFlavor</code> &#x7C7B;&#xFF0C;&#x6211;&#x5728;&#x5B9E;&#x9645;&#x9879;&#x76EE;&#x4E2D;&#x78B0;&#x5230;&#x4E00;&#x4E2A;&#x9700;&#x6C42;&#xFF0C;&#x9488;&#x5BF9;&#x67D0;&#x4E00;&#x4E2A;&#x529F;&#x80FD;&#x65B9;&#x6CD5;&#xFF0C;&#x5206;&#x4E3A;&#x4E24;&#x4E2A;&#x7248;&#x672C;&#x5904;&#x7406;&#xFF0C;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#x5728; CI &#x73AF;&#x5883;&#x4E2D;&#x8FD8;&#x8981;&#x540C;&#x65F6;&#x4E0A;&#x4F20;&#x8FD9;&#x4E24;&#x4E2A;&#x7248;&#x672C;&#xFF0C;&#x8FD9;&#x5C31;&#x610F;&#x5473;&#x7740;&#x4E24;&#x4E2A;&#x7248;&#x672C;&#x7684;&#x5305;&#x540D;&#x4E5F;&#x8981;&#x4E0D;&#x540C;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#xFF1A;</p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// buildConfig &#x4E2D;&#x914D;&#x7F6E;AUDIO_VERSION&#x5B57;&#x6BB5;</span></span><br><span class="line">productFlavors {</span><br><span class="line">    shine {</span><br><span class="line">     buildConfigField <span class="hljs-string">&quot;int&quot;</span>, <span class="hljs-string">&quot;AUDIO_VERSION&quot;</span>, <span class="hljs-string">&quot;2&quot;</span></span><br><span class="line">     versionCode <span class="hljs-number">2</span></span><br><span class="line">    }</span><br><span class="line">    webrtc {</span><br><span class="line">     buildConfigField <span class="hljs-string">&quot;int&quot;</span>, <span class="hljs-string">&quot;AUDIO_VERSION&quot;</span>, <span class="hljs-string">&quot;1&quot;</span></span><br><span class="line">     versionCode <span class="hljs-number">1</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">  </span><br><span class="line"><span class="hljs-comment">// buildTypes &#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x4EA7;&#x54C1;&#x98CE;&#x5473;&#xFF0C;&#x6784;&#x5EFA;&#x4E0D;&#x540C;&#x7684; apk &#x6587;&#x4EF6;&#x540D;</span></span><br><span class="line">buildTypes {</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">     applicationVariants.all { variant -&gt;</span><br><span class="line">                    variant.outputs.<span class="hljs-keyword">each</span> { output -&gt;</span><br><span class="line">                        <span class="hljs-keyword">def</span> outputFile = output.outputFile</span><br><span class="line">                        <span class="hljs-keyword">if</span> (outputFile != <span class="hljs-keyword">null</span> &amp;&amp; outputFile.name.endsWith(<span class="hljs-string">&apos;.apk&apos;</span>)) {</span><br><span class="line">                            <span class="hljs-comment">// &#x8FD9;&#x91CC;&#x6DFB;&#x52A0;productFlavors&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x8F93;&#x51FA;apk&#x540D;&#x79F0;&#x4E3A;LoveDev-v1.0-webrtc.apk</span></span><br><span class="line">                            <span class="hljs-keyword">def</span> fileName = <span class="hljs-string">&quot;LoveDev-v${defaultConfig.versionName}-${variant.productFlavors[0].name}.apk&quot;</span></span><br><span class="line">                            output.outputFile = <span class="hljs-keyword">new</span> <span class="hljs-keyword">File</span>(outputFile.parent, fileName)</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>&#x914D;&#x7F6E;&#x4E4B;&#x540E;&#x5728; <code>buildType</code> &#x7C7B;&#x4E2D;&#x5C31;&#x6709;&#x4E86;int &#x7C7B;&#x578B;&#x7684; <code>AUDIO_VERSION</code> &#x5B57;&#x6BB5;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x8BE5;&#x5B57;&#x6BB5;&#x5224;&#x65AD;&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;<p></p>
+<p>&#x5176;&#x5B9E;&#x5F88;&#x591A;&#x914D;&#x7F6E;&#xFF0C;&#x5728;&#x5B98;&#x7F51;&#x91CC;&#x9762;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x8FC7;&#x4E86;&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD8;&#x662F;&#x8981;&#x6839;&#x636E;&#x5177;&#x4F53;&#x7684;&#x9879;&#x76EE;&#x8FDB;&#x884C;&#x5177;&#x4F53;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x5C3D;&#x91CF;&#x4E0D;&#x8981;&#x7167;&#x6284;&#x7167;&#x642C;&#xFF0C;&#x5B98;&#x7F51;&#x5730;&#x5740;<a href="https://developer.android.com/studio/build/index.html?hl=zh-cn" target="_blank" rel="noopener">&#x8BF7;&#x6233;&#x8FD9;&#x91CC;</a></p>
+<h2 id="sourceSets-&#x8BBE;&#x7F6E;&#x6E90;&#x96C6;"><a href="#sourceSets-&#x8BBE;&#x7F6E;&#x6E90;&#x96C6;" class="headerlink" title="sourceSets &#x8BBE;&#x7F6E;&#x6E90;&#x96C6;"></a>sourceSets &#x8BBE;&#x7F6E;&#x6E90;&#x96C6;</h2><p>&#x5982;&#x679C;&#x9700;&#x8981;&#x4E3A;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x5728;&#x903B;&#x8F91;&#x4E0D;&#x53D8;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x914D;&#x7F6E;&#x591A;&#x5957;&#x754C;&#x9762;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x7528;&#x5230; <code>sourceSets</code> &#x6765;&#x914D;&#x7F6E;&#x9879;&#x76EE;&#x6E90;&#x96C6;&#xFF0C;&#x73B0;&#x5728;&#x6709;&#x5982;&#x4E0B;&#x7ED3;&#x6784;&#x7684;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF1A;</p>
+<p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">+--main</span><br><span class="line">|   +--java</span><br><span class="line">|   +--skin-custom</span><br><span class="line">|   +--res</span><br></pre></td></tr></tbody></table></figure><br>&#x5176;&#x4E2D; <code>skin-custom</code> &#x5B58;&#x653E;&#x7684;&#x5C31;&#x662F;&#x5B9A;&#x5236;&#x76AE;&#x80A4;&#xFF0C;<code>build.gradle</code> &#x9700;&#x8981;&#x8FDB;&#x884C;&#x5982;&#x4E0B;&#x914D;&#x7F6E;&#xFF1A;<p></p>
+<p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">flavorDimensions(<span class="hljs-string">&quot;skin&quot;</span>)</span><br><span class="line"></span><br><span class="line">productFlavors {</span><br><span class="line">    standard {</span><br><span class="line">        dimension <span class="hljs-string">&quot;skin&quot;</span></span><br><span class="line">    }</span><br><span class="line">    skin {</span><br><span class="line">        dimension <span class="hljs-string">&quot;skin&quot;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">sourceSets</span>{</span><br><span class="line">    standard {</span><br><span class="line">        res.srcDirs = [<span class="hljs-string">&apos;src/main/res&apos;</span>]</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    skin {</span><br><span class="line">        res.srcDirs = [<span class="hljs-string">&apos;src/main/skin-custom&apos;</span>]</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><br>&#x5982;&#x679C;&#x5728; <code>skin-custom</code> &#x4E2D;&#x83B7;&#x53D6;&#x4E0D;&#x5230;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x5C31;&#x904D;&#x5386;&#x5176;&#x4ED6;&#x6587;&#x4EF6;&#x5939;&#x5BFB;&#x627E;&#x8BE5;&#x6587;&#x4EF6;<p></p>
+<h2 id="&#x5FFD;&#x7565;-release-buildType"><a href="#&#x5FFD;&#x7565;-release-buildType" class="headerlink" title="&#x5FFD;&#x7565; release buildType"></a>&#x5FFD;&#x7565; release buildType</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">android{</span><br><span class="line">    ...</span><br><span class="line">    variantFilter { variant -&gt;</span><br><span class="line">        <span class="hljs-keyword">def</span> names = variant.buildType.name</span><br><span class="line">        <span class="hljs-keyword">if</span> (names.contains(<span class="hljs-string">&quot;release&quot;</span>)) {</span><br><span class="line">            setIgnore(<span class="hljs-keyword">true</span>)</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h2 id="&#x751F;&#x6210;-jar-&#x5305;"><a href="#&#x751F;&#x6210;-jar-&#x5305;" class="headerlink" title="&#x751F;&#x6210; jar &#x5305;"></a>&#x751F;&#x6210; jar &#x5305;</h2><p></p><figure class="highlight gradle hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">task</span> makeJar(type: <span class="hljs-keyword">Copy</span>) {</span><br><span class="line">    <span class="hljs-keyword">delete</span> <span class="hljs-string">&apos;build/myapp.jar&apos;</span> <span class="hljs-comment">//&#x5220;&#x9664;&#x4E4B;&#x524D;&#x7684;&#x65E7;jar&#x5305;</span></span><br><span class="line">    <span class="hljs-keyword">from</span>(<span class="hljs-string">&apos;build/intermediates/packaged-classes/release/&apos;</span>) <span class="hljs-comment">//&#x4ECE;&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x4E0B;&#x53D6;&#x51FA;&#x9ED8;&#x8BA4;jar&#x5305;</span></span><br><span class="line">    <span class="hljs-keyword">into</span>(<span class="hljs-string">&apos;build/&apos;</span>) <span class="hljs-comment">//&#x5C06;jar&#x5305;&#x8F93;&#x51FA;&#x5230;&#x6307;&#x5B9A;&#x76EE;&#x5F55;&#x4E0B;</span></span><br><span class="line">    <span class="hljs-keyword">include</span>(<span class="hljs-string">&apos;classes.jar&apos;</span>)</span><br><span class="line">    rename(<span class="hljs-string">&apos;classes.jar&apos;</span>, <span class="hljs-string">&apos;myapp.jar&apos;</span>) <span class="hljs-comment">//&#x81EA;&#x5B9A;&#x4E49;jar&#x5305;&#x7684;&#x540D;&#x5B57;</span></span><br><span class="line">}</span><br><span class="line">makeJar.dependsOn(build)</span><br></pre></td></tr></tbody></table></figure><p></p>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Android/">#Android</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2018/07/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E3%80%8AAndroid-%E5%BC%80%E5%8F%91%E8%89%BA%E6%9C%AF%E6%8E%A2%E7%B4%A2%E3%80%8B-%E7%AC%AC%E4%B9%9D%E7%AB%A0%E5%86%85%E5%AE%B9%E6%80%BB%E7%BB%93/">《Android 开发艺术探索》- 第九章内容总结</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2018/05/28/Android/Groovy-%E5%85%A5%E9%97%A8/">Groovy 入门</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2018/05/29/Android/Gradle-%E5%85%A5%E9%97%A8/';
+        this.page.identifier = '2018/05/29/Android/Gradle-入门/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

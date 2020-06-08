@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>VIM学习笔记 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VIM学习笔记">
+<meta property="og:url" content="http://yoursite.com/2017/02/14/VIM%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="121">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2017/02/14/VIM%E6%93%8D%E4%BD%9C/media/14841083379128/2012122112240283.png">
+<meta property="og:image" content="http://yoursite.com/2017/02/14/VIM%E6%93%8D%E4%BD%9C/media/14841083379128/2012122112273084.png">
+<meta property="article:published_time" content="2017-02-14T13:51:43.000Z">
+<meta property="article:modified_time" content="2018-09-19T02:27:04.302Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="杂货铺">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2017/02/14/VIM%E6%93%8D%E4%BD%9C/media/14841083379128/2012122112240283.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目录">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#退出">1&nbsp;&nbsp;<b>退出</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#移动">2&nbsp;&nbsp;<b>移动</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#单词移动">2.1&nbsp;&nbsp;单词移动</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#插入">3&nbsp;&nbsp;<b>插入</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#字符位置插入">3.1&nbsp;&nbsp;字符位置插入</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#删除">4&nbsp;&nbsp;<b>删除</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#字符删除">4.1&nbsp;&nbsp;字符删除</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#隔行合并">4.2&nbsp;&nbsp;隔行合并</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#替换">5&nbsp;&nbsp;<b>替换</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#恢复">6&nbsp;&nbsp;<b>恢复</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#多窗口打开">7&nbsp;&nbsp;<b>多窗口打开</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#Pattern-操作">8&nbsp;&nbsp;<b>Pattern 操作</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#使用宏">9&nbsp;&nbsp;<b>使用宏</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            VIM学习笔记
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2017-02-14T13:51:43.000Z" itemprop="datePublished">2月 14 2017</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            12 分钟 读完 (约 1768 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p></p><figure class="highlight plain hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VIM == &quot;&#x7F16;&#x8F91;&#x5668;&#x4E4B;&#x795E;&quot;</span><br></pre></td></tr></tbody></table></figure><p></p>
+<a id="more"></a>
+
+<h2 id="&#x9000;&#x51FA;"><a href="#&#x9000;&#x51FA;" class="headerlink" title="&#x9000;&#x51FA;"></a>&#x9000;&#x51FA;</h2><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">:q</td>
+<td align="left">&#x672A;&#x4FEE;&#x6539;&#x9000;&#x51FA;</td>
+</tr>
+<tr>
+<td align="left">:q!</td>
+<td align="left">&#x5F3A;&#x5236;&#x4E0D;&#x4FDD;&#x5B58;&#x9000;&#x51FA;</td>
+</tr>
+<tr>
+<td align="left">:x</td>
+<td align="left">&#x4FDD;&#x5B58;&#x5E76;&#x9000;&#x51FA;</td>
+</tr>
+<tr>
+<td align="left">## &#x5207;&#x6362; tab</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">gt</td>
+<td align="left">&#x4E0B;&#x4E2A; tab</td>
+</tr>
+<tr>
+<td align="left">gT</td>
+<td align="left">&#x4E0A;&#x4E2A; tab</td>
+</tr>
+<tr>
+<td align="left">## &#x67E5;&#x627E;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">n</td>
+<td align="left">&#x6B63;&#x5E8F;&#x67E5;&#x627E;</td>
+</tr>
+<tr>
+<td align="left">/</td>
+<td align="left">&#x540E;&#x9762;&#x52A0;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">f{char}</td>
+<td align="left">&#x67E5;&#x627E;&#x7B2C;&#x4E00;&#x4E2A; [char]</td>
+</tr>
+<tr>
+<td align="left">;</td>
+<td align="left">&#x91CD;&#x590D;&#x6700;&#x540E;&#x4E00;&#x4E2A; f, F, t, T &#x6307;&#x4EE4;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x79FB;&#x52A8;"><a href="#&#x79FB;&#x52A8;" class="headerlink" title="&#x79FB;&#x52A8;"></a>&#x79FB;&#x52A8;</h2><h3 id="&#x5355;&#x8BCD;&#x79FB;&#x52A8;"><a href="#&#x5355;&#x8BCD;&#x79FB;&#x52A8;" class="headerlink" title="&#x5355;&#x8BCD;&#x79FB;&#x52A8;"></a>&#x5355;&#x8BCD;&#x79FB;&#x52A8;</h3><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">W w</td>
+<td align="left">&#x79FB;&#x52A8;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">E e</td>
+<td align="left">&#x79FB;&#x52A8;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;&#x7ED3;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">B b</td>
+<td align="left">&#x5012;&#x9000;&#x5230;&#x4E0A;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="left">&#x8DF3;&#x5230;&#x4E0B;&#x4E2A;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">#</td>
+<td align="left">&#x8DF3;&#x5230;&#x4E0A;&#x4E2A;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">### &#x6574;&#x884C;&#x79FB;&#x52A8;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">0</td>
+<td align="left">&#x79FB;&#x52A8;&#x5230;&#x884C;&#x9996;</td>
+</tr>
+<tr>
+<td align="left">$</td>
+<td align="left">&#x79FB;&#x52A8;&#x5230;&#x884C;&#x672B;</td>
+</tr>
+<tr>
+<td align="left">+</td>
+<td align="left">&#x79FB;&#x52A8;&#x5230;&#x4E0B;&#x4E00;&#x884C;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">&#x79FB;&#x52A8;&#x5230;&#x4E0A;&#x4E00;&#x884C;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">### &#x6839;&#x636E;&#x884C;&#x53F7;&#x6765;&#x79FB;&#x52A8;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">Ctrl+g</td>
+<td align="left">&#x663E;&#x793A;&#x5F53;&#x524D;&#x884C;&#x4FE1;&#x606F;</td>
+</tr>
+<tr>
+<td align="left">nG</td>
+<td align="left">&#x8F6C;&#x81F3;&#x7B2C;n&#x884C;</td>
+</tr>
+<tr>
+<td align="left">G</td>
+<td align="left">&#x8F6C;&#x81F3;&#x6587;&#x672C;&#x672B;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">gg</td>
+<td align="left">&#x79FB;&#x81F3;&#x6587;&#x672C;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">### &#x5C4F;&#x5E55;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">H</td>
+<td align="left">&#x5C4F;&#x5E55;&#x4E0A;&#x65B9;</td>
+</tr>
+<tr>
+<td align="left">M</td>
+<td align="left">&#x5C4F;&#x5E55;&#x4E2D;&#x95F4;</td>
+</tr>
+<tr>
+<td align="left">L</td>
+<td align="left">&#x5C4F;&#x5E55;&#x5E95;&#x90E8;</td>
+</tr>
+<tr>
+<td align="left">### &#x590D;&#x5408;&#x547D;&#x4EE4;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">&#x76F8;&#x5F53;&#x4E8E; c$&#xFF0C;&#x4ECE;&#x5149;&#x6807;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x5220;&#x9664;&#x5230;&#x672B;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">s</td>
+<td align="left">&#x76F8;&#x5F53;&#x4E8E; cl&#xFF0C;&#x5220;&#x9664;&#x5149;&#x6807;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x5B57;&#x7B26;&#x5E76;&#x8FDB;&#x5165;&#x63D2;&#x5165;&#x6A21;&#x5F0F;</td>
+</tr>
+<tr>
+<td align="left">S</td>
+<td align="left">&#x76F8;&#x5F53;&#x4E8E; cc</td>
+</tr>
+<tr>
+<td align="left">A</td>
+<td align="left">&#x5728;&#x4E00;&#x884C;&#x7684;&#x7ED3;&#x5C3E;&#x5904;&#x8FFD;&#x52A0;</td>
+</tr>
+<tr>
+<td align="left">I</td>
+<td align="left">&#x5728;&#x4E00;&#x884C;&#x7684;&#x5F00;&#x5934;&#x5904;&#x63D2;&#x5165;</td>
+</tr>
+<tr>
+<td align="left">o</td>
+<td align="left">&#x5728;&#x5149;&#x6807;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x7684;&#x4E0B;&#x4E00;&#x884C;&#x6253;&#x5F00;&#x65B0;&#x884C;&#x63D2;&#x5165;</td>
+</tr>
+<tr>
+<td align="left">O</td>
+<td align="left">&#x5728;&#x5149;&#x6807;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x7684;&#x4E0A;&#x4E00;&#x884C;&#x6253;&#x5F00;&#x65B0;&#x884C;&#x63D2;&#x5165;</td>
+</tr>
+<tr>
+<td align="left"><strong>tips1&#xFF1A;</strong>10I*<esc>&#x5148;&#x8F93;&#x5165;10,&#x7136;&#x540E;&#x8F93;&#x5165;i&#xFF0C;&#x63A5;&#x7740;&#x8F93;&#x5165;*&#x53F7;&#xFF0C;&#x6700;&#x540E;&#x6309;<esc></esc></esc></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>&#x3000;&#x3000;  &#x3000;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x884C;&#x5F00;&#x5934;&#x8F93;&#x5165;&#x5341;&#x4E2A;*<br>&#x3000;&#x3000;  &#x3000;<img src="media/14841083379128/2012122112240283.png" alt="2012122112240283"><br>&#x3000;&#x3000;  &#x3000;<br><strong>tips2&#xFF1A;</strong>&#x540C;&#x6837;&#xFF0C;5o###<esc>&#x5148;&#x8F93;&#x5165;5,&#x7136;&#x540E;&#x8F93;&#x5165;o&#xFF0C;&#x63A5;&#x7740;&#x8F93;&#x5165;###&#xFF0C;&#x6700;&#x540E;&#x6309;<esc></esc></esc></p>
+<p>&#x3000;&#x3000;&#x3000;  &#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x4E0B;&#x5217;5&#x884C;&#x4E2D;&#x6BCF;&#x4E00;&#x884C;&#x5F00;&#x5934;&#x63D2;&#x5165;###<br>&#x3000;&#x3000;&#x3000;  <img src="media/14841083379128/2012122112273084.png" alt="2012122112273084"></p>
+<h2 id="&#x63D2;&#x5165;"><a href="#&#x63D2;&#x5165;" class="headerlink" title="&#x63D2;&#x5165;"></a>&#x63D2;&#x5165;</h2><h3 id="&#x5B57;&#x7B26;&#x4F4D;&#x7F6E;&#x63D2;&#x5165;"><a href="#&#x5B57;&#x7B26;&#x4F4D;&#x7F6E;&#x63D2;&#x5165;" class="headerlink" title="&#x5B57;&#x7B26;&#x4F4D;&#x7F6E;&#x63D2;&#x5165;"></a>&#x5B57;&#x7B26;&#x4F4D;&#x7F6E;&#x63D2;&#x5165;</h3><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">i</td>
+<td align="left">&#x5728;&#x5149;&#x6807;&#x4E4B;&#x524D;&#x63D2;&#x5165;</td>
+</tr>
+<tr>
+<td align="left">a</td>
+<td align="left">&#x5728;&#x5149;&#x6807;&#x4E4B;&#x540E;&#x8FFD;&#x52A0;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x5220;&#x9664;"><a href="#&#x5220;&#x9664;" class="headerlink" title="&#x5220;&#x9664;"></a>&#x5220;&#x9664;</h2><h3 id="&#x5B57;&#x7B26;&#x5220;&#x9664;"><a href="#&#x5B57;&#x7B26;&#x5220;&#x9664;" class="headerlink" title="&#x5B57;&#x7B26;&#x5220;&#x9664;"></a>&#x5B57;&#x7B26;&#x5220;&#x9664;</h3><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">x</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x6240;&#x5728;&#x5904;&#x5B57;&#x7B26;</td>
+</tr>
+<tr>
+<td align="left">X</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x6240;&#x5728;&#x524D;&#x5B57;&#x7B26;</td>
+</tr>
+<tr>
+<td align="left">### &#x5355;&#x8BCD;&#x5220;&#x9664;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">dw</td>
+<td align="left">&#x5220;&#x9664;&#x5230;&#x4E0B;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">de</td>
+<td align="left">&#x5220;&#x9664;&#x5230;&#x672C;&#x5355;&#x8BCD;&#x672B;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">dE</td>
+<td align="left">&#x5220;&#x9664;&#x5230;&#x672C;&#x5355;&#x8BCD;&#x672B;&#x5C3E;&#x5305;&#x62EC;&#x6807;&#x70B9;&#x5728;&#x5185;</td>
+</tr>
+<tr>
+<td align="left">db</td>
+<td align="left">&#x5220;&#x9664;&#x5230;&#x524D;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">dB</td>
+<td align="left">&#x5220;&#x9664;&#x5230;&#x524D;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;&#x5305;&#x62EC;&#x6807;&#x70B9;&#x5728;&#x5185;</td>
+</tr>
+<tr>
+<td align="left">dt)</td>
+<td align="left">&#x5220;&#x9664;&#x5230;)&#x4E4B;&#x524D;&#x6240;&#x6709;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">df)</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x5305;&#x62EC;)&#x6240;&#x6709;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">dT)</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x5230;&#x5149;&#x6807;&#x524D;)&#x6240;&#x6709;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">dF)</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x5230;&#x5149;&#x6807;&#x524D;&#x5305;&#x62EC;)&#x6240;&#x6709;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">### &#x884C;&#x5220;&#x9664;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">dd</td>
+<td align="left">&#x5220;&#x9664;&#x4E00;&#x6574;&#x884C;</td>
+</tr>
+<tr>
+<td align="left">3dd</td>
+<td align="left">&#x5220;&#x9664;&#x4E09;&#x6574;&#x884C;</td>
+</tr>
+<tr>
+<td align="left">D d$</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x4F4D;&#x7F6E;&#x5230;&#x672C;&#x884C;&#x7ED3;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">d0</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x4F4D;&#x7F6E;&#x5230;&#x672C;&#x884C;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">### &#x6807;&#x70B9;&#x5185;&#x5220;&#x9664;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">ci(</td>
+<td align="left">&#x66F4;&#x6539;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">di[</td>
+<td align="left">&#x5220;&#x9664;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">yi{</td>
+<td align="left">&#x590D;&#x5236;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">vi&lt;</td>
+<td align="left">&#x9009;&#x62E9;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;</td>
+</tr>
+<tr>
+<td align="left">###  &#x5E26;&#x6807;&#x70B9;&#x5220;&#x9664;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">ca(</td>
+<td align="left">&#x66F4;&#x6539;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;&#x548C;&#x6807;&#x70B9;</td>
+</tr>
+<tr>
+<td align="left">da[</td>
+<td align="left">&#x5220;&#x9664;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;&#x548C;&#x6807;&#x70B9;</td>
+</tr>
+<tr>
+<td align="left">ya{</td>
+<td align="left">&#x590D;&#x5236;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;&#x548C;&#x6807;&#x70B9;</td>
+</tr>
+<tr>
+<td align="left">va&lt;</td>
+<td align="left">&#x9009;&#x62E9;&#x914D;&#x5BF9;&#x6807;&#x70B9;&#x7B26;&#x53F7;&#x4E2D;&#x7684;&#x6587;&#x672C;&#x5185;&#x5BB9;&#x548C;&#x6807;&#x70B9;</td>
+</tr>
+<tr>
+<td align="left">## &#x590D;&#x5236;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">### &#x884C;&#x590D;&#x5236;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">y^</td>
+<td align="left">&#x590D;&#x5236;&#x81F3;&#x884C;&#x9996;</td>
+</tr>
+<tr>
+<td align="left">y$</td>
+<td align="left">&#x590D;&#x5236;&#x81F3;&#x884C;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">yy</td>
+<td align="left">&#x590D;&#x5236;&#x6574;&#x884C;</td>
+</tr>
+<tr>
+<td align="left">yH</td>
+<td align="left">&#x4ECE;&#x5F53;&#x524D;&#x884C;&#x590D;&#x5236;&#x5230;&#x5C4F;&#x5E55;&#x9876;&#x7AEF;</td>
+</tr>
+<tr>
+<td align="left">yL</td>
+<td align="left">&#x4ECE;&#x5F53;&#x524D;&#x884C;&#x590D;&#x5236;&#x5230;&#x5C4F;&#x5E55;&#x4F4E;&#x7AEF;</td>
+</tr>
+<tr>
+<td align="left">### &#x5355;&#x8BCD;&#x548C;&#x5B57;&#x7B26;&#x590D;&#x5236;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">ynl</td>
+<td align="left">&#x5411;&#x53F3;&#x590D;&#x5236;n&#x4E2A;&#x5B57;&#x7B26;</td>
+</tr>
+<tr>
+<td align="left">ynh</td>
+<td align="left">&#x5411;&#x5DE6;&#x590D;&#x5236;n&#x4E2A;&#x5B57;&#x7B26;</td>
+</tr>
+<tr>
+<td align="left">ynw</td>
+<td align="left">&#x5411;&#x524D;&#x590D;&#x5236;n&#x4E2A;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">ynb</td>
+<td align="left">&#x5411;&#x540E;&#x590D;&#x5236;n&#x4E2A;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">yiw</td>
+<td align="left">&#x590D;&#x5236;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">diw</td>
+<td align="left">&#x526A;&#x5207;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">## &#x4FEE;&#x6539;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">### &#x5B57;&#x7B26;&#x66FF;&#x6362;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">r</td>
+<td align="left">&#x5355;&#x4E2A;&#x5B57;&#x7B26;&#x66FF;&#x6362;</td>
+</tr>
+<tr>
+<td align="left">R</td>
+<td align="left">&#x8FDE;&#x7EED;&#x66FF;&#x6362;</td>
+</tr>
+<tr>
+<td align="left">~</td>
+<td align="left">&#x66F4;&#x6539;&#x5927;&#x5C0F;&#x5199;</td>
+</tr>
+<tr>
+<td align="left">### &#x5355;&#x8BCD;&#x4FEE;&#x6539;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">cw</td>
+<td align="left">&#x4ECE;&#x5149;&#x6807;&#x5904;&#x4FEE;&#x6539;&#x5230;&#x5355;&#x8BCD;&#x7ED3;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">cb</td>
+<td align="left">&#x4ECE;&#x5149;&#x6807;&#x5904;&#x4FEE;&#x6539;&#x5230;&#x5355;&#x8BCD;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">ciw</td>
+<td align="left">&#x6539;&#x5199;&#x6574;&#x4E2A;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">### &#x884C;&#x4FEE;&#x6539;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left">c$</td>
+<td align="left">&#x4ECE;&#x5149;&#x6807;&#x4FEE;&#x6539;&#x5230;&#x672C;&#x884C;&#x672B;&#x5C3E;</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">&#x529F;&#x80FD;&#x540C;&#x4E0A;</td>
+</tr>
+<tr>
+<td align="left">c0</td>
+<td align="left">&#x4ECE;&#x5149;&#x6807;&#x4FEE;&#x6539;&#x5230;&#x672C;&#x884C;&#x5F00;&#x5934;</td>
+</tr>
+<tr>
+<td align="left">cc</td>
+<td align="left">&#x5220;&#x9664;&#x6574;&#x884C;&#x4ECE;&#x5934;&#x4FEE;&#x6539;</td>
+</tr>
+<tr>
+<td align="left">S</td>
+<td align="left">&#x529F;&#x80FD;&#x540C;&#x4E0A;</td>
+</tr>
+<tr>
+<td align="left">s</td>
+<td align="left">&#x5220;&#x9664;&#x5149;&#x6807;&#x6240;&#x5728;&#x4F4D;&#x7F6E;&#x7684;&#x5B57;&#x7B26;&#xFF0C;&#x7136;&#x540E;&#x63D2;&#x5165;</td>
+</tr>
+<tr>
+<td align="left">## &#x8FD0;&#x7B97;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Command</td>
+<td align="left">Alias</td>
+</tr>
+<tr>
+<td align="left">:&#x2014;&#x2014;&#x2014;-</td>
+<td align="left">:&#x2014;&#x2014;&#x2013;</td>
+</tr>
+<tr>
+<td align="left"><c-a></c-a></td>
+<td align="left">&#x5BF9;&#x6570;&#x5B57;&#x52A0;&#x64CD;&#x4F5C;</td>
+</tr>
+<tr>
+<td align="left"><c-x></c-x></td>
+<td align="left">&#x5BF9;&#x6570;&#x5B57;&#x51CF;&#x64CD;&#x4F5C;</td>
+</tr>
+<tr>
+<td align="left">{count} <c-a></c-a></td>
+<td align="left">&#x52A0;&#x4E0A; [count]</td>
+</tr>
+<tr>
+<td align="left">&#x5982;&#x679C;&#x5F53;&#x524D;&#x5149;&#x6807;&#x4E0D;&#x5728;&#x6570;&#x5B57;&#x4E0A;&#xFF0C;&#x5219;&#x6B63;&#x5411;&#x67E5;&#x627E;&#x7B2C;&#x4E00;&#x4E2A;&#x6570;&#x5B57;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">## &#x5408;&#x5E76;&#x884C;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">### &#x591A;&#x884C;&#x5408;&#x5E76;&#x6210;&#x4E00;&#x884C;</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">AAAAA</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">BBBBB</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">CCCCC</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>&#x5408;&#x5E76;&#x4E3A;:<br>AAAAA BBBBB CCCCC</p>
+<p>&#x65B9;&#x6CD5;1: normal&#x72B6;&#x6001;&#x4E0B; 3J &#x5176;&#x4E2D;&#x7684;3&#x662F;&#x8303;&#x56F4;,&#x53EF;&#x4EE5;&#x662F;&#x4E66;&#x7B7E;&#x6216;&#x8005;&#x641C;&#x7D22;&#x4F4D;&#x7F6E;&#x7B49;&#x65B9;&#x5F0F;&#x5B9E;&#x73B0;,J&#x4E3A;&#x5408;&#x5E76;<br>&#x6CE8;: &#x5982;&#x679C;&#x6539;&#x4E3A;3gJ&#x7684;&#x8BDD;,&#x5219;&#x5408;&#x5E76;&#x65F6;&#x5404;&#x884C;&#x6CA1;&#x6709;&#x7A7A;&#x767D;AAAAABBBBBCCCCC, &#x4E0B;&#x9762;&#x65B9;&#x6CD5;&#x7C7B;&#x4F3C;,&#x4E0D;&#x518D;&#x91CD;&#x590D;&#x8FD9;&#x4E24;&#x79CD;&#x5408;&#x5E76;&#x65B9;&#x5F0F;&#x7684;&#x533A;&#x522B;.</p>
+<p>&#x65B9;&#x6CD5;2: &#x547D;&#x4EE4;&#x72B6;&#x6001;&#x4E0B; :1,3 join   &#x6216; :1,3 j</p>
+<p>&#x65B9;&#x6CD5;3: &#x4F20;&#x7EDF;&#x4E00;&#x70B9;&#x7684;,&#x66FF;&#x6362;&#x6362;&#x884C;&#x7B26;&#x7684;&#x65B9;&#x5F0F;,&#x4E3A;&#x907F;&#x514D;&#x6700;&#x540E;&#x4E00;&#x884C;&#x4E5F;&#x88AB;&#x6362;&#x6389;,&#x8303;&#x56F4;&#x7F29;&#x5C0F;&#x4E86;,&#x547D;&#x4EE4;&#x72B6;&#x6001;&#x4E0B;  :1,2s/\n/ /</p>
+<h3 id="&#x9694;&#x884C;&#x5408;&#x5E76;"><a href="#&#x9694;&#x884C;&#x5408;&#x5E76;" class="headerlink" title="&#x9694;&#x884C;&#x5408;&#x5E76;"></a>&#x9694;&#x884C;&#x5408;&#x5E76;</h3><p>AAAAA<br>BBBBB<br>CCCCC<br>DDDDD<br>&#x5408;&#x5E76;&#x4E3A;:</p>
+<p>AAAAA BBBBB<br>CCCCC DDDDD<br>&#x65B9;&#x6CD5;1: &#x501F;&#x7528;&#x4E00;&#x4E0B;&#x5B8F;&#x5F55;&#x5236;&#x529F;&#x80FD;, normal&#x72B6;&#x6001;&#x4E0B; qaJjq &#x5B9E;&#x73B0;&#x5F55;&#x5236;, &#x7136;&#x540E;&#x5728;&#x5408;&#x9002;&#x7684;&#x533A;&#x57DF;&#x91CD;&#x590D;&#x6267;&#x884C;n&#x904D;,&#x8FD9;&#x91CC;2&#x904D;&#x5373;&#x53EF;,normal&#x72B6;&#x6001;&#x4E0B;2@a</p>
+<p>&#x65B9;&#x6CD5;2: &#x547D;&#x4EE4;&#x72B6;&#x6001;&#x4E0B; :1,4g/^/ join  &#x589E;&#x52A0;&#x4E86;g&#x8FC7;&#x6EE4;&#x540E;,&#x5408;&#x5E76;&#x53D8;&#x6210;&#x4E86;&#x9694;&#x884C;&#x5904;&#x7406;&#x3011;</p>
+<h2 id="&#x66FF;&#x6362;"><a href="#&#x66FF;&#x6362;" class="headerlink" title="&#x66FF;&#x6362;"></a>&#x66FF;&#x6362;</h2><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">:s/old/new/</td>
+<td align="left">&#x66FF;&#x6362;&#x5F53;&#x524D;&#x884C;&#x7B2C;&#x4E00;&#x4E2A; old &#x4E3A; new</td>
+</tr>
+<tr>
+<td align="left">:s/old/new/g</td>
+<td align="left">&#x66FF;&#x6362;&#x5F53;&#x524D;&#x884C;&#x6240;&#x6709; old &#x4E3A; new</td>
+</tr>
+<tr>
+<td align="left">:n,$s/old/new/</td>
+<td align="left">&#x66FF;&#x6362;&#x7B2C; n &#x884C;&#x5F00;&#x59CB;&#x5230;&#x6700;&#x540E;&#x4E00;&#x884C;&#x4E2D;&#x6BCF;&#x4E00;&#x884C;&#x7684;&#x7B2C;&#x4E00;&#x4E2A; old &#x4E3A; new</td>
+</tr>
+<tr>
+<td align="left">:n,$s/old/new/g</td>
+<td align="left">&#x66FF;&#x6362;&#x7B2C; n &#x884C;&#x5F00;&#x59CB;&#x5230;&#x6700;&#x540E;&#x4E00;&#x884C;&#x4E2D;&#x6BCF;&#x4E00;&#x884C;&#x6240;&#x6709; old &#x4E3A; new</td>
+</tr>
+<tr>
+<td align="left">:%s/old/new/</td>
+<td align="left">&#x66FF;&#x6362;&#x6BCF;&#x4E00;&#x884C;&#x7684;&#x7B2C;&#x4E00;&#x4E2A; old &#x4E3A; new</td>
+</tr>
+<tr>
+<td align="left">:%s/old/new/g</td>
+<td align="left">&#x66FF;&#x6362;&#x6BCF;&#x4E00;&#x884C;&#x4E2D;&#x6240;&#x6709; old &#x4E3A; new</td>
+</tr>
+</tbody></table>
+<h2 id="&#x6062;&#x590D;"><a href="#&#x6062;&#x590D;" class="headerlink" title="&#x6062;&#x590D;"></a>&#x6062;&#x590D;</h2><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">u</td>
+<td align="left">&#x64A4;&#x6D88;&#x4E0A;&#x6B21;&#x547D;&#x4EE4;</td>
+</tr>
+<tr>
+<td align="left">U</td>
+<td align="left">&#x6062;&#x590D;&#x6574;&#x884C;</td>
+</tr>
+<tr>
+<td align="left">ctrl+r</td>
+<td align="left">&#x91CD;&#x505A;</td>
+</tr>
+<tr>
+<td align="left">.</td>
+<td align="left">&#x91CD;&#x590D;</td>
+</tr>
+<tr>
+<td align="left">e!</td>
+<td align="left">&#x5168;&#x6587;&#x6062;&#x590D;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x591A;&#x7A97;&#x53E3;&#x6253;&#x5F00;"><a href="#&#x591A;&#x7A97;&#x53E3;&#x6253;&#x5F00;" class="headerlink" title="&#x591A;&#x7A97;&#x53E3;&#x6253;&#x5F00;"></a>&#x591A;&#x7A97;&#x53E3;&#x6253;&#x5F00;</h2><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Alias</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">:vs file</td>
+<td align="left">&#x5728;&#x65B0;&#x7684;&#x5782;&#x76F4;&#x5206;&#x5C4F;&#x4E2D;&#x6253;&#x5F00;&#x6587;&#x4EF6;</td>
+</tr>
+<tr>
+<td align="left">:sv file</td>
+<td align="left">&#x5728;&#x65B0;&#x7684;&#x6C34;&#x5E73;&#x5206;&#x5C4F;&#x4E2D;&#x6253;&#x5F00;&#x6587;&#x4EF6;</td>
+</tr>
+</tbody></table>
+<h2 id="Pattern-&#x64CD;&#x4F5C;"><a href="#Pattern-&#x64CD;&#x4F5C;" class="headerlink" title="Pattern &#x64CD;&#x4F5C;"></a>Pattern &#x64CD;&#x4F5C;</h2><table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Example</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">/{pattern}[/]<cr></cr></td>
+<td align="left">/hello</td>
+<td align="left">&#x5411;&#x524D;&#x67E5;&#x627E;&#x7B2C;&#x4E00;&#x6B21;&#x51FA;&#x73B0; hello &#x7684;&#x4F4D;&#x7F6E;</td>
+</tr>
+<tr>
+<td align="left">/{pattern}/{offset}<cr></cr></td>
+<td align="left">/hello/2</td>
+<td align="left">&#x5411;&#x524D;&#x67E5;&#x627E;&#x7B2C;&#x4E00;&#x6B21;&#x51FA;&#x73B0; hello &#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5E76;&#x5411;&#x4E0B;&#x79FB;&#x52A8;&#x4E24;&#x884C;</td>
+</tr>
+<tr>
+<td align="left">/</td>
+<td align="left">/</td>
+<td align="left">&#x4F7F;&#x7528;&#x4E0A;&#x6B21;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x5411;&#x524D;&#x67E5;&#x627E;</td>
+</tr>
+<tr>
+<td align="left">//{offset}<cr></cr></td>
+<td align="left">//3</td>
+<td align="left">&#x4F7F;&#x7528;&#x4E0A;&#x6B21;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x504F;&#x79FB;&#x503C;&#x4E3A;3&#xFF0C;&#x504F;&#x79FB;&#x503C;&#x4E3A;&#x7A7A;&#x548C;/&#x529F;&#x80FD;&#x4E00;&#x81F4;</td>
+</tr>
+<tr>
+<td align="left">?{pattern}[?]<cr></cr></td>
+<td align="left">?hello</td>
+<td align="left">&#x5411;&#x540E;&#x67E5;&#x627E;&#x7B2C;&#x4E00;&#x6B21;&#x51FA;&#x73B0; hello &#x7684;&#x4F4D;&#x7F6E;</td>
+</tr>
+<tr>
+<td align="left">?{pattern}?{offset}<cr></cr></td>
+<td align="left">?hello?2</td>
+<td align="left">&#x5411;&#x540E;&#x67E5;&#x627E;&#x7B2C;&#x4E00;&#x6B21;&#x51FA;&#x73B0; hello &#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5E76;&#x5411;&#x4E0B;&#x79FB;&#x52A8;&#x4E24;&#x884C;</td>
+</tr>
+<tr>
+<td align="left">?</td>
+<td align="left">?</td>
+<td align="left">&#x4F7F;&#x7528;&#x4E0A;&#x6B21;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x5411;&#x540E;&#x67E5;&#x627E;</td>
+</tr>
+<tr>
+<td align="left">??{offset}<cr></cr></td>
+<td align="left">??3</td>
+<td align="left">&#x4F7F;&#x7528;&#x4E0A;&#x6B21;&#x7684;&#x6A21;&#x5F0F;&#xFF0C;&#x504F;&#x79FB;&#x503C;&#x4E3A;3&#xFF0C;&#x504F;&#x79FB;&#x503C;&#x4E3A;&#x7A7A;&#x548C;/&#x529F;&#x80FD;&#x4E00;&#x81F4;</td>
+</tr>
+<tr>
+<td align="left">n</td>
+<td align="left">n</td>
+<td align="left">&#x5411;&#x524D;&#x67E5;&#x627E;</td>
+</tr>
+<tr>
+<td align="left">N</td>
+<td align="left">N</td>
+<td align="left">&#x5411;&#x540E;&#x67E5;&#x627E;</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="left">*</td>
+<td align="left">&#x5411;&#x524D;&#x67E5;&#x627E;&#x8DDD;&#x79BB;&#x5149;&#x6807;&#x6700;&#x8FD1;&#x7684;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">#</td>
+<td align="left">#</td>
+<td align="left">&#x5411;&#x540E;&#x67E5;&#x627E;&#x8DDD;&#x79BB;&#x5149;&#x6807;&#x6700;&#x8FD1;&#x7684;&#x5355;&#x8BCD;</td>
+</tr>
+<tr>
+<td align="left">gd</td>
+<td align="left">gd</td>
+<td align="left">&#x8DF3;&#x8F6C;&#x81F3;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x7684;&#x4F4D;&#x7F6E;</td>
+</tr>
+<tr>
+<td align="left">gD</td>
+<td align="left">gD</td>
+<td align="left">&#x8DF3;&#x8F6C;&#x81F3;&#x5168;&#x5C40;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x7684;&#x4F4D;&#x7F6E;</td>
+</tr>
+</tbody></table>
+<h2 id="&#x4F7F;&#x7528;&#x5B8F;"><a href="#&#x4F7F;&#x7528;&#x5B8F;" class="headerlink" title="&#x4F7F;&#x7528;&#x5B8F;"></a>&#x4F7F;&#x7528;&#x5B8F;</h2><ul>
+<li>normal &#x6A21;&#x5F0F;&#x4E0B;&#x6309;&#x4E0B; <code>qa</code> &#x5F00;&#x59CB;&#x5F55;&#x5236;&#x5B8F;&#xFF0C;a &#x5C31;&#x662F;&#x8BE5;&#x5B8F;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x662F;&#x4EFB;&#x610F;&#x5B57;&#x7B26;</li>
+<li>&#x548C;&#x6B63;&#x5E38;&#x4F7F;&#x7528; vim &#x4E00;&#x6837;&#xFF0C;&#x8BB0;&#x5F55;&#x4E0B;&#x9700;&#x8981;&#x7684;&#x64CD;&#x4F5C;</li>
+<li>&#x64CD;&#x4F5C;&#x5B8C;&#x6210;&#x540E;&#x518D;&#x6B21;&#x6309;&#x4E0B; <code>q</code> &#x7ED3;&#x675F;&#x5F55;&#x5236;</li>
+<li><code>@a</code>&#xFF1A;&#x5F53;&#x524D;&#x884C;&#x4F7F;&#x7528;&#x8BE5;&#x5B8F;&#xFF0C;<code>3@a</code>&#xFF1A;&#x91CD;&#x590D;&#x4F7F;&#x7528;&#x4E09;&#x6B21;&#x8BE5;&#x5B8F;&#xFF0C;<code>@@</code>&#xFF1A;&#x5BF9;&#x4E0A;&#x6B21;&#x5B8F;&#x7684;&#x91CD;&#x590D;&#x4F7F;&#x7528;</li>
+</ul>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/%E6%9D%82%E8%B4%A7%E9%93%BA/">#杂货铺</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2017/03/23/Java%E4%B8%AD%E7%9A%84%E5%BC%95%E7%94%A8/">Java中的引用</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2017/01/18/NPM%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">NPM使用介绍</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2017/02/14/VIM%E6%93%8D%E4%BD%9C/';
+        this.page.identifier = '2017/02/14/VIM操作/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>

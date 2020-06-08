@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>《Effective Java》- 创建和销毁对象 - LoveDev</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="一个踏踏实实的程序员">
+
+
+
+
+
+    <meta name="description" content="&amp;#x4F7F;&amp;#x7528;&amp;#x9759;&amp;#x6001;&amp;#x5DE5;&amp;#x5382;&amp;#x65B9;&amp;#x6CD5;&amp;#x66FF;&amp;#x4EE3;&amp;#x6784;&amp;#x9020;&amp;#x5668;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Effective Java》- 创建和销毁对象">
+<meta property="og:url" content="http://yoursite.com/2018/08/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/Effective%20Java/%E3%80%8AEffective-java%E3%80%8B-%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/index.html">
+<meta property="og:site_name" content="LoveDev">
+<meta property="og:description" content="&amp;#x4F7F;&amp;#x7528;&amp;#x9759;&amp;#x6001;&amp;#x5DE5;&amp;#x5382;&amp;#x65B9;&amp;#x6CD5;&amp;#x66FF;&amp;#x4EE3;&amp;#x6784;&amp;#x9020;&amp;#x5668;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-08-21T08:56:58.000Z">
+<meta property="article:modified_time" content="2020-03-07T05:58:53.928Z">
+<meta property="article:author" content="Kevin">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+<link rel="icon" href="/favicon.png">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159956718-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159956718-1');
+</script>
+
+
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    <img src="/favicon.png" alt="" height="28">
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">archives</a>
+            
+            <a class="navbar-item "
+               href="/tags">tags</a>
+            
+            <a class="navbar-item "
+               href="/about">about</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜索" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            <div class="navbar-item is-hoverable has-dropdown is-hidden-mobile is-hidden-tablet-only toc">
+                <a class="navbar-item" title="目录">
+                    <i class="fa fa-list"></i>
+                </a>
+                <div class="navbar-dropdown is-right">
+                    
+                    
+                    
+                    
+                    <a class="navbar-item" href="#使用静态工厂方法替代构造器">1&nbsp;&nbsp;<b>使用静态工厂方法替代构造器</b></a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#优势">1.1&nbsp;&nbsp;优势</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#缺点">1.2&nbsp;&nbsp;缺点</a>
+                    
+                    
+                    
+                    <a class="navbar-item" href="#惯用名称">1.3&nbsp;&nbsp;惯用名称</a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#构造函数多个参数时使用构造器">2&nbsp;&nbsp;<b>构造函数多个参数时使用构造器</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#用私用构造器或者枚举类型创建-Singleton">3&nbsp;&nbsp;<b>用私用构造器或者枚举类型创建 Singleton</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#通过私有构造函数强化不可实例化能力">4&nbsp;&nbsp;<b>通过私有构造函数强化不可实例化能力</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#避免创建不必要的对象">5&nbsp;&nbsp;<b>避免创建不必要的对象</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#消除过期的对象引用">6&nbsp;&nbsp;<b>消除过期的对象引用</b></a>
+                    
+                    
+                    <hr class="navbar-divider">
+                    
+                    
+                    <a class="navbar-item" href="#避免使用终结方法">7&nbsp;&nbsp;<b>避免使用终结方法</b></a>
+                    
+                </div>
+            </div>
+            
+            
+            <a class="navbar-item" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article style="padding-top: 1.5rem!important;" class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            《Effective Java》- 创建和销毁对象
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            <time datetime="2018-08-21T08:56:58.000Z" itemprop="datePublished">8月 21 2018</time>
+        </span>
+        
+        
+        <span class="column is-narrow">
+            
+            
+            8 分钟 读完 (约 1148 字)
+        </span>
+        
+    </div>
+
+    
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><h1 id="&#x4F7F;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x66FF;&#x4EE3;&#x6784;&#x9020;&#x5668;"><a href="#&#x4F7F;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x66FF;&#x4EE3;&#x6784;&#x9020;&#x5668;" class="headerlink" title="&#x4F7F;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x66FF;&#x4EE3;&#x6784;&#x9020;&#x5668;"></a>&#x4F7F;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x66FF;&#x4EE3;&#x6784;&#x9020;&#x5668;</h1><a id="more"></a>
+<h2 id="&#x4F18;&#x52BF;"><a href="#&#x4F18;&#x52BF;" class="headerlink" title="&#x4F18;&#x52BF;"></a>&#x4F18;&#x52BF;</h2><ul>
+<li><p>&#x8BE5;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x5F0F;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x8FD4;&#x56DE;&#x7C7B;&#x5B9E;&#x4F8B;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF0C;&#x4E0D;&#x540C;&#x4E8E;&#x8BBE;&#x8BA1;&#x6A21;&#x5F0F;&#x4E2D;&#x7684;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;</p>
+</li>
+<li><p>&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x6709;&#x540D;&#x79F0;&#xFF0C;&#x89C1;&#x540D;&#x77E5;&#x610F;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7C7B;&#x9700;&#x8981;&#x591A;&#x4E2A;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x91C7;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;&#x51FD;&#x6570;&#x540D;&#x5F97;&#x4EE5;&#x7406;&#x89E3;&#x548C;&#x533A;&#x5206;</p>
+</li>
+<li><p>&#x4E0D;&#x5FC5;&#x5728;&#x6BCF;&#x6B21;&#x8C03;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#x90FD;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x5BF9;&#x8C61;&#xFF0C;&#x8FD9;&#x79CD;&#x65B9;&#x6CD5;&#x7C7B;&#x4F3C;&#x4EAB;&#x5143;&#xFF08;Flyweight&#xFF09;&#x6A21;&#x5F0F;&#x4EE5;&#x53CA;&#x5355;&#x4F8B;&#xFF08;Singleton&#xFF09;&#x6A21;&#x5F0F;&#xFF0C;&#x8FD9;&#x4E9B;&#x7C7B;&#x90FD;&#x80FD;&#x6210;&#x4E3A;<strong>&#x5B9E;&#x4F8B;&#x53D7;&#x63A7;&#x7684;&#x7C7B;</strong>&#xFF0C;&#x8FD9;&#x4E9B;&#x7C7B;&#x7684;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; == &#x4EE3;&#x66FF; equals &#xFF0C;&#x56E0;&#x4E3A; == &#x5BF9;&#x6BD4;&#x7684;&#x662F;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x5B58;&#x5730;&#x5740;&#xFF0C;equals &#x662F;&#x5BF9;&#x6BD4;&#x5BF9;&#x8C61;&#x6BCF;&#x4E2A;&#x5B57;&#x6BB5;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x6240;&#x4EE5; == &#x6548;&#x7387;&#x8981;&#x9AD8;&#x4E8E; equals</p>
+</li>
+<li><p>&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8FD4;&#x56DE;&#x539F;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x7684;&#x4EFB;&#x610F;&#x5B50;&#x7C7B;&#x5BF9;&#x8C61;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x53C2;&#x6570;&#x7684;&#x4E0D;&#x540C;&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x5B50;&#x7C7B;&#x5BF9;&#x8C61;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x968F;&#x7740;&#x7248;&#x672C;&#x7684;&#x8FED;&#x4EE3;&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x5B50;&#x7C7B;&#x5BF9;&#x8C61;&#x3002;&#x63D0;&#x9AD8;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x6269;&#x5C55;&#x6027;&#x548C;&#x53EF;&#x7EF4;&#x62A4;&#x6027;&#x3002;</p>
+</li>
+<li><p>&#x521B;&#x5EFA;&#x6CDB;&#x578B;&#x5B9E;&#x4F8B;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x4EE3;&#x7801;&#x53D8;&#x5F97;&#x66F4;&#x7B80;&#x5355;</p>
+<p>  </p><figure class="highlight java hljs"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, List&lt;String&gt;&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;String, List&lt;String&gt;&gt;();</span><br><span class="line"><span class="hljs-comment">// &#x4F7F;&#x7528;&#x9759;&#x6001;&#x5DE5;&#x5382;&#x65B9;&#x6CD5;</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K, V&gt; <span class="hljs-function">HashMap&lt;K, V&gt; <span class="hljs-title">newInstance</span><span class="hljs-params">()</span> </span>{</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> HashMap&lt;K, v&gt;();</span><br><span class="line">}</span><br><span class="line"><span class="hljs-comment">// &#x6539;&#x9020;&#x540E;&#x4F7F;&#x7528;&#x65B9;&#x6CD5;</span></span><br><span class="line">Map&lt;String, List&lt;String&gt;&gt; map = HashMap.newInstance();</span><br></pre></td></tr></tbody></table></figure><p></p>
+</li>
+</ul>
+<h2 id="&#x7F3A;&#x70B9;"><a href="#&#x7F3A;&#x70B9;" class="headerlink" title="&#x7F3A;&#x70B9;"></a>&#x7F3A;&#x70B9;</h2><ul>
+<li>&#x7C7B;&#x4E0D;&#x542B;&#x6709;&#x516C;&#x6709;&#x6216;&#x8005;&#x53D7;&#x4FDD;&#x62A4;&#x7684;&#x6784;&#x9020;&#x5668;&#xFF0C;&#x5C31;&#x4E0D;&#x80FD;&#x88AB;&#x5B50;&#x7C7B;&#x5316;</li>
+<li>&#x5728;&#x6587;&#x6863;&#x4E0A;&#x9762;&#x5E76;&#x4E0D;&#x80FD;&#x548C;&#x5176;&#x4ED6;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x6709;&#x4EFB;&#x4F55;&#x533A;&#x522B;</li>
+</ul>
+<h2 id="&#x60EF;&#x7528;&#x540D;&#x79F0;"><a href="#&#x60EF;&#x7528;&#x540D;&#x79F0;" class="headerlink" title="&#x60EF;&#x7528;&#x540D;&#x79F0;"></a>&#x60EF;&#x7528;&#x540D;&#x79F0;</h2><ul>
+<li>valueOf&#xFF1A;&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#xFF0C;&#x8FD4;&#x56DE;&#x5B9E;&#x4F8B;&#x548C;&#x53C2;&#x6570;&#x5177;&#x6709;&#x76F8;&#x540C;&#x7684;&#x503C;</li>
+<li>of&#xFF1A;valueOf &#x66F4;&#x4E3A;&#x7B80;&#x6D01;&#x7684;&#x5199;&#x6CD5;</li>
+<li>getInstance&#xFF1A;&#x8FD4;&#x56DE;&#x7684;&#x5B9E;&#x4F8B;&#x901A;&#x8FC7;&#x65B9;&#x6CD5;&#x53C2;&#x6570;&#x6765;&#x63CF;&#x8FF0;&#xFF0C;&#x5728; Singleton &#x4E2D;&#x8BE5;&#x51FD;&#x6570;&#x6CA1;&#x6709;&#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;&#x5168;&#x5C40;&#x552F;&#x4E00;&#x7684;&#x5B9E;&#x4F8B;</li>
+<li>newInstance&#xFF1A;&#x6BCF;&#x6B21;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x5B9E;&#x4F8B;</li>
+<li>getType&#xFF1A;&#x540C; getInstance &#xFF0C;Tpye &#x8868;&#x793A;&#x8FD4;&#x56DE;&#x5BF9;&#x8C61;&#x7684;&#x7C7B;&#x578B;</li>
+<li>newType&#xFF1A;&#x540C; newInstance</li>
+</ul>
+<h1 id="&#x6784;&#x9020;&#x51FD;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x65F6;&#x4F7F;&#x7528;&#x6784;&#x9020;&#x5668;"><a href="#&#x6784;&#x9020;&#x51FD;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x65F6;&#x4F7F;&#x7528;&#x6784;&#x9020;&#x5668;" class="headerlink" title="&#x6784;&#x9020;&#x51FD;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x65F6;&#x4F7F;&#x7528;&#x6784;&#x9020;&#x5668;"></a>&#x6784;&#x9020;&#x51FD;&#x6570;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x65F6;&#x4F7F;&#x7528;&#x6784;&#x9020;&#x5668;</h1><p>&#x5EFA;&#x9020;&#x8005;&#xFF08;Builder&#xFF09; &#x6A21;&#x5F0F;</p>
+<h1 id="&#x7528;&#x79C1;&#x7528;&#x6784;&#x9020;&#x5668;&#x6216;&#x8005;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x521B;&#x5EFA;-Singleton"><a href="#&#x7528;&#x79C1;&#x7528;&#x6784;&#x9020;&#x5668;&#x6216;&#x8005;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x521B;&#x5EFA;-Singleton" class="headerlink" title="&#x7528;&#x79C1;&#x7528;&#x6784;&#x9020;&#x5668;&#x6216;&#x8005;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x521B;&#x5EFA; Singleton"></a>&#x7528;&#x79C1;&#x7528;&#x6784;&#x9020;&#x5668;&#x6216;&#x8005;&#x679A;&#x4E3E;&#x7C7B;&#x578B;&#x521B;&#x5EFA; Singleton</h1><p>&#x5355;&#x4F8B;&#xFF08;Singleton&#xFF09; &#x6A21;&#x5F0F;</p>
+<ul>
+<li><input disabled type="checkbox"> &#x5E8F;&#x5217;&#x5316;&#x95EE;&#x9898;</li>
+</ul>
+<h1 id="&#x901A;&#x8FC7;&#x79C1;&#x6709;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5F3A;&#x5316;&#x4E0D;&#x53EF;&#x5B9E;&#x4F8B;&#x5316;&#x80FD;&#x529B;"><a href="#&#x901A;&#x8FC7;&#x79C1;&#x6709;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5F3A;&#x5316;&#x4E0D;&#x53EF;&#x5B9E;&#x4F8B;&#x5316;&#x80FD;&#x529B;" class="headerlink" title="&#x901A;&#x8FC7;&#x79C1;&#x6709;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5F3A;&#x5316;&#x4E0D;&#x53EF;&#x5B9E;&#x4F8B;&#x5316;&#x80FD;&#x529B;"></a>&#x901A;&#x8FC7;&#x79C1;&#x6709;&#x6784;&#x9020;&#x51FD;&#x6570;&#x5F3A;&#x5316;&#x4E0D;&#x53EF;&#x5B9E;&#x4F8B;&#x5316;&#x80FD;&#x529B;</h1><p>&#x6709;&#x65F6;&#x5019;&#x9700;&#x8981;&#x53EA;&#x5305;&#x542B;&#x4E86;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x548C;&#x9759;&#x6001;&#x53D8;&#x91CF;&#x8FD9;&#x6837;&#x7684;&#x5DE5;&#x5177;&#x7C7B;&#xFF0C;&#x5B9E;&#x4F8B;&#x5316;&#x8FD9;&#x6837;&#x7684;&#x7C7B;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x610F;&#x4E49;&#x3002;&#x4E0D;&#x80FD;&#x901A;&#x8FC7;&#x628A;&#x8FD9;&#x6837;&#x7684;&#x7C7B;&#x8BBE;&#x7F6E;&#x6210;&#x62BD;&#x8C61;&#x7C7B;&#x6765;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x6837;&#x8BE5;&#x7C7B;&#x5C31;&#x53EF;&#x4EE5;&#x5B50;&#x7C7B;&#x5316;&#xFF0C;&#x8BEF;&#x5BFC;&#x8C03;&#x7528;&#x8005;&#x3002;&#x6B64;&#x65F6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x628A;&#x6784;&#x9020;&#x51FD;&#x6570;&#x8BBE;&#x7F6E;&#x6210;&#x79C1;&#x6709;&#x7684;&#x6765;&#x89E3;&#x51B3;&#x8BE5;&#x95EE;&#x9898;&#xFF0C;&#x4E0D;&#x8FC7;&#x8FD9;&#x6837;&#x505A;&#x4F1A;&#x6709;&#x526F;&#x4F5C;&#x7528;&#xFF0C;&#x56E0;&#x4E3A;&#x5B50;&#x7C7B;&#x8BBF;&#x95EE;&#x4E0D;&#x5230;&#x7236;&#x7C7B;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x6837;&#x7684;&#x7C7B;&#x4E0D;&#x80FD;&#x88AB;&#x5B50;&#x7C7B;&#x5316;</p>
+<h1 id="&#x907F;&#x514D;&#x521B;&#x5EFA;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x5BF9;&#x8C61;"><a href="#&#x907F;&#x514D;&#x521B;&#x5EFA;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x5BF9;&#x8C61;" class="headerlink" title="&#x907F;&#x514D;&#x521B;&#x5EFA;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x5BF9;&#x8C61;"></a>&#x907F;&#x514D;&#x521B;&#x5EFA;&#x4E0D;&#x5FC5;&#x8981;&#x7684;&#x5BF9;&#x8C61;</h1><ul>
+<li>&#x5982;&#x679C;&#x6709;&#x7C7B;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x5C31;&#x786E;&#x5B9A;&#x4E0D;&#x53D8;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x53EF;&#x4EE5;&#x5728;&#x9759;&#x6001;&#x4EE3;&#x7801;&#x5757;&#x4E2D;&#x5BF9;&#x8FD9;&#x4E9B;&#x5185;&#x5BB9;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x6CA1;&#x80FD;&#x91CD;&#x7528;&#x5BF9;&#x8C61;&#x5F71;&#x54CD;&#x7A0B;&#x5E8F;&#x7684;&#x98CE;&#x683C;&#x548C;&#x6027;&#x80FD;&#xFF0C;&#x4F46;&#x662F;&#x6CA1;&#x80FD;&#x521B;&#x5EFA;&#x91CD;&#x590D;&#x5BF9;&#x8C61;&#x6216;&#x8005;&#x4FDD;&#x62A4;&#x6027;&#x62F7;&#x8D1D;&#x6240;&#x5E26;&#x6765;&#x7684;&#x5F71;&#x54CD;&#x662F;&#x5B89;&#x5168;&#x6F0F;&#x6D1E;&#x548C;&#x9519;&#x8BEF;&#xFF0C;&#x5F53;&#x91CD;&#x7528;&#x5BF9;&#x8C61;&#x7684;&#x4EE3;&#x4EF7;&#x5927;&#x4E8E;&#x521B;&#x5EFA;&#x91CD;&#x590D;&#x5BF9;&#x8C61;&#x65F6;&#xFF0C;&#x5E94;&#x8BE5;&#x91CD;&#x65B0;&#x521B;&#x5EFA;&#x5BF9;&#x8C61;&#x6216;&#x8005;&#x4FDD;&#x62A4;&#x6027;&#x62F7;&#x8D1D;</li>
+</ul>
+<h1 id="&#x6D88;&#x9664;&#x8FC7;&#x671F;&#x7684;&#x5BF9;&#x8C61;&#x5F15;&#x7528;"><a href="#&#x6D88;&#x9664;&#x8FC7;&#x671F;&#x7684;&#x5BF9;&#x8C61;&#x5F15;&#x7528;" class="headerlink" title="&#x6D88;&#x9664;&#x8FC7;&#x671F;&#x7684;&#x5BF9;&#x8C61;&#x5F15;&#x7528;"></a>&#x6D88;&#x9664;&#x8FC7;&#x671F;&#x7684;&#x5BF9;&#x8C61;&#x5F15;&#x7528;</h1><ul>
+<li><p>&#x8FC7;&#x671F;&#x5F15;&#x7528;&#xFF1A;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x89E3;&#x9664;&#x7684;&#x5F15;&#x7528;</p>
+</li>
+<li><p>&#x624B;&#x52A8;&#x6E05;&#x7A7A;&#x5BF9;&#x8C61;&#x5F15;&#x7528;&#x5E94;&#x8BE5;&#x662F;&#x4E00;&#x79CD;&#x4F8B;&#x5916;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4E00;&#x79CD;&#x89C4;&#x8303;&#x884C;&#x4E3A;&#x3002;&#x6D88;&#x9664;&#x8FC7;&#x671F;&#x5F15;&#x7528;&#x7684;&#x6700;&#x597D;&#x65B9;&#x5F0F;&#x662F;&#x8BA9;&#x5305;&#x542B;&#x6539;&#x5F15;&#x7528;&#x7684;&#x53D8;&#x91CF;&#x7ED3;&#x675F;&#x751F;&#x547D;&#x5468;&#x671F;</p>
+</li>
+<li><p>&#x53EA;&#x8981;&#x7C7B;&#x81EA;&#x5DF1;&#x7BA1;&#x7406;&#x5185;&#x5B58;&#xFF0C;&#x5C31;&#x5E94;&#x8BE5;&#x8B66;&#x60D5;&#x5185;&#x5B58;&#x6CC4;&#x6F0F;&#x95EE;&#x9898;&#xFF0C;&#x4E00;&#x70B9;&#x5B9E;&#x4F8B;&#x88AB;&#x91CA;&#x653E;&#x6389;&#xFF0C;&#x8BE5;&#x5B9E;&#x4F8B;&#x4E2D;&#x5305;&#x542B;&#x7684;&#x5F15;&#x7528;&#x5BF9;&#x8C61;&#x90FD;&#x5E94;&#x8BE5;&#x88AB;&#x6D88;&#x9664;</p>
+</li>
+<li><p>&#x501F;&#x52A9; Heap &#x5256;&#x6790;&#x5DE5;&#x5177;&#x53D1;&#x73B0;&#x5185;&#x5B58;&#x6CC4;&#x6F0F;&#x95EE;&#x9898;</p>
+</li>
+<li><input disabled type="checkbox"> <p>&#x5185;&#x5B58;&#x6CC4;&#x6F0F;</p>
+</li>
+</ul>
+<h1 id="&#x907F;&#x514D;&#x4F7F;&#x7528;&#x7EC8;&#x7ED3;&#x65B9;&#x6CD5;"><a href="#&#x907F;&#x514D;&#x4F7F;&#x7528;&#x7EC8;&#x7ED3;&#x65B9;&#x6CD5;" class="headerlink" title="&#x907F;&#x514D;&#x4F7F;&#x7528;&#x7EC8;&#x7ED3;&#x65B9;&#x6CD5;"></a>&#x907F;&#x514D;&#x4F7F;&#x7528;&#x7EC8;&#x7ED3;&#x65B9;&#x6CD5;</h1><p>finalize() &#x4F1A;&#x5BFC;&#x81F4;&#x884C;&#x4E3A;&#x4E0D;&#x7A33;&#x5B9A;&#x3001;&#x964D;&#x4F4E;&#x6027;&#x80FD;&#x3001;&#x4EE5;&#x53CA;&#x53EF;&#x79FB;&#x690D;&#x6027;&#x95EE;&#x9898;</p>
+<ul>
+<li>&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x53CA;&#x65F6;&#x6267;&#x884C;&#xFF0C;JVM &#x7684;&#x4E0D;&#x540C;&#x5BFC;&#x81F4; finalize() &#x6267;&#x884C;&#x6548;&#x679C;&#x7684;&#x4E0D;&#x540C;</li>
+<li>&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#xFF0C;&#x5F53;&#x5BF9;&#x8C61;&#x53D8;&#x6210;&#x4E0D;&#x53EF;&#x8FBE;&#x65F6;&#xFF0C;&#x5BF9;&#x8C61;&#x7684; finalize() &#x6CA1;&#x6709;&#x6267;&#x884C;</li>
+<li>System.gc()&#x3001;System.finalization() &#x53EA;&#x80FD;&#x589E;&#x52A0; finalize() &#x88AB;&#x6267;&#x884C;&#x7684;&#x51E0;&#x7387;</li>
+<li>&#x5728; finalize() &#x4E2D;&#xFF0C;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x65F6;&#x4F1A;&#x5BFC;&#x81F4; finalize() &#x8FC7;&#x7A0B;&#x7ED3;&#x675F;&#xFF0C;&#x4F7F;&#x5BF9;&#x8C61;&#x5904;&#x4E8E;&#x88AB;&#x7834;&#x574F;&#x72B6;&#x6001;</li>
+<li>&#x6DFB;&#x52A0;&#x4E86; finalize() &#x540E;&#x7684;&#x5BF9;&#x8C61;&#x7684;&#x521B;&#x5EFA;&#x548C;&#x9500;&#x6BC1;&#x6267;&#x884C;&#x8FC7;&#x7A0B;&#x6BD4;&#x6CA1;&#x6709;&#x6DFB;&#x52A0;&#x7684;&#x7528;&#x65F6;&#x66F4;&#x957F;</li>
+<li>&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x663E;&#x5F0F;&#x7684;&#x7EC8;&#x6B62;&#x5BF9;&#x8C61;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x6BD4;&#x5982; FileInputStream&#x3001;FileOutputStream&#x3001;Timer&#x3001;Connection</li>
+</ul>
+</body></html>
+    
+    </div>
+    
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/Java/">#Java</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2018/08/23/Android/Android%E6%9E%B6%E6%9E%84%E7%BB%84%E4%BB%B6WorkManager/">Android架构组件WorkManager</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2018/08/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/Effective%20Java/%E3%80%8AEffective-java%E3%80%8B-%E6%9E%9A%E4%B8%BE%E5%92%8C%E6%B3%A8%E8%A7%A3/">《Effective Java》- 枚举和注解</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+<div class="sharebox">
+    
+<div class="sharethis-inline-share-buttons"></div>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=5e62ac01d0c39800126ea9e5&amp;product=inline-share-buttons&amp;cms=sop' async='async'></script>
+
+</div>
+
+
+
+<div class="comments">
+    <h3 class="title is-4">评论</h3>
+    
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://yoursite.com/2018/08/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/Effective%20Java/%E3%80%8AEffective-java%E3%80%8B-%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81%E5%AF%B9%E8%B1%A1/';
+        this.page.identifier = '2018/08/21/读书笔记/Effective Java/《Effective-java》-创建和销毁对象/';
+        
+        this.language = 'zh';
+        
+    };
+    (function() {
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'lovedev-org-1' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+<div id="disqus_thread">
+    
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+</div>
+</div>
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2020 Kevin&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" href="https://github.com/KevinLoveGitHub" target="_blank" rel="noopener">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" target="_blank" rel="noopener">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery').justifiedGallery();
+            }
+        });
+    })(jQuery);
+</script>
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <style>
+        .hljs {
+            position: relative;
+        }
+
+        .hljs .clipboard-btn {
+            float: right;
+            color: #9a9a9a;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hljs .clipboard-btn:hover {
+          color: #8a8a8a;
+        }
+
+        .hljs > .clipboard-btn {
+            display: none;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .hljs:hover > .clipboard-btn {
+            display: inline;
+        }
+
+        .hljs > figcaption > .clipboard-btn {
+            margin-right: 4px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('figure.hljs').each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code');
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+    </script>
+
+    
+    
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站内搜索" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
